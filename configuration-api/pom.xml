@@ -11,7 +11,7 @@
     <name>configuration-api</name>
     <version>0.0.0-1-SNAPSHOT</version>
     <description>This project is...</description>
-    <url>http://maven-doc.nds.com/maven_sites/${project.groupId}/${project.artifactId}/${project.version}</url>
+    <url>https://github.com/foundation-runtime/configuration/configuration-api</url>
     <issueManagement>
         <system>{put your issue tracking system here - i.e. CQ or JIRA}
         </system>
@@ -84,15 +84,7 @@
                     </schemaIncludes>
                     <strict>true</strict>
                 </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-release-plugin</artifactId>
-                <configuration>
-                    <tagBase>
-                        http://savana.il.nds.com/repos/ch_repo/tags/vss/foundation/configuration-api
-                    </tagBase>
-                </configuration>
-            </plugin>
+            </plugin>            
         </plugins>
     </build>
     <dependencies>
@@ -126,14 +118,5 @@
             <artifactId>jaxb2-basics</artifactId>
             <version>0.6.4</version>
         </dependency>
-    </dependencies>
-	<!--
-    <distributionManagement>
-        <site>
-            <id>NDS Site</id>
-            <url>scp://maven-doc.nds.com/cifs/maven_sites/${project.groupId}/${project.artifactId}/${project.version}
-            </url>
-        </site>
-    </distributionManagement>
-	-->
+    </dependencies>	
 </project>
