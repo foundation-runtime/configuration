@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HierarchyTree>
+
+    <HierarchyNode id="0" name="UHE" levelName="GLOBAL" levelOrder="999">
+
+        <HierarchyNode id="1" name="ProdX-East" levelName="GROUP" levelOrder="500" >
+            <HierarchyNode id="6" name="ProdX-East-1" levelName="COMPONENT" levelOrder="0" processName="dathomir.labs.nds.ca/opt/nds/uhe/ProdX/prodx" />
+            <HierarchyNode id="7" name="ProdX-East-2" levelName="COMPONENT" levelOrder="0" processName="yavin4.labs.nds.ca/opt/nds/uhe/ProdX/prodx" />
+            <HierarchyNode id="8" name="ProdX-East-3" levelName="COMPONENT" levelOrder="0" processName="dantooine.labs.nds.ca/opt/nds/uhe/ProdX/prodx" />
+            <HierarchyNode id="9" name="ProdX-East-4" levelName="COMPONENT" levelOrder="0" processName="nemoidia.labs.nds.ca/opt/nds/uhe/ProdX/prodx" />
+        </HierarchyNode>
+
+        <HierarchyNode id="2" name="ProdX-West" levelName="GROUP" levelOrder="500" >
+            <HierarchyNode id="10" name="ProdX-West-1" levelName="COMPONENT" levelOrder="0" processName="kirk.labs.nds.ca/opt/nds/uhe/ProdX/prodx" />
+            <HierarchyNode id="11" name="ProdX-West-2" levelName="COMPONENT" levelOrder="0" processName="bones.labs.nds.ca/opt/nds/uhe/ProdX/prodx" />
+        </HierarchyNode>
+
+    </HierarchyNode>
+
+</HierarchyTree>

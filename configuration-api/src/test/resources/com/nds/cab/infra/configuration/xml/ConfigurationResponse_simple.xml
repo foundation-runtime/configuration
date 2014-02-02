@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConfigurationResponse>
+    <NamespaceParameters>
+        <NamespaceIdentifier name="ProdX" version="2.4" />
+
+        <Parameter name="booleanVariable" 
+                   type="BOOLEAN"
+                   instantiationLevelId="0"
+                   description="This parameter describes the way that..." 
+                   paramId="1" >
+            <Value>
+                <PrimitiveValue value="true" />
+            </Value>
+            <DefaultValue>
+                <PrimitiveValue value="false" />
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter name="booleanArray" 
+                   type="BOOLEAN"
+                   instantiationLevelId="901"
+                   isArray="true"
+                   description="This parameter describes the way that..." 
+                   paramId="2" >
+            <Value>
+                <PrimitiveValue value="true"  index="0" />
+                <PrimitiveValue value="false" index="1" />
+            </Value>
+            <EnabledBy parameterName="booleanVariable" operator="E">
+                <Value>
+                    <PrimitiveValue value="true" />
+                </Value>
+            </EnabledBy>
+        </Parameter>
+
+        <Parameter name="intVariable" 
+                   type="INTEGER"
+                   instantiationLevelId="501"
+                   description="This parameter describes the way that..." 
+                   paramId="3" >
+            <Value>
+                <PrimitiveValue value="123" />
+            </Value>
+            <DefaultValue>
+                <PrimitiveValue value="150" />
+            </DefaultValue>
+            <Range>
+                <ValueRange min="100" max="199" />
+            </Range>
+        </Parameter>
+
+        <Parameter name="intArray" 
+                   type="INTEGER"
+                   instantiationLevelId="501"
+                   isArray="true"
+                   description="This parameter describes the way that..." 
+                   paramId="4" >
+            <Value>
+                <PrimitiveValue value="123" index="0" />
+                <PrimitiveValue value="321" index="1" />
+                <PrimitiveValue value="456" index="2" />
+                <PrimitiveValue value="654" index="3" />
+            </Value>
+            <DefaultValue>
+                <PrimitiveValue value="42" index="0" />
+                <PrimitiveValue value="101" index="1" />
+            </DefaultValue>
+            <Range>
+                <ValueRange min="0" max="999" />
+            </Range>
+        </Parameter>
+
+        <Parameter name="stringVariable" 
+                   type="STRING"
+                   instantiationLevelId="901"
+                   description="This parameter describes the way that..." 
+                   paramId="5" >
+            <Value>
+                <PrimitiveValue value="SHALOM" />
+            </Value>
+            <DefaultValue>
+                <PrimitiveValue value="GREETINGS" />
+            </DefaultValue>
+            <Range>
+                <StringEnum value="GREETINGS" />
+                <StringEnum value="SHALOM" />
+                <StringEnum value="OLA" />
+            </Range>
+        </Parameter>
+
+        <Parameter name="stringArray" 
+                   type="STRING"
+                   instantiationLevelId="901"
+                   isArray="true"
+                   description="This parameter describes the way that..." 
+                   paramId="6" >
+            <Value>
+                <PrimitiveValue value="Hello," index="0" />
+                <PrimitiveValue value="how"    index="1" />
+                <PrimitiveValue value="are"    index="2" />
+                <PrimitiveValue value="you?"   index="3" />
+            </Value>
+        </Parameter>
+
+        <Parameter name="durationArray" 
+                   type="INTEGER"
+                   instantiationLevelId="501"
+                   isArray="true"
+                   description="This parameter describes the way that..." 
+                   paramId="7" 
+                   unit="SECONDS">
+            <Value>
+                <PrimitiveValue value="30"  index="0" />
+                <PrimitiveValue value="15" index="1" />
+                <PrimitiveValue value="90" index="2" />
+            </Value>
+            <Range>
+                <ValueRange min="15" max="120" />
+            </Range>
+        </Parameter>
+
+        <Parameter name="structureVariable" 
+                   type="STRUCTURE"
+                   instantiationLevelId="0"
+                   description="This parameter describes the way that..." 
+                   paramId="8" >
+	        <StructureDefinition>
+	            <StructureMemberDefinition name="host" type="STRING" />
+	            <StructureMemberDefinition name="port" type="INTEGER">
+	                <Range>
+	                    <ValueRange min="1024" max="65535"/>
+	                </Range>
+	            </StructureMemberDefinition>
+	            <StructureMemberDefinition name="numRetries" type="INTEGER"/>
+	        </StructureDefinition>
+            <Value>
+                <StructureValue>
+                    <StructureMemberValue name="host"       value="vgc1a"/>
+                    <StructureMemberValue name="port"       value="13131"/>
+                    <StructureMemberValue name="numRetries" value="10"/>
+                </StructureValue>
+            </Value>
+        </Parameter>
+
+        <Parameter name="structureArray" 
+                   type="STRUCTURE"
+                   instantiationLevelId="501"
+                   isArray="true"
+                   description="This parameter describes the way that..." 
+                   paramId="9" >
+	        <StructureDefinition>
+	            <StructureMemberDefinition name="host" type="STRING" />
+	            <StructureMemberDefinition name="port" type="INTEGER">
+	                <Range>
+	                    <ValueRange min="1024" max="65535"/>
+	                </Range>
+	            </StructureMemberDefinition>
+	            <StructureMemberDefinition name="numRetries" type="INTEGER"/>
+	        </StructureDefinition>
+            <Value>
+                <StructureValue index="0">
+                    <StructureMemberValue name="host"       value="vgc1a"/>
+                    <StructureMemberValue name="port"       value="13131"/>
+                    <StructureMemberValue name="numRetries" value="10"/>
+                </StructureValue>
+                <StructureValue index="1">
+                    <StructureMemberValue name="host"       value="vgc1b"/>
+                    <StructureMemberValue name="port"       value="13131"/>
+                    <StructureMemberValue name="numRetries" value="10"/>
+                </StructureValue>
+            </Value>
+            <DefaultValue>
+                <StructureValue index="0">
+                    <StructureMemberValue name="host"       value="localhost"/>
+                    <StructureMemberValue name="port"       value="8080"/>
+                    <StructureMemberValue name="numRetries" value="1"/>
+                </StructureValue>
+                <StructureValue index="1">
+                    <StructureMemberValue name="host"       value="localhost"/>
+                    <StructureMemberValue name="port"       value="8081"/>
+                    <StructureMemberValue name="numRetries" value="2"/>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+
+    </NamespaceParameters>
+
+    <NamespaceParameters>
+        <NamespaceIdentifier name="RMI" version="1.7" />
+
+        <Parameter name="timeout" 
+                   type="INTEGER"
+                   instantiationLevelId="901"
+                   description="This parameter describes the way that..." 
+                   paramId="10"
+                   unit="SECONDS" >
+            <Value>
+                <PrimitiveValue value="4" />
+            </Value>
+            <DefaultValue>
+                <PrimitiveValue value="4" />
+            </DefaultValue>
+            <Range>
+                <ValueRange min="3" max="5" />
+            </Range>
+        </Parameter>
+    </NamespaceParameters>
+
+    <NamespaceParameters>
+	    <NamespaceIdentifier name="NdsLogger" version="1.99" />
+	    <Parameter name="SNMP.traps.enabled" 
+	               type="BOOLEAN"
+	               instantiationLevelId="901"
+	               description="This parameter describes the way that..." 
+                   paramId="11" >
+	        <Value>
+	            <PrimitiveValue value="false"/>
+	        </Value>
+	    </Parameter>
+	    <Parameter name="threshold" 
+	               type="STRING"
+	               description="This parameter describes the way that..." 
+                   paramId="12" >
+	        <Value>
+	            <PrimitiveValue value="ERROR"/><!-- NOTE this missing instantiationLevelId.  There is no value instantiated, this is the default -->
+	        </Value>
+	        <DefaultValue>
+	            <PrimitiveValue value="ERROR"/>
+	        </DefaultValue>
+	    </Parameter>
+    </NamespaceParameters>
+
+</ConfigurationResponse>

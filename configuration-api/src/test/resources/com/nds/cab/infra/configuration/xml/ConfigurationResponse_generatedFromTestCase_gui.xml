@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ConfigurationResponse xsi:noNamespaceSchemaLocation="http://ch-infra.il.nds.com/cabResources/CCP_XML.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <NamespaceParameters>
+        <NamespaceIdentifier version="3.9" name="ProdX"/>
+        <Parameter requiresRestart="false" advanced="false" readOnly="false" hidden="false" required="true" isArray="false" description="this param is ..." instantiationLevelId="9000" type="STRING" name="param.A" paramId="1">
+            <Value>
+                <PrimitiveValue value="I'm A"/>
+            </Value>
+            <Range>
+                <StringEnum value="I'm A"/>
+                <StringEnum value="I'm B"/>
+                <StringEnum value="I'm C"/>
+            </Range>
+        </Parameter>
+        <Parameter requiresRestart="false" advanced="false" readOnly="false" hidden="false" required="true" isArray="false" description="this param is ..." instantiationLevelId="500" type="STRING" name="param.B" paramId="2">
+            <Value>
+                <PrimitiveValue value="I'm B"/>
+            </Value>
+            <Range>
+                <StringEnum value="I'm A"/>
+                <StringEnum value="I'm B"/>
+                <StringEnum value="I'm C"/>
+            </Range>
+        </Parameter>
+        <Parameter unit="SECONDS" requiresRestart="false" advanced="false" readOnly="false" hidden="false" required="true" isArray="true" description="this param is ..." instantiationLevelId="0" type="INTEGER" name="param.C" paramId="3">
+            <Value>
+                <PrimitiveValue index="0" value="60"/>
+                <PrimitiveValue index="1" value="24"/>
+            </Value>
+            <DefaultValue>
+                <PrimitiveValue index="0" value="1000"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter requiresRestart="false" advanced="false" readOnly="false" hidden="false" required="true" isArray="true" description="this param is ..." type="INTEGER" name="param.D" paramId="4">
+            <Value>
+                <PrimitiveValue index="0" value="0"/>
+                <PrimitiveValue index="1" value="10"/>
+                <PrimitiveValue index="2" value="100"/>
+            </Value>
+            <DefaultValue>
+                <PrimitiveValue index="0" value="0"/>
+                <PrimitiveValue index="1" value="10"/>
+                <PrimitiveValue index="2" value="100"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange max="100" min="0"/>
+            </Range>
+        </Parameter>
+    </NamespaceParameters>
+</ConfigurationResponse>

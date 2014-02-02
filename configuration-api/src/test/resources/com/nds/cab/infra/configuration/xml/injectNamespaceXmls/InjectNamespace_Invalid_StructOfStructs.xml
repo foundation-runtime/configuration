@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This is intentionally an invalid XML -->
+<!--  Structure of Structures should be disallowed. -->
+<NamespaceDefinitions>
+
+    <NamespaceDefinition>
+         
+        <NamespaceIdentifier name="StructureOnlyNamespace" version="1.4"/>
+
+	    <Parameter name="structureVariable" 
+	               type="STRUCTURE"
+	               instantiationLevel="GLOBAL"
+	               description="This parameter is a structure of structures..." >
+	        <StructureDefinition>
+	            <StructureMemberDefinition name="structureStructureMemberA" type="STRUCTURE"/>
+	            <StructureMemberDefinition name="structureStructureMemberB" type="STRUCTURE"/>
+	            <StructureMemberDefinition name="structureStructureMemberC" type="STRUCTURE"/>
+	        </StructureDefinition>
+	    </Parameter>
+
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>

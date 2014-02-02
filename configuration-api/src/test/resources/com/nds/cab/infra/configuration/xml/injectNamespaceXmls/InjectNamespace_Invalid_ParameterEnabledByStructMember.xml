@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This is intentionally an invalid XML -->
+<!--  A parameter should not be able to be enabled by a structure member. -->
+<NamespaceDefinitions>
+
+    <NamespaceDefinition>
+
+	    <NamespaceIdentifier name="enableBysNamespace" version="12" />
+	    <InstallationProperties softwareName="ProdX" defaultInstallPath="/opt/nds/uhe/ProdX/prodx" />
+
+	    <Parameter name="structureVariable" 
+	               type="STRUCTURE"
+	               instantiationLevel="GLOBAL"
+	               description="This parameter is a structure of Integer values..." >
+	        <StructureDefinition>
+	            <StructureMemberDefinition name="structureIntMember" type="INTEGER"/>
+	        </StructureDefinition>
+	        <DefaultValue>
+	            <StructureValue>
+	                <StructureMemberValue name="structureIntMember" value="24"/>
+	            </StructureValue>
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="booleanVarEnabledByStructureMember" 
+	               type="BOOLEAN"
+	               instantiationLevel="COMPONENT"
+	               description="This parameter is enabled by a structure member." >
+	        <EnabledBy parameterName="structureIntMember" operator="E">
+	            <Value>
+	                <PrimitiveValue value="24" />
+	            </Value>
+	        </EnabledBy>
+	    </Parameter>
+
+
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>
+

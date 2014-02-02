@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConfigurationOperations>
+    <Operation index="0">
+        <Add paramId="901" levelInstanceId="42">
+            <PrimitiveValue value="hello" />
+        </Add>
+    </Operation>
+    <Operation index="1">
+        <Update paramId="822" levelInstanceId="0">
+            <OldStructure index="0">
+                <StructureMemberValue name="host" value="stormwind.labs.nds.ca"/>
+                <StructureMemberValue name="port" value="8080"/>
+            </OldStructure>
+            <OldStructure index="1">
+                <StructureMemberValue name="host" value="darnassus.labs.nds.ca"/>
+                <StructureMemberValue name="port" value="8080"/>
+            </OldStructure>
+            <NewStructure index="0">
+                <StructureMemberValue name="host" value="stormwind.labs.nds.ca"/>
+                <StructureMemberValue name="port" value="9000"/>
+            </NewStructure>
+        </Update>
+    </Operation>
+    <Operation index="2">
+        <Delete levelInstanceId="42">
+         	<paramId>901</paramId>
+        </Delete>
+    </Operation>
+</ConfigurationOperations>

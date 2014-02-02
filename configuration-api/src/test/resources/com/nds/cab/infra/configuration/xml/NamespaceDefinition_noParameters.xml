@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NamespaceDefinitions>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="ProdX" version="0.9" />
+	    <InstallationProperties softwareName="ProdX" defaultInstallPath="/opt/nds/uhe/ProdX/prodx" />
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="RMI" version="1.7" />
+	    </NamespaceDependency>
+
+	    <!-- *************************************************************** -->
+	    <!-- *** EXAMPLE OF OVERRIDING THE DEFAULT VALUE OF A DEPENDENCY *** -->
+	    <!-- *************************************************************** -->
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="NdsLogger" version="1.99" />
+
+	        <!-- Normally SNMP Traps are enabled, but we had to disable them by default due to a ProdX 2.x SPAM issue - we'll fix it for ProdX 3.0 -->
+	        <ParameterOverride name="SNMP.traps.enabled" instantiationLevel="COMPONENT">
+	            <InstallDefault>
+	                <PrimitiveValue value="false" />
+	            </InstallDefault>
+	        </ParameterOverride>
+	    </NamespaceDependency>
+
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="RMI" version="1.7" />
+	    <Parameter name="timeout" 
+	               type="INTEGER"
+	               instantiationLevel="GLOBAL"
+	               description="This parameter describes the way that..." 
+	               unit="SECONDS">
+	        <DefaultValue>
+	            <PrimitiveValue value="3" />
+	        </DefaultValue>
+	        <Range>
+	            <ValueRange min="1" max="10" />
+	        </Range>
+	    </Parameter>
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="NdsLogger" version="1.99" />
+	    <Parameter name="SNMP.traps.enabled" 
+	               type="BOOLEAN"
+	               instantiationLevel="GLOBAL"
+	               description="This parameter describes the way that..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="true"/>
+	        </DefaultValue>
+	    </Parameter>
+	    <Parameter name="threshold" 
+	               type="STRING"
+	               instantiationLevel="GROUP"
+	               description="This parameter describes the way that..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="WARN"/>
+	        </DefaultValue>
+	    </Parameter>
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>

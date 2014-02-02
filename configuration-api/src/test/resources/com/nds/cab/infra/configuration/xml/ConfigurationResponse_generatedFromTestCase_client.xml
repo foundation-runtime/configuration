@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ConfigurationResponse xsi:noNamespaceSchemaLocation="http://ch-infra.il.nds.com/cabResources/CCP_XML.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <NamespaceParameters>
+        <NamespaceIdentifier version="3.9" name="ProdX"/>
+        <Parameter requiresRestart="false" advanced="false" readOnly="false" hidden="false" required="true" isArray="false" description="this param is ..." type="STRING" name="param.A">
+            <Value>
+                <PrimitiveValue value="I'm A"/>
+            </Value>
+        </Parameter>
+        <Parameter requiresRestart="false" advanced="false" readOnly="false" hidden="false" required="true" isArray="false" description="this param is ..." type="STRING" name="param.B">
+            <Value>
+                <PrimitiveValue value="I'm B"/>
+            </Value>
+        </Parameter>
+        <Parameter unit="SECONDS" requiresRestart="false" advanced="false" readOnly="false" hidden="false" required="true" isArray="true" description="this param is ..." type="INTEGER" name="param.C">
+            <Value>
+                <PrimitiveValue index="0" value="60"/>
+                <PrimitiveValue index="1" value="24"/>
+            </Value>
+        </Parameter>
+        <Parameter requiresRestart="false" advanced="false" readOnly="false" hidden="false" required="true" isArray="true" description="this param is ..." type="INTEGER" name="param.D">
+            <Value>
+                <PrimitiveValue index="0" value="0"/>
+                <PrimitiveValue index="1" value="10"/>
+                <PrimitiveValue index="2" value="100"/>
+            </Value>
+        </Parameter>
+    </NamespaceParameters>
+</ConfigurationResponse>

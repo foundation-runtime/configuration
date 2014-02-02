@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NamespaceDefinitions>
+
+    <NamespaceDefinition>
+
+	    <NamespaceIdentifier name="ProdX" version="0.9" />
+	    <InstallationProperties softwareName="Mr. ProdX" defaultInstallPath="/opt/nds/uhe/ProdX/prodx" />
+
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+
+	    <NamespaceIdentifier name="ProdY" version="2.9" />
+	    <InstallationProperties softwareName="Dr. ProdY" defaultInstallPath="/opt/nds/uhe/ProdY/prody" />
+
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+
+	    <NamespaceIdentifier name="ProdZ" version="3.1416" />
+	    <InstallationProperties softwareName="Ms. ProdZ" defaultInstallPath="/opt/nds/uhe/ProdZ/prodz" />
+
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>

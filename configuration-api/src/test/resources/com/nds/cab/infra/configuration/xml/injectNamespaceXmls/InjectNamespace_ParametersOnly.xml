@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NamespaceDefinitions>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="ProdX" version="0.9" />
+	    <InstallationProperties softwareName="ProdX" defaultInstallPath="/opt/nds/uhe/ProdX/prodx" />
+
+	    <Parameter name="booleanVariable" 
+	               type="BOOLEAN"
+	               instantiationLevel="GLOBAL"
+	               description="This is a boolean variable and should be accepted."
+	               required="false"
+	               readOnly="true"
+	               advanced="true">
+	        <DefaultValue>
+	            <PrimitiveValue value="true" />
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="stringVariable" 
+	               type="STRING"
+	               instantiationLevel="GROUP"
+	               description="This is a string variable and should be accepted."
+	               hidden="true" 
+	               requiresRestart="true">
+	        <DefaultValue>
+	            <PrimitiveValue value="STRING_VAR_TEST" />
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="intVariable" 
+	               type="INTEGER"
+	               instantiationLevel="COMPONENT"
+	               description="This is an integer variable and should be accepted."
+	               readOnly="true"
+	               advanced="true" >
+	        <DefaultValue>
+	            <PrimitiveValue value="101" />
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="floatVariable" 
+	               type="FLOAT"
+	               instantiationLevel="GLOBAL"
+	               description="This is a float variable and should be accepted." 
+	               required="false"
+	               hidden="true">
+	        <DefaultValue>
+	            <PrimitiveValue value="3.1416" />
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="durationVariable" 
+	               type="DURATION"
+	               instantiationLevel="GLOBAL"
+	               description="This is a duration variable and should be accepted."
+	               readOnly="true" 
+	               requiresRestart="true">
+	        <DefaultValue>
+	            <PrimitiveValue value="16" durationUnit="HOURS" />
+	        </DefaultValue>
+	    </Parameter>
+
+
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>

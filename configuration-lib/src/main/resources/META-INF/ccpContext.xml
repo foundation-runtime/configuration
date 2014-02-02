@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"	   
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+	   default-init-method="startup" default-destroy-method="shutdown"
+	   default-lazy-init="true">
+
+
+	<description>All the stuffs inside this file are common configuration
+		for the
+		cab components
+	</description>	
+	
+	<bean id="cabConfigurationFileNameResolver" class="com.cisco.vss.foundation.configuration.CabConfigurationFileNameResolver" />
+
+	<bean id="configuration" class="com.cisco.vss.foundation.configuration.CommonConfigurationsLoader" depends-on="cabConfigurationFileNameResolver">
+		<description>used to to create a common configuration object that
+			could be injected to the
+			business objects.
+		</description>
+		<property name="resourcesList" ref="configResourcesLoader"/>
+		<property name="delimiterParsingDisabled" value="#{ systemProperties['commonsConfig.delimiterParsingDisabled'] != null ? systemProperties['commonsConfig.delimiterParsingDisabled'] : false }"/>
+		<property name="defaultListDelimiter" value="#{ systemProperties['commonsConfig.defaultListDelimiter'] != null ? systemProperties['commonsConfig.defaultListDelimiter'] : ',' }"/>		
+		<!-- <property name="dbapi" ref="dbApiImpl"/> -->
+	</bean>
+
+	<bean id="configResourcesLoader" class="com.cisco.vss.foundation.configuration.ConfigResourcesLoader">
+		<description>The places where to search the config files: * all the
+			defaulfConfig.properties
+			files * one single config.properties file
+		</description>
+		<property name="internalPropertyConfig" value="classpath*:/defaultConfig.properties"/>
+		<property name="internalXmlConfig" value="classpath*:/configSchema.xml"/>
+		<property name="customerConfig">
+			<list>
+				<value>#{resolveConfigFileName()}</value>
+			</list>
+		</property>
+		<property name="deploymentConfig">
+			<list>
+				<value>deploymentConfig.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="defaultConfiguration" class="com.cisco.vss.foundation.configuration.CommonConfigurationsLoader">
+		<description>used to to create a common configuration object with the
+			default configuration this
+			could be used by the configuration UI in
+			order to get only the default configurations.
+		</description>
+		<property name="resourcesList" ref="defaultConfigResourcesLoader"/>
+	</bean>
+
+	<bean id="defaultConfigResourcesLoader" class="com.cisco.vss.foundation.configuration.ConfigResourcesLoader">
+		<description>The places where to search the default config files: *
+			all the
+			defaulfConfig.properties files * one dummy file to use the
+			standard interface
+		</description>
+		<property name="internalPropertyConfig" value="classpath*:/defaultConfig.properties"/>
+		<property name="internalXmlConfig" value="classpath*:/defaultConfig1.xml"/>
+		<property name="customerConfig" value="dummyConfig.file"/>
+	</bean>
+
+	<bean class="com.cisco.vss.foundation.configuration.InfraPropertyPlaceholderConfigurer">
+		<description>used to be able to add dynamic params that will be
+			defined in the deployment stage
+			${param name}
+		</description>
+		<property name="properties" ref="commonsConfigWrapper"></property>
+		<property name="systemPropertiesMode" value="2"/>		
+	</bean>
+
+	<bean id="commonsConfigWrapper" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="properties" ref="commonsConfigFactory"/>
+	</bean>
+
+	<bean name="commonsConfigFactory" class="com.cisco.vss.foundation.configuration.CabCommonsConfigurationFactoryBean">
+		<constructor-arg ref="configuration"/>
+	</bean>	
+
+	<bean id="dynamicReloadSupport" class="com.cisco.vss.foundation.configuration.DynamicReloadSupport" init-method="init"
+		  lazy-init="false" depends-on="configuration">
+		<constructor-arg ref="configuration">
+		</constructor-arg>
+	</bean>
+</beans>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<NamespaceDefinitions xsi:noNamespaceSchemaLocation="http://ch-infra.il.nds.com/cabResources/CCP_XML.xsd"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <NamespaceDefinition>
+        <NamespaceIdentifier version="" name="" />
+        <Parameter name="RITest"
+                   type="STRUCTURE"
+                   description="server communication"
+                   instantiationLevel="GLOBAL"
+                   isArray="true">
+
+            <StructureDefinition>
+                <StructureMemberDefinition name="host" type="STRING"/>
+                <StructureMemberDefinition name="port" type="STRING"/>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue index="0">
+                    <StructureMemberValue name="host" value="localhost" />
+                    <StructureMemberValue name="port" value="8080" />
+                </StructureValue>
+                <StructureValue index="1">
+                    <StructureMemberValue name="host" value="localhost" />
+                    <StructureMemberValue name="port" value="8081" />
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NamespaceDefinitions>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="ProdX" version="2.4" />
+	    <InstallationProperties softwareName="ProdX" defaultInstallPath="/opt/nds/uhe/ProdX/prodx" />
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="RMI" version="1.7" />
+	    </NamespaceDependency>
+
+	    <!-- *************************************************************** -->
+	    <!-- *** EXAMPLE OF OVERRIDING THE DEFAULT VALUE OF A DEPENDENCY *** -->
+	    <!-- *************************************************************** -->
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="NdsLogger" version="1.99" />
+
+	        <!-- Normally SNMP Traps are enabled, but we had to disable them by default due to a ProdX 2.x SPAM issue - we'll fix it for ProdX 3.0 -->
+	        <ParameterOverride name="SNMP.traps.enabled" instantiationLevel="COMPONENT">
+	            <InstallDefault>
+	                <PrimitiveValue value="false" />
+	            </InstallDefault>
+	        </ParameterOverride>
+	    </NamespaceDependency>
+
+	    <Parameter name="booleanVariable" 
+	               type="BOOLEAN"
+	               instantiationLevel="GLOBAL"
+	               description="This parameter describes the way that..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="false" />
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="booleanArray" 
+	               type="BOOLEAN"
+	               instantiationLevel="COMPONENT"
+	               isArray="true"
+	               description="This parameter describes the way that..." >
+	        <EnabledBy parameterName="booleanVariable" operator="E">
+	            <Value>
+	                <PrimitiveValue value="true" />
+	            </Value>
+	        </EnabledBy>
+	    </Parameter>
+
+	    <Parameter name="intVariable" 
+	               type="INTEGER"
+	               instantiationLevel="GROUP"
+	               description="This parameter describes the way that..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="150" />
+	        </DefaultValue>
+	        <Range>
+	            <ValueRange min="100" max="199" />
+	        </Range>
+	    </Parameter>
+
+	    <Parameter name="intArray" 
+	               type="INTEGER"
+	               instantiationLevel="GROUP"
+	               isArray="true"
+	               description="This parameter describes the way that..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="42" index="0" />
+	            <PrimitiveValue value="101" index="1" />
+	        </DefaultValue>
+	        <Range>
+	            <ValueRange min="0" max="999" />
+	        </Range>
+	    </Parameter>
+
+	    <Parameter name="stringVariable" 
+	               type="STRING"
+	               instantiationLevel="COMPONENT"
+	               description="This parameter describes the way that..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="GREETINGS" />
+	        </DefaultValue>
+	        <Range>
+	            <StringEnum value="GREETINGS" />
+	            <StringEnum value="SHALOM" />
+	            <StringEnum value="OLA" />
+	        </Range>
+	    </Parameter>
+
+        <!-- This array has no default, so out of the box components would get null when they ask for this parameter -->
+	    <Parameter name="stringArray" 
+	               type="STRING"
+	               instantiationLevel="COMPONENT"
+	               isArray="true"
+	               description="This parameter describes the way that..." >
+	    </Parameter>
+
+        <!-- This array has no default, so out of the box components would get null when they ask for this parameter -->
+	    <Parameter name="durationArray" 
+	               type="STRING"
+	               instantiationLevel="GROUP"
+	               isArray="true"
+	               description="This parameter describes the way that..." 
+	               unit="SECONDS">
+	        <Range>
+	            <ValueRange min="15" max="120" />
+	        </Range>
+	    </Parameter>
+
+	    <Parameter name="structureVariable" 
+	               type="STRUCTURE"
+	               instantiationLevel="GLOBAL"
+	               description="This parameter describes the way that..." >
+	        <StructureDefinition>
+	            <StructureMemberDefinition name="X" type="INTEGER"/>
+	            <StructureMemberDefinition name="Y" type="INTEGER"/>
+	            <StructureMemberDefinition name="Z" type="INTEGER"/>
+	        </StructureDefinition>
+	        <DefaultValue>
+	            <StructureValue>
+	                <StructureMemberValue name="X" value="0"/>
+	                <StructureMemberValue name="Y" value="0"/>
+	                <StructureMemberValue name="Z" value="0"/>
+	            </StructureValue>
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="structureArray" 
+	               type="STRUCTURE"
+	               instantiationLevel="GROUP"
+	               isArray="true"
+	               description="This parameter describes the way that..." >
+	        <StructureDefinition>
+	            <StructureMemberDefinition name="host" type="STRING" />
+	            <StructureMemberDefinition name="port" type="INTEGER">
+	                <Range>
+	                    <ValueRange min="1024" max="65535"/>
+	                </Range>
+	            </StructureMemberDefinition>
+	            <StructureMemberDefinition name="numRetries" type="INTEGER"/>
+	        </StructureDefinition>
+
+	        <DefaultValue>
+	            <StructureValue index="0">
+	                <StructureMemberValue name="host"       value="localhost"/>
+	                <StructureMemberValue name="port"       value="8080"/>
+	                <StructureMemberValue name="numRetries" value="1"/>
+	            </StructureValue>
+	            <StructureValue index="1">
+	                <StructureMemberValue name="host"       value="localhost"/>
+	                <StructureMemberValue name="port"       value="8081"/>
+	                <StructureMemberValue name="numRetries" value="2"/>
+	            </StructureValue>
+	        </DefaultValue>
+	    </Parameter>
+
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="RMI" version="1.7" />
+	    <Parameter name="timeout" 
+	               type="STRING"
+	               instantiationLevel="GLOBAL"
+	               description="This parameter describes the way that..." 
+	               unit="SECONDS">
+	        <DefaultValue>
+	            <PrimitiveValue value="3" />
+	        </DefaultValue>
+	        <Range>
+                <ValueRange min="3" max="5" />
+	        </Range>
+	    </Parameter>
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="NdsLogger" version="1.99" />
+	    <Parameter name="SNMP.traps.enabled" 
+	               type="BOOLEAN"
+	               instantiationLevel="GLOBAL"
+	               description="This parameter describes the way that..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="true"/>
+	        </DefaultValue>
+	    </Parameter>
+	    <Parameter name="threshold" 
+	               type="STRING"
+	               instantiationLevel="GROUP"
+	               description="This parameter describes the way that..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="WARN"/>
+	        </DefaultValue>
+	    </Parameter>
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>

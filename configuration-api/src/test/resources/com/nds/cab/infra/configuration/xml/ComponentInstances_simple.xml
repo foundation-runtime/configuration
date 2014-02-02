@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ComponentInstances>
+    <ComponentInstance id="6"  name="ProdX-East-1"/>
+    <ComponentInstance id="7"  name="ProdX-East-2" parentId="6" levelName="COMPONENT" levelOrder="0" processName="ProductX"/>
+    <ComponentInstance id="10" name="ProdX-West-1" parentId="6"/>
+</ComponentInstances>

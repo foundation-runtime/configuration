@@ -1,0 +1,23 @@
+<jxb:bindings version="2.1"
+               xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema">
+               
+  <jxb:bindings schemaLocation="CCP_XML.xsd" node="/xs:schema">
+    <jxb:schemaBindings>
+      <jxb:package name="com.cisco.vss.foundation.configuration.xml.jaxb">
+      </jxb:package>
+    </jxb:schemaBindings>
+  </jxb:bindings>
+  
+  <jaxb:bindings jaxb:version="2.0" jaxb:extensionBindingPrefixes="xjc"  
+             xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"  
+             xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"  
+             xmlns:xs="http://www.w3.org/2001/XMLSchema">  
+       <jaxb:globalBindings>
+       		 <xjc:simple/> 
+             <jaxb:javaType name="Integer" xmlType="xs:integer"  
+               parseMethod="com.cisco.vss.foundation.configuration.xml.jaxb.adapters.DataConverter.parseInteger"
+               printMethod="com.cisco.vss.foundation.configuration.xml.jaxb.adapters.DataConverter.printInteger"/>
+       </jaxb:globalBindings>  
+  </jaxb:bindings>
+</jxb:bindings>

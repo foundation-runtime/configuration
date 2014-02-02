@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+	<xs:element name="HierarchyTree">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="HierarchyNode" type="HierarchyNode" /><!-- 
+					root -->
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ParameterInstantiations">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="HierarchyNode" type="HierarchyNode"
+					minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="parameterId" type="xs:integer" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ComponentInstances">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ComponentInstance" type="HierarchyNode"
+					minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ConfigurationOperations">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Operation" type="Operation" minOccurs="1"
+					maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ConfigurationResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="NamespaceParameters" type="NamespaceParameters"
+					minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="NamespaceDefinitions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="NamespaceDefinition" type="NamespaceDefinition"
+					minOccurs="1" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="NamespaceDefinition">
+		<xs:sequence>
+			<!-- The unique identifier for this Namespace -->
+			<xs:element name="NamespaceIdentifier" type="NamespaceIdentifier" />
+
+			<!-- Some Namespaces correspond to installable components, with a name 
+				and install path -->
+			<xs:element name="InstallationProperties" type="InstallationProperties"
+				minOccurs="0" maxOccurs="1" />
+
+			<!-- Other Namespaces that this Namespace depends on. This SHOULD be reserved 
+				for installable components that depend on multiple Namespaces, but some libraries 
+				may require multiple Namespaces as well. -->
+			<xs:element name="NamespaceDependency" type="NamespaceDependency"
+				minOccurs="0" maxOccurs="unbounded" />
+			
+			<xs:element name="ParameterOverride" type="ParameterOverride"
+				minOccurs="0" maxOccurs="unbounded" />
+
+			<xs:element name="ParameterType" type="ParameterType"
+				minOccurs="0" maxOccurs="unbounded" />
+
+			<xs:element name="Parameter" type="Parameter" minOccurs="0"
+				maxOccurs="unbounded" />
+
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="NamespaceParameters">
+		<xs:sequence>
+			<xs:element name="NamespaceIdentifier" type="NamespaceIdentifier" />
+			<xs:element name="Parameter" type="Parameter" minOccurs="1"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Operation">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Update" type="Update" />
+				<xs:element name="Add" type="Add" />
+				<xs:element name="Delete" type="Delete" />
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="index" type="xs:int" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="Update">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="OldPrimitive" type="PrimitiveValue"
+					minOccurs="1" maxOccurs="unbounded" />
+				<xs:element name="NewPrimitive" type="PrimitiveValue"
+					minOccurs="1" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="OldStructure" type="StructureValue"
+					minOccurs="1" maxOccurs="unbounded" />
+				<xs:element name="NewStructure" type="StructureValue"
+					minOccurs="1" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:choice>
+
+		<xs:attribute name="paramId" type="xs:integer" use="required" />
+		<xs:attribute name="levelInstanceId" type="xs:integer"
+			use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="Add">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="PrimitiveValue" type="PrimitiveValue"
+					minOccurs="1" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="StructureValue" type="StructureValue"
+					minOccurs="1" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:choice>
+
+		<xs:attribute name="paramId" type="xs:integer" use="required" />
+		<xs:attribute name="levelInstanceId" type="xs:integer"
+			use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="Delete">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="paramId" type="xs:integer" />
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="structId" type="xs:integer" />
+			</xs:sequence>
+		</xs:choice>
+		<xs:attribute name="levelInstanceId" type="xs:integer"
+			use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="NamespaceIdentifier">
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="version" type="xs:string" use="required" />
+		<xs:attribute name="file" type="xs:string" use="optional"/>
+		<xs:attribute name="groupWith" type="xs:string" use="optional"/>
+	</xs:complexType>
+
+	<xs:complexType name="InstallationProperties">
+		<xs:attribute name="softwareName" type="xs:string" use="required" /><!-- 
+			The name of the software being installed - SHOULD be the same as NamespaceIdentifier.name, 
+			but we're being flexible -->
+		<xs:attribute name="defaultInstallPath" type="xs:string"
+			use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="NamespaceDependency">
+		<xs:sequence>
+			<xs:element name="NamespaceIdentifier" type="NamespaceIdentifier" />
+
+			<!-- Some products may need to override the default instantiations of 
+				their namespace dependencies -->
+			<xs:element name="ParameterOverride" type="ParameterOverride"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="DiscoveredBy">
+		<xs:attribute name="namespaceName" type="xs:string" use="required" />
+		<xs:attribute name="parameterName" type="xs:string" use="required" />
+	</xs:complexType>
+	
+	<xs:complexType name="Parameter">
+		<xs:sequence>
+			<xs:element name="StructureDefinition" type="StructureDefinition"
+				minOccurs="0" maxOccurs="1" />
+			<xs:element name="Value" type="ParameterValue" minOccurs="0"
+				maxOccurs="1" />
+			<xs:element name="DefaultValue" type="ParameterValue"
+				minOccurs="0" maxOccurs="1" />
+			<xs:element name="Range" type="ParameterRange" minOccurs="0"
+				maxOccurs="1" />
+
+			<!-- Use if this parameter is only enabled when another parameter in this 
+				namespace has a specific value -->
+			<xs:element name="EnabledBy" type="EnabledBy" minOccurs="0"
+				maxOccurs="1" />
+			<xs:element name="DiscoveredBy" type="DiscoveredBy" minOccurs="0"
+				maxOccurs="1" />
+		</xs:sequence>
+
+		<xs:attribute name="paramId" type="xs:string" use="optional" />
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="type" type="ParameterKind" use="required" />
+		<xs:attribute name="instantiationLevelId" type="xs:string"
+			use="optional" />
+		<xs:attribute name="instantiationLevelName" type="xs:string"
+			use="optional" />
+		<xs:attribute name="instantiationLevel" type="HierarchyLevel"
+			use="optional" />
+		<xs:attribute name="defaultInstantiationLevelId" type="xs:string"
+			use="optional" />
+		<xs:attribute name="description" type="xs:string" use="required" />
+
+		<xs:attribute name="isArray" type="xs:boolean" use="optional"
+			default="false" />
+		<xs:attribute name="required" type="xs:boolean" use="optional" default="true" />
+		<xs:attribute name="hidden" type="xs:boolean" use="optional"
+			default="false" />
+		<xs:attribute name="readOnly" type="xs:boolean" use="optional"
+			default="false" />
+		<xs:attribute name="advanced" type="xs:boolean" use="optional"
+			default="false" />
+		<xs:attribute name="requiresRestart" type="xs:boolean"
+			use="optional" default="true" />
+		<xs:attribute name="unit" type="xs:string" use="optional" />
+		<xs:attribute name="base" type="xs:string" use="optional" />
+	</xs:complexType>
+
+	<xs:complexType name="ParameterType">
+		<xs:sequence>
+			<xs:element name="StructureDefinition" type="StructureDefinition"
+				minOccurs="0" maxOccurs="1" />			
+		</xs:sequence>
+
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="type" type="ParameterKind" use="required" />
+		<xs:attribute name="description" type="xs:string" use="required" />
+		<xs:attribute name="isArray" type="xs:boolean" use="optional" default="false" />
+		<xs:attribute name="required" type="xs:boolean" use="optional" default="true" />
+		<xs:attribute name="hidden" type="xs:boolean" use="optional" default="false" />
+		<xs:attribute name="readOnly" type="xs:boolean" use="optional" default="false" />
+		<xs:attribute name="advanced" type="xs:boolean" use="optional" default="false" />
+		<xs:attribute name="requiresRestart" type="xs:boolean" use="optional" default="false" />
+		<xs:attribute name="unit" type="xs:string" use="optional" />
+	</xs:complexType>
+
+	<xs:complexType name="ParameterValue">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="PrimitiveValue" type="PrimitiveValue"
+					minOccurs="1" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="StructureValue" type="StructureValue"
+					minOccurs="1" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:complexType name="PrimitiveValue">
+		<xs:sequence>
+			<xs:element name="LinkTo" type="LinkTo" minOccurs="0"
+				maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="value" type="xs:string" use="required" />
+		<xs:attribute name="index" type="xs:string" use="optional" />
+		<xs:attribute name="valueId" type="xs:integer" use="optional" />
+	</xs:complexType>
+
+	<xs:complexType name="StructureValue">
+		<xs:sequence>
+			<xs:element name="StructureMemberValue" type="StructureMemberValue"
+				minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="index" type="xs:string" use="optional" />
+	</xs:complexType>
+
+	<xs:complexType name="StructureDefinition">
+		<xs:sequence>
+			<xs:element name="StructureMemberDefinition" type="StructureMemberDefinition"
+				minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>		
+	</xs:complexType>
+
+	<xs:complexType name="StructureMemberDefinition">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="StructureDefinition" type="StructureDefinition"
+					minOccurs="0" maxOccurs="1" />
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="DefaultValue" type="ParameterValue"
+					minOccurs="0" maxOccurs="1" />
+				<xs:element name="Range" type="ParameterRange" minOccurs="0"
+					maxOccurs="1" />
+					<xs:element name="DiscoveredBy" type="DiscoveredBy" minOccurs="0"
+				maxOccurs="1" />
+			</xs:sequence>
+		</xs:choice>
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="type" type="ParameterKind" use="required" />
+		<xs:attribute name="isArray" type="xs:boolean" use="optional" default="false" />
+		<xs:attribute name="hidden" type="xs:boolean" use="optional" default="false" />
+		<xs:attribute name="advanced" type="xs:boolean" use="optional" default="false" />
+		<xs:attribute name="description" type="xs:string" use="optional" />
+		<xs:attribute name="unit" type="xs:string" use="optional" />
+		<xs:attribute name="ignoreName" type="xs:boolean" use="optional" default="false" />
+		<xs:attribute name="required" type="xs:boolean" use="optional" default="true" />
+	</xs:complexType>
+
+	<xs:complexType name="StructureMemberValue">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="StructureValue" type="StructureValue"
+					minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="LinkTo" type="LinkTo" minOccurs="0"
+					maxOccurs="1" />
+			</xs:sequence>
+		</xs:choice>
+		<xs:attribute name="index" type="xs:string" use="optional" />
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="value" type="xs:string" use="optional" />
+		<xs:attribute name="valueId" type="xs:integer" use="optional" />
+	</xs:complexType>
+
+	<xs:complexType name="ParameterRange">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="StringEnum" type="StringEnum"
+					minOccurs="1" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:element name="ValueRange" type="ValueRange" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="StringEnum">
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="ValueRange">
+		<xs:attribute name="min" type="xs:string" use="optional" />
+		<xs:attribute name="max" type="xs:string" use="optional" />
+	</xs:complexType>
+
+	<xs:simpleType name="ParameterKind">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="STRING" />
+			<xs:enumeration value="INTEGER" />
+			<xs:enumeration value="BOOLEAN" />
+			<xs:enumeration value="FLOAT" />
+			<xs:enumeration value="LONG" />
+			<xs:enumeration value="ENCRYPTED" />
+			<xs:enumeration value="STRUCTURE" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="EnabledBy">
+		<xs:sequence>
+			<xs:element name="Value" type="ParameterValue" />
+		</xs:sequence>
+		<xs:attribute name="parameterName" type="xs:string" use="required" />
+		<xs:attribute name="operator" type="Operator" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="LinkTo">
+		<xs:attribute name="namespaceName" type="xs:string" use="required" />
+		<xs:attribute name="namespaceVersion" type="xs:string"
+			use="required" />
+		<xs:attribute name="parameterName" type="xs:string" use="required" />
+		<xs:attribute name="levelInstanceId" type="xs:int" use="optional" />
+		<xs:attribute name="valueId" type="xs:integer" use="optional" />
+	</xs:complexType>
+
+	<xs:simpleType name="Operator">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="GT" /><!-- Greater than -->
+			<xs:enumeration value="GTE" /><!-- Greater than or equal 
+				to -->
+			<xs:enumeration value="LT" /><!-- Less than -->
+			<xs:enumeration value="LTE" /><!-- Less than or equal to -->
+			<xs:enumeration value="E" /><!-- Equal to -->
+			<xs:enumeration value="NE" /><!-- Not equal to -->
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- parameter overrides only allow overriding the default value and default 
+		hierarchy level -->
+	<xs:complexType name="ParameterOverride">
+		<xs:sequence>
+			<xs:element name="InstallDefault" type="ParameterValue" />
+		</xs:sequence>
+
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="instantiationLevel" type="HierarchyLevel"
+			use="required" />
+	</xs:complexType>
+
+	<xs:simpleType name="HierarchyLevel">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="GLOBAL" />
+			<xs:enumeration value="GROUP" />
+			<xs:enumeration value="COMPONENT" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="HierarchyNode">
+		<xs:sequence>
+			<xs:element name="HierarchyNode" type="HierarchyNode"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="NamespaceParameters" type="NamespaceParameters"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="required" />
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="parentId" type="xs:string" use="optional" />
+		<xs:attribute name="levelName" type="HierarchyLevel" use="optional" />
+		<xs:attribute name="levelOrder" type="xs:integer" use="optional" />
+		<xs:attribute name="processName" type="xs:string" use="optional" />
+		<xs:attribute name="installPath" type="xs:string" use="optional" />
+		<xs:attribute name="ccpEnable" type="xs:integer" use="optional" default="0" />
+		<xs:attribute name="ccpSwitchable" type="xs:boolean" use="optional" default="true" />
+		<xs:attribute name="inSync" type="xs:boolean" use="optional"/>
+		<xs:attribute name="isRunning" type="xs:boolean" use="optional"/>
+		<xs:attribute name="fqdn" type="xs:string" use="optional" />
+		<xs:attribute name="ccpServers" type="xs:string" use="optional" />
+	</xs:complexType>
+
+	<xs:element name="ComponentDetailsResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ComponentInstallation" type="ComponentInstallation" minOccurs="0"
+					maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="Component">
+		<xs:sequence>
+			<xs:element name="OtherInstallations" type="Component"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="configSchema" type="xs:string"
+				minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="componentName" type="xs:string" use="required" />
+		<xs:attribute name="namespaceName" type="xs:string" use="required" />
+		<xs:attribute name="namespaceVersion" type="xs:string"
+			use="required" />
+		<xs:attribute name="parentId" type="xs:string" use="optional" />
+		<xs:attribute name="fqdn" type="xs:string" use="optional" />
+		<xs:attribute name="installPath" type="xs:string" use="optional" />
+		<xs:attribute name="ccpEnable" type="xs:integer" use="optional" />
+		<xs:attribute name="ccpSwitchable" type="xs:boolean" use="optional" default="true" />		
+	</xs:complexType>
+
+	<xs:element name="InstallNewComponentOperation">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ComponentInstallation" type="ComponentInstallation"
+					maxOccurs="unbounded" />
+				<xs:element name="Operation" type="Operation" minOccurs="0"
+					maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="ComponentInstallation">
+		<xs:sequence>
+			<xs:element name="Component" type="Component" />
+			<xs:element name="NewParameterValue" type="NewParameterValue"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="NewParameterValue">
+		<xs:sequence>
+			<xs:element name="Value" type="ParameterValue" />
+		</xs:sequence>
+		<xs:attribute name="namespaceName" type="xs:string" use="required" />
+		<xs:attribute name="namespaceVersion" type="xs:string"
+			use="required" />
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="LevelName" type="HierarchyLevel" use="required" />
+	</xs:complexType>
+
+</xs:schema>

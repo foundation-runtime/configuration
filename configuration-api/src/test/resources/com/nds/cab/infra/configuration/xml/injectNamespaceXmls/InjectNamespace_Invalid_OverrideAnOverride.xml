@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This is intentionally an invalid XML -->
+<!--  Overriding an override should be disallowed. -->
+<NamespaceDefinitions>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="ProdX" version="0.9" />
+	    <InstallationProperties softwareName="ProdX" defaultInstallPath="/opt/nds/uhe/ProdX/prodx" />
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="ProdY" version="1.99" />
+
+	        <ParameterOverride name="overrideStringValue" instantiationLevel="COMPONENT">
+	            <InstallDefault>
+	                <PrimitiveValue value="ThisIsOverridenYetAgain" />
+	            </InstallDefault>
+	        </ParameterOverride>
+	        
+	    </NamespaceDependency>
+
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="ProdY" version="1.99" />
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="ProdZ" version="2.99" />
+
+	        <ParameterOverride name="overrideStringValue" instantiationLevel="GROUP">
+	            <InstallDefault>
+	                <PrimitiveValue value="ThisIsOverridenInitially" />
+	            </InstallDefault>
+	        </ParameterOverride>
+	        
+	    </NamespaceDependency>
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="ProdZ" version="2.99" />
+	    
+	    <Parameter name="overrideStringValue" 
+	               type="STRING"
+	               instantiationLevel="GLOBAL"
+	               description="This is a string parameter that will be overriden..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="ThisIsNotOverriden"/>
+	        </DefaultValue>
+	    </Parameter>
+	    	    
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>

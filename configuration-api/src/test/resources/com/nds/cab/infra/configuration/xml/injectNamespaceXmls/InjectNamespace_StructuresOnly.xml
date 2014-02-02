@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NamespaceDefinitions>
+
+    <NamespaceDefinition>
+    
+     
+        <NamespaceIdentifier name="StructureOnlyNamespace" version="1.4"/>
+
+	    <Parameter name="structureVariable" 
+	               type="STRUCTURE"
+	               instantiationLevel="GLOBAL"
+	               description="This parameter is a structure of Integer values..." >
+	        <StructureDefinition>
+	            <StructureMemberDefinition name="structureIntMember" type="INTEGER"/>
+	            <StructureMemberDefinition name="structureStringMember" type="STRING"/>
+	            <StructureMemberDefinition name="structureBooleanMember" type="BOOLEAN"/>
+	            <StructureMemberDefinition name="structureFloatMember" type="FLOAT"/>
+	            <StructureMemberDefinition name="structureDurationMember" type="INTEGER" unit="SECONDS"/>
+	        </StructureDefinition>
+	        <DefaultValue>
+	            <StructureValue>
+	                <StructureMemberValue name="structureIntMember" value="24"/>
+	                <StructureMemberValue name="structureStringMember" value="This is a string member"/>
+	                <StructureMemberValue name="structureBooleanMember" value="true"/>
+	                <StructureMemberValue name="structureFloatMember" value="3.1416"/>
+	                <StructureMemberValue name="structureDurationMember" value="16" />
+	            </StructureValue>
+	        </DefaultValue>
+	    </Parameter>
+
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>

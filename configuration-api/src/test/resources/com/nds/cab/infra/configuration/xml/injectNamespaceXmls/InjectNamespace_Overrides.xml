@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NamespaceDefinitions>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="ProdX" version="0.9" />
+	    <InstallationProperties softwareName="ProdX" defaultInstallPath="/opt/nds/uhe/ProdX/prodx" />
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="ProdY" version="1.99" />
+
+	        <ParameterOverride name="overrideStringValue" instantiationLevel="COMPONENT">
+	            <InstallDefault>
+	                <PrimitiveValue value="ThisIsOverridden" />
+	            </InstallDefault>
+	        </ParameterOverride>
+	        
+	        <ParameterOverride name="overrideBooleanValue" instantiationLevel="COMPONENT">
+	            <InstallDefault>
+	                <PrimitiveValue value="true" />
+	            </InstallDefault>
+	        </ParameterOverride>
+
+	        <ParameterOverride name="overrideIntValue" instantiationLevel="GROUP">
+	            <InstallDefault>
+	                <PrimitiveValue value="101" />
+	            </InstallDefault>
+	        </ParameterOverride>
+
+	        <ParameterOverride name="overrideFloatValue" instantiationLevel="COMPONENT">
+	            <InstallDefault>
+	                <PrimitiveValue value="99.999" />
+	            </InstallDefault>
+	        </ParameterOverride>
+
+	        <ParameterOverride name="overrideDurationValue" instantiationLevel="COMPONENT">
+	            <InstallDefault>
+	                <PrimitiveValue value="HOURS" />
+	            </InstallDefault>
+	        </ParameterOverride>
+
+	        <ParameterOverride name="overrideStructureIntMember" instantiationLevel="COMPONENT">
+	            <InstallDefault>
+	                <PrimitiveValue value="42" />
+	            </InstallDefault>
+	        </ParameterOverride>
+
+	        <ParameterOverride name="overrideIntArray" instantiationLevel="COMPONENT">
+	            <InstallDefault>
+	                <PrimitiveValue value="123" index="0"/>
+	            </InstallDefault>
+	        </ParameterOverride>
+	        
+	    </NamespaceDependency>
+
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="ProdY" version="1.99" />
+	    
+	    <Parameter name="overrideStringValue" 
+	               type="STRING"
+	               instantiationLevel="GLOBAL"
+	               description="This is a string parameter that will be overridden..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="ThisIsNotOverriden"/>
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="overrideBooleanValue" 
+	               type="BOOLEAN"
+	               instantiationLevel="GROUP"
+	               description="This is a boolean parameter that will be overridden..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="false"/>
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="overrideIntValue" 
+	               type="INTEGER"
+	               instantiationLevel="GLOBAL"
+	               description="This is an integer parameter that will be overridden..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="1"/>
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="overrideFloatValue" 
+	               type="FLOAT"
+	               instantiationLevel="GLOBAL"
+	               description="This is a float parameter that will be overridden..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="3.1416"/>
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="overrideDurationValue" 
+	               type="STRING"
+	               instantiationLevel="GLOBAL"
+	               description="This is a duration parameter that will be overridden..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="SECONDS"/>
+	        </DefaultValue>
+	    </Parameter>
+	    
+	    <Parameter name="overrideStructureVariable" 
+	               type="STRUCTURE"
+	               instantiationLevel="GLOBAL"
+	               description="This parameter is a structure of Integer values that will be overridden..." >
+	        <StructureDefinition>
+	            <StructureMemberDefinition name="overrideStructureIntMember" type="INTEGER"/>
+	        </StructureDefinition>
+	        <DefaultValue>
+	            <StructureValue>
+	                <StructureMemberValue name="overrideStructureIntMember" value="24"/>
+	            </StructureValue>
+	        </DefaultValue>
+	    </Parameter>
+	    
+        <Parameter name="overrideIntArray" 
+	               type="INTEGER"
+	               instantiationLevel="GROUP"
+	               isArray="true"
+	               description="This is a parameter that is an integer array" >
+            <DefaultValue>
+                <PrimitiveValue value="10" index="0" />
+	        </DefaultValue>
+        </Parameter>
+	    
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>

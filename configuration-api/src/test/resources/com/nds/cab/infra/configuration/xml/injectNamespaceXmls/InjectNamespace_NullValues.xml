@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NamespaceDefinitions>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="ProdX" version="0.9" />
+	    <InstallationProperties softwareName="ProdX" defaultInstallPath="/opt/nds/uhe/ProdX/prodx" />
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="ProdY" version="1.99" />
+
+	        <ParameterOverride name="nullOverrideStringVariable" instantiationLevel="COMPONENT">
+ 	            <InstallDefault>
+	                <PrimitiveValue value="" />
+	            </InstallDefault>
+
+	        </ParameterOverride>
+	        	        
+	    </NamespaceDependency>
+
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="ProdY" version="1.99" />
+	    
+	    <Parameter name="nullOverrideStringVariable" 
+	               type="STRING"
+	               instantiationLevel="GLOBAL"
+	               description="This is a string parameter that will be overriden..." >
+	        <DefaultValue>
+	            <PrimitiveValue value=""/>
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="nullStringVariable" 
+	               type="STRING"
+	               instantiationLevel="GLOBAL"
+	               description="This is a string parameter that has a default value of null" >
+	        <DefaultValue>
+	            <PrimitiveValue value=""/>
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="nullRangeVariable" 
+	               type="INTEGER"
+	               instantiationLevel="GROUP"
+	               description="This parameter defines a range with a numerical minimum and maximum that are null." 
+	               unit="HOURS">
+	        <DefaultValue>
+	            <PrimitiveValue value="" />
+	        </DefaultValue>
+	        <Range>
+	            <ValueRange min="" max="" />
+	        </Range>
+	    </Parameter>
+
+	    <Parameter name="nullStructureVariable" 
+	               type="STRUCTURE"
+	               instantiationLevel="GLOBAL"
+	               description="This parameter is a structure of null values..." >
+	        <StructureDefinition>
+	            <StructureMemberDefinition name="nullStructureIntMember" type="INTEGER" unit="HOURS">
+	            </StructureMemberDefinition>
+	        </StructureDefinition>
+	        <DefaultValue>
+	            <StructureValue>
+	                <StructureMemberValue name="nullStructureIntMember" value=""/>
+	            </StructureValue>
+	        </DefaultValue>
+            <Range>
+                <ValueRange min="" max="" />
+            </Range>
+	    </Parameter>
+	    
+	    <Parameter name="nullArrayOfStructuresVariable"
+                   type="STRUCTURE"
+                   description="A variable containing an array of structures that are null"
+                   instantiationLevel="GLOBAL"
+                   isArray="true">
+
+            <StructureDefinition>
+                <StructureMemberDefinition name="nullArrayOfStructureStringMember" type="STRING">
+	            </StructureMemberDefinition>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue index="0">
+                    <StructureMemberValue name="nullArrayOfStructureStringMember" value=""/>
+                </StructureValue>
+                <StructureValue index="1">
+                    <StructureMemberValue name="nullArrayOfStructureStringMember" value="" />
+                </StructureValue>
+            </DefaultValue>
+            <Range>
+   	            <StringEnum value="1" />
+   	            <StringEnum value="2" />
+   	            <StringEnum value="3" />
+            </Range>
+
+        </Parameter>
+	    
+	    
+	    	    
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>

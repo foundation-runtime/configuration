@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NamespaceDefinitions>
+
+    <NamespaceDefinition>
+
+	    <NamespaceIdentifier name="arrayNamespace" version="12" />
+	    <InstallationProperties softwareName="ProdX" defaultInstallPath="/opt/nds/uhe/ProdX/prodx" />
+
+	        <Parameter name="intArray" 
+	               type="INTEGER"
+	               instantiationLevel="GROUP"
+	               isArray="true"
+	               description="This is a parameter that is an integer array" >
+	            <DefaultValue>
+	                <PrimitiveValue value="10" index="0" />
+   	                <PrimitiveValue value="11" index="1" />
+	                <PrimitiveValue value="12" index="2" />
+	                <PrimitiveValue value="13" index="3" />
+	                <PrimitiveValue value="14" index="4" />
+	            </DefaultValue>
+	        </Parameter>
+
+	        <Parameter name="stringArray" 
+	               type="STRING"
+	               instantiationLevel="GROUP"
+	               isArray="true"
+	               description="This is a parameter that is a string array" >
+	            <DefaultValue>
+	                <PrimitiveValue value="One" index="0" />
+   	                <PrimitiveValue value="Two" index="1" />
+	                <PrimitiveValue value="Three" index="2" />
+	                <PrimitiveValue value="Four" index="3" />
+	                <PrimitiveValue value="Five" index="4" />
+	            </DefaultValue>
+	        </Parameter>
+
+	        <Parameter name="booleanArray" 
+	               type="BOOLEAN"
+	               instantiationLevel="GLOBAL"
+	               isArray="true"
+	               description="This is a parameter that is a boolean array" >
+	            <DefaultValue>
+	                <PrimitiveValue value="true" index="0" />
+   	                <PrimitiveValue value="false" index="1" />
+	                <PrimitiveValue value="true" index="2" />
+	                <PrimitiveValue value="true" index="3" />
+	                <PrimitiveValue value="false" index="4" />
+	            </DefaultValue>
+	        </Parameter>
+
+	        <Parameter name="floatArray" 
+	               type="FLOAT"
+	               instantiationLevel="GLOBAL"
+	               isArray="true"
+	               description="This is a parameter that is a float array" >
+	            <DefaultValue>
+	                <PrimitiveValue value="1.99" index="0" />
+   	                <PrimitiveValue value="3.1416" index="1" />
+	                <PrimitiveValue value="7.77" index="2" />
+	                <PrimitiveValue value="123456789.0" index="3" />
+	                <PrimitiveValue value="-6.7" index="4" />
+	            </DefaultValue>
+	        </Parameter>
+
+	        <Parameter name="durationArray" 
+	               type="STRING"
+	               instantiationLevel="GLOBAL"
+	               isArray="true"
+	               description="This is a parameter that is a duration array" >
+	            <DefaultValue>
+	                <PrimitiveValue value="MILLISECONDS" index="0" />
+   	                <PrimitiveValue value="SECONDS" index="1" />
+	                <PrimitiveValue value="MINUTES" index="2" />
+	                <PrimitiveValue value="HOURS" index="3" />
+	                <PrimitiveValue value="DAYS" index="4" />
+	            </DefaultValue>
+	        </Parameter>
+
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>
+

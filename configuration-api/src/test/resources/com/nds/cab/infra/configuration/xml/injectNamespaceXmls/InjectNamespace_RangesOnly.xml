@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NamespaceDefinitions>
+
+    <NamespaceDefinition>
+
+	    <NamespaceIdentifier name="rangesNamespace" version="12" />
+	    <InstallationProperties softwareName="ProdX" defaultInstallPath="/opt/nds/uhe/ProdX/prodx" />
+
+	    <Parameter name="NumberRangeVariable" 
+	               type="INTEGER"
+	               instantiationLevel="GROUP"
+	               description="This parameter defines a range with a numerical minimum and maximum." 
+	               unit="SECONDS" >
+	        <DefaultValue>
+	            <PrimitiveValue value="5" />
+	        </DefaultValue>
+	        <Range>
+	            <ValueRange min="0" max="10" />
+	        </Range>
+	    </Parameter>
+
+	    <Parameter name="MultipleChoiceRangeVariable" 
+	               type="STRING"
+	               instantiationLevel="GROUP"
+	               description="This parameter defines a range with multiple choice limitations." >
+	        <DefaultValue>
+	            <PrimitiveValue value="GNARLY" />
+	        </DefaultValue>
+	        <Range>
+	            <StringEnum value="GNARLY" />
+	            <StringEnum value="AWESOME" />
+	            <StringEnum value="TUBULAR" />
+	            <StringEnum value="RADICAL" />	            
+	        </Range>
+	    </Parameter>
+
+	    <Parameter name="StructureRangeVariable" 
+	               type="STRUCTURE"
+	               instantiationLevel="GLOBAL"
+	               description="This parameter is a structure of with a defined range." >
+	        <StructureDefinition>
+	            <StructureMemberDefinition name="intStructureMember" type="INTEGER" unit="HOURS">
+	            	<Range>
+	                	<ValueRange min="2" max="10" />
+		        	</Range>
+	            </StructureMemberDefinition>
+	        </StructureDefinition>
+	        <DefaultValue>
+	            <StructureValue>
+	                <StructureMemberValue name="intStructureMember" value="5" />
+	            </StructureValue>
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="ArrayOfStringStructuresVariable"
+                   type="STRUCTURE"
+                   description="A variable containing an array of structures with a range"
+                   instantiationLevel="GLOBAL"
+                   isArray="true">
+
+            <StructureDefinition>
+                <StructureMemberDefinition name="ArrayOfStructureStringMember" type="STRING">
+	            </StructureMemberDefinition>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue index="0">
+                    <StructureMemberValue name="ArrayOfStructureStringMember" value="MORNING"/>
+                </StructureValue>
+                <StructureValue index="1">
+                    <StructureMemberValue name="ArrayOfStructureStringMember" value="AFTERNOON" />
+                </StructureValue>
+            </DefaultValue>
+            <Range>
+                <StringEnum value="MORNING" />
+                <StringEnum value="AFTERNOON" />
+                <StringEnum value="EVENING" />
+	        </Range>
+        </Parameter>
+
+	    <Parameter name="StringArrayRange" 
+	           type="STRING"
+	           instantiationLevel="GROUP"
+	           isArray="true"
+	           description="This is a parameter that is a string array" >
+	        <DefaultValue>
+	            <PrimitiveValue value="ONE" index="0" />
+   	            <PrimitiveValue value="TWO" index="1" />
+	            <PrimitiveValue value="THREE" index="2" />
+	        </DefaultValue>
+            <Range>
+                <StringEnum value="ONE" />
+                <StringEnum value="TWO" />
+                <StringEnum value="THREE" />
+	        </Range>
+	    </Parameter>
+
+
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>
+

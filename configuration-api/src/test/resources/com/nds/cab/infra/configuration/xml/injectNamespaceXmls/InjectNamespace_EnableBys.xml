@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NamespaceDefinitions>
+
+    <NamespaceDefinition>
+
+	    <NamespaceIdentifier name="enableBysNamespace" version="12" />
+	    <InstallationProperties softwareName="ProdX" defaultInstallPath="/opt/nds/uhe/ProdX/prodx" />
+
+	    <Parameter name="booleanVar1EnablesBooleanVar2" 
+	               type="BOOLEAN"
+	               instantiationLevel="GLOBAL"
+	               description="This parameter enables another boolean parameter." >
+	        <DefaultValue>
+	            <PrimitiveValue value="false" />
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="booleanVar2EnabledByBooleanVar1" 
+	               type="BOOLEAN"
+	               instantiationLevel="COMPONENT"
+	               description="This parameter is enabled by another boolean parameter." >
+	        <EnabledBy parameterName="booleanVar1EnablesBooleanVar2" operator="E">
+	            <Value>
+	                <PrimitiveValue value="true" />
+	            </Value>
+	        </EnabledBy>
+	    </Parameter>
+
+	    <Parameter name="intVar1EnablesIntVar2" 
+	               type="INTEGER"
+	               instantiationLevel="GLOBAL"
+	               description="This parameter enables another integer parameter." >
+	        <DefaultValue>
+	            <PrimitiveValue value="24" />
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="intVar2EnabledByIntVar1" 
+	               type="INTEGER"
+	               instantiationLevel="COMPONENT"
+	               description="This parameter is enabled by another integer parameter." >
+	        <EnabledBy parameterName="intVar1EnablesIntVar2" operator="LTE">
+	            <Value>
+	                <PrimitiveValue value="25" />
+	            </Value>
+	        </EnabledBy>
+	    </Parameter>
+
+	    <Parameter name="stringVar1EnablesStringVar2" 
+	               type="STRING"
+	               instantiationLevel="GLOBAL"
+	               description="This parameter enables another string parameter." >
+	        <DefaultValue>
+	            <PrimitiveValue value="Winner" />
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="stringVar2EnabledByStringVar1" 
+	               type="STRING"
+	               instantiationLevel="COMPONENT"
+	               description="This parameter is enabled by another string parameter." >
+	        <EnabledBy parameterName="stringVar1EnablesStringVar2" operator="NE">
+	            <Value>
+	                <PrimitiveValue value="Congratulations" />
+	            </Value>
+	        </EnabledBy>
+	    </Parameter>
+
+	    <Parameter name="floatVar1EnablesFloatVar2" 
+	               type="FLOAT"
+	               instantiationLevel="GLOBAL"
+	               description="This parameter enables another float parameter." >
+	        <DefaultValue>
+	            <PrimitiveValue value="3.1416" />
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="floatVar2EnabledByFloatVar1" 
+	               type="FLOAT"
+	               instantiationLevel="COMPONENT"
+	               description="This parameter is enabled by another float parameter." >
+	        <EnabledBy parameterName="floatVar1EnablesFloatVar2" operator="GTE">
+	            <Value>
+	                <PrimitiveValue value="9.99" />
+	            </Value>
+	        </EnabledBy>
+	    </Parameter>
+
+	    <Parameter name="durationVar1EnablesDurationVar2" 
+	               type="DURATION" 
+	               instantiationLevel="GLOBAL"
+	               description="This parameter enables another duration parameter." >
+	        <DefaultValue>
+	            <PrimitiveValue value="MILLISECONDS" />
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="durationVar2EnabledByDurationVar1" 
+	               type="DURATION"
+	               instantiationLevel="COMPONENT"
+	               description="This parameter is enabled by another duration parameter." >
+	        <EnabledBy parameterName="durationVar1EnablesDurationVar2" operator="E">
+	            <Value>
+	                <PrimitiveValue value="SECONDS" />
+	            </Value>
+	        </EnabledBy>
+	    </Parameter>
+
+	    <Parameter name="intArrayEnabledByIntVar" 
+	               type="DURATION"
+	               instantiationLevel="COMPONENT"
+	               isArray="true"
+	               description="This parameter is enabled by another integer parameter." >
+	        <EnabledBy parameterName="intVar1EnablesIntVar2" operator="LT">
+	            <Value>
+	                <PrimitiveValue value="5" />
+	            </Value>
+	        </EnabledBy>
+	    </Parameter>
+
+	    <Parameter name="structureVar" 
+	               type="STRUCTURE"
+	               instantiationLevel="COMPONENT"
+	               description="This structure is enabled by an integer parameter." >
+	        <StructureDefinition>
+	            <StructureMemberDefinition name="structureIntMemberEnabledByIntVar" type="INTEGER"/>
+	        </StructureDefinition>
+	        <DefaultValue>
+	            <StructureValue>
+	                <StructureMemberValue name="structureIntMemberEnabledByIntVar" value="2011"/>
+	            </StructureValue>
+	        </DefaultValue>	               
+	        <EnabledBy parameterName="intVar1EnablesIntVar2" operator="GT">
+	            <Value>
+	                <PrimitiveValue value="12" />
+	            </Value>
+	        </EnabledBy>
+	    </Parameter>
+
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>
+

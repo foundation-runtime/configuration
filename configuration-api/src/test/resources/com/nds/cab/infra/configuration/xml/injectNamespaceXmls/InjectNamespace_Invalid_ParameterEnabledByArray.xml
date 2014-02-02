@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This is intentionally an invalid XML -->
+<!--  A parameter should not be able to be enabled by an array. -->
+<NamespaceDefinitions>
+
+    <NamespaceDefinition>
+
+	    <NamespaceIdentifier name="enableBysNamespace" version="12" />
+	    <InstallationProperties softwareName="ProdX" defaultInstallPath="/opt/nds/uhe/ProdX/prodx" />
+
+	    <Parameter name="intArray" 
+	               type="INTEGER"
+	               instantiationLevel="GROUP"
+	               isArray="true"
+	               description="This is a parameter that is an integer array" >
+	        <DefaultValue>
+	            <PrimitiveValue value="10" index="0" />
+   	            <PrimitiveValue value="11" index="1" />
+	            <PrimitiveValue value="12" index="2" />
+	            <PrimitiveValue value="13" index="3" />
+	            <PrimitiveValue value="14" index="4" />
+            </DefaultValue>
+        </Parameter>
+
+	    <Parameter name="booleanVarEnabledByArray" 
+	               type="BOOLEAN"
+	               instantiationLevel="COMPONENT"
+	               description="This parameter is enabled by an array." >
+	        <EnabledBy parameterName="intArray" operator="E">
+	            <Value>
+	                <PrimitiveValue value="I. Don't. Know... But I know it shouldn't get this far." />
+	            </Value>
+	        </EnabledBy>
+	    </Parameter>
+
+
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>
+

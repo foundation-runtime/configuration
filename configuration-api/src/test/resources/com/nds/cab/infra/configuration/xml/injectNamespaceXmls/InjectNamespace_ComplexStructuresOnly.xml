@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NamespaceDefinitions>
+
+    <NamespaceDefinition>
+    
+     
+        <NamespaceIdentifier name="ComplexStructureOnlyNamespace" version="1.4"/>
+
+	    <Parameter name="cmService" type="STRUCTURE" isArray="true" description="TBD">
+			<StructureDefinition>
+				<StructureMemberDefinition name="host" type="STRING" />
+				<StructureMemberDefinition name="port" type="INTEGER"/>
+				<StructureMemberDefinition name="cards" type="INTEGER"  isArray="true"/>
+				<StructureMemberDefinition name="carmService" type="STRUCTURE"  isArray="true">
+					<StructureDefinition>
+						<StructureMemberDefinition name="host" type="STRING"/>
+						<StructureMemberDefinition name="port" type="INTEGER"/>
+						<StructureMemberDefinition name="cas" type="INTEGER" isArray="true"/>
+						<StructureMemberDefinition name="bsmService" type="STRUCTURE">
+							<StructureDefinition>
+								<StructureMemberDefinition name="host" type="STRING"/>
+								<StructureMemberDefinition name="port" type="INTEGER"/>
+							</StructureDefinition>
+						</StructureMemberDefinition>
+					</StructureDefinition>
+				</StructureMemberDefinition>
+			</StructureDefinition>
+			<DefaultValue>
+				<StructureValue index="1">
+					<StructureMemberValue name="host" value="chvm16"/>
+					<StructureMemberValue name="port" value="13131"/>
+					<StructureMemberValue name="cards" value="1001" index="1"/>
+					<StructureMemberValue name="cards" value="1005" index="2"/>
+					<StructureMemberValue name="carmService">
+						<StructureValue index="1">
+							<StructureMemberValue name="host" value="chvm16"/>
+							<StructureMemberValue name="port" value="13131"/>
+							<StructureMemberValue name="cas" index="1" value="4323"/>
+							<StructureMemberValue name="cas" index="2" value="5321"/>
+							<StructureMemberValue name="bsmService">
+								<StructureValue index="1">
+									<StructureMemberValue name="host" value="chvm15"/>
+									<StructureMemberValue name="port" value="13131"/>
+								</StructureValue>
+								<StructureValue index="2">
+									<StructureMemberValue name="host" value="chvm15"/>
+									<StructureMemberValue name="port" value="13132"/>
+								</StructureValue>
+							</StructureMemberValue>
+						</StructureValue>
+						<StructureValue index="2">
+							<StructureMemberValue name="host" value="chvm15"/>
+							<StructureMemberValue name="port" value="13131"/>
+							<StructureMemberValue name="cas" index="1" value="4323"/>
+							<StructureMemberValue name="cas" index="2" value="5321"/>
+							<StructureMemberValue name="bsmService">
+								<StructureValue index="1">
+									<StructureMemberValue name="host" value="chvm15"/>
+									<StructureMemberValue name="port" value="13131"/>
+								</StructureValue>
+							</StructureMemberValue>
+						</StructureValue>
+					</StructureMemberValue>
+				</StructureValue>
+			</DefaultValue>
+		</Parameter>
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>

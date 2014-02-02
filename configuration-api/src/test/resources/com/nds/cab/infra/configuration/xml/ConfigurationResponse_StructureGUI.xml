@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ConfigurationResponse xsi:noNamespaceSchemaLocation="http://ch-infra.il.nds.com/cabResources/CCP_XML.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <NamespaceParameters>
+        <NamespaceIdentifier version="2.1" name="ProdY"/>
+        <Parameter requiresRestart="false" advanced="false" readOnly="false" hidden="false" required="true" isArray="false" description="Whether or not to use bsm-server" instantiationLevelId="0" type="BOOLEAN" name="bsm-server.enabled" paramId="99">
+            <Value>
+                <PrimitiveValue value="true"/>
+            </Value>
+        </Parameter>
+        <Parameter requiresRestart="false" advanced="false" readOnly="false" hidden="false" required="true" isArray="true" description="The bsm-server structure does..." instantiationLevelId="32" type="STRUCTURE" name="bsm-server" paramId="100">
+            <StructureDefinition>
+                <StructureMemberDefinition type="STRING" name="bsm-server.host">
+                    <Range>
+                        <StringEnum value="hostA"/>
+                        <StringEnum value="hostB"/>
+                        <StringEnum value="hostC"/>
+                    </Range>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition type="INTEGER" name="bsm-server.port">
+                    <Range>
+                        <ValueRange max="5000" min="1025"/>
+                    </Range>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+            <Value>
+                <StructureValue index="0">
+                    <StructureMemberValue value="hostA" name="bsm-server.host"/>
+                    <StructureMemberValue value="80" name="bsm-server.port"/>
+                </StructureValue>
+                <StructureValue index="1">
+                    <StructureMemberValue value="hostB" name="bsm-server.host"/>
+                    <StructureMemberValue value="8080" name="bsm-server.port"/>
+                </StructureValue>
+            </Value>
+            <DefaultValue>
+                <StructureValue index="0">
+                    <StructureMemberValue value="hostB" name="bsm-server.host"/>
+                    <StructureMemberValue value="2000" name="bsm-server.port"/>
+                </StructureValue>
+                <StructureValue index="1">
+                    <StructureMemberValue value="hostC" name="bsm-server.host"/>
+                    <StructureMemberValue value="2001" name="bsm-server.port"/>
+                </StructureValue>
+            </DefaultValue>
+            <EnabledBy operator="E" parameterName="bsm-server.enabled">
+                <Value>
+                    <PrimitiveValue value="true"/>
+                </Value>
+            </EnabledBy>
+        </Parameter>
+    </NamespaceParameters>
+</ConfigurationResponse>

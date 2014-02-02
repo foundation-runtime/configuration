@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<NamespaceDefinitions xsi:noNamespaceSchemaLocation="http://ch-infra.il.nds.com/cabResources/CCP_XML.xsd"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <NamespaceDefinition>
+        <NamespaceIdentifier version="1.0.5-SNAPSHOT" name="RemoteInvocationClientServerTesting"/>
+
+        <NamespaceDependency>
+            <NamespaceIdentifier version="2.4.0-0-SNAPSHOT" name="cabRemoteInvocationClient"/>
+            <ParameterOverride instantiationLevel="COMPONENT" name="loadBalancer.timeout">
+                <InstallDefault>
+                    <PrimitiveValue value="30000"/>
+                </InstallDefault>
+            </ParameterOverride>
+            <ParameterOverride instantiationLevel="COMPONENT" name="loadBalancer.enableHeartBeat">
+                <InstallDefault>
+                    <PrimitiveValue value="true"/>
+                </InstallDefault>
+            </ParameterOverride>
+            <ParameterOverride instantiationLevel="COMPONENT" name="loadBalancer.port">
+                <InstallDefault>
+                    <PrimitiveValue value="13344"/>
+                </InstallDefault>
+            </ParameterOverride>
+        </NamespaceDependency>
+
+        <NamespaceDependency>
+            <NamespaceIdentifier version="2.3.0-0-SNAPSHOT" name="cabRemoteInvocationServer"/>
+            <ParameterOverride instantiationLevel="COMPONENT" name="loadBalancer.serverRecoveryDaemontimeInterval">
+                <InstallDefault>
+                    <PrimitiveValue value="15000"/>
+                </InstallDefault>
+            </ParameterOverride>
+            <ParameterOverride instantiationLevel="COMPONENT" name="loadBalancer.enableHeartBeat">
+                <InstallDefault>
+                    <PrimitiveValue value="true"/>
+                </InstallDefault>
+            </ParameterOverride>
+            <ParameterOverride instantiationLevel="COMPONENT" name="loadBalancer.port">
+                <InstallDefault>
+                    <PrimitiveValue value="13344"/>
+                </InstallDefault>
+            </ParameterOverride>
+        </NamespaceDependency>
+
+        <NamespaceDependency>
+            <NamespaceIdentifier version="2.1.0-0-SNAPSHOT" name="cabConfiguration"/>
+            <ParameterOverride instantiationLevel="COMPONENT" name="dynamicConfigReload.autoUpdateEnabled">
+                <InstallDefault>
+                    <PrimitiveValue value="true"/>
+                </InstallDefault>
+            </ParameterOverride>
+            <ParameterOverride instantiationLevel="COMPONENT" name="dynamicConfigReload.enabled">
+                <InstallDefault>
+                    <PrimitiveValue value="true"/>
+                </InstallDefault>
+            </ParameterOverride>
+        </NamespaceDependency>
+
+        <Parameter description="server communication" instantiationLevel="GLOBAL" type="STRUCTURE" name="RITest">
+            <StructureDefinition>
+                <StructureMemberDefinition type="STRING" name="host"/>
+                <StructureMemberDefinition type="STRING" name="port"/>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue index="0">
+                    <StructureMemberValue name="host" value="localhost"/>
+                    <StructureMemberValue name="port" value="${loadBalancer.port}"/>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+        <NamespaceIdentifier version="2.4.0-0-SNAPSHOT" name="cabRemoteInvocationClient"/>
+        <Parameter description="when set to true will cause the RMI client to not start if the server is not up."
+                   instantiationLevel="GLOBAL" type="BOOLEAN" name="failRmiClientIfServerDown">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter
+                description="the default timeout for the client. If in this perios of time, the client will not get any response an error will be thrown."
+                instantiationLevel="GLOBAL" type="INTEGER" name="loadBalancer.timeout">
+            <DefaultValue>
+                <PrimitiveValue value="300000"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter
+                description="if set to true, will cause the client infrastructure to re-send the current request to the server."
+                instantiationLevel="GLOBAL" type="BOOLEAN" name="loadBalancer.retryOnTimeout">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter
+                description="the number of times the client will retry connectiong to a server when facing communication errors"
+                instantiationLevel="GLOBAL" type="INTEGER" name="loadBalancer.numberOfRetries">
+            <DefaultValue>
+                <PrimitiveValue value="3"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="the load balancing strategy. can be either failOverStrategy or roundRobinStrategy"
+                   instantiationLevel="GLOBAL" type="STRUCTURE" name="loadBalancer.strategy">
+            <StructureDefinition>
+                <StructureMemberDefinition type="STRING" name="loadBalancer.strategy">
+                    <Range>
+                        <StringEnum value="failOverStrategy"/>
+                        <StringEnum value="roundRobinStrategy"/>
+                    </Range>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+        </Parameter>
+        <Parameter
+                description="the period of time to wait between retries that occur when communication errors are encoutered."
+                instantiationLevel="GLOBAL" type="INTEGER" name="loadBalancer.retryDelay">
+            <DefaultValue>
+                <PrimitiveValue value="1500"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter
+                description="when set to true enabled internal heartbeat that should prevent the client from ever failing on RequestTimeoutException."
+                instantiationLevel="GLOBAL" type="BOOLEAN" name="loadBalancer.enableHeartBeat">
+            <DefaultValue>
+                <PrimitiveValue value="true"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter
+                description="if the number of retries was exausted the server instance that is not working is marked as down in internal client state. The client in return will not attemp to reconnect to the server for thie configured amount of time"
+                instantiationLevel="GLOBAL" type="INTEGER" name="loadBalancer.waitingTime">
+            <DefaultValue>
+                <PrimitiveValue value="60000"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter
+                description="the default port for the RMI Registry. The client will try and connect to a server on this host, unless override by a service specific port."
+                instantiationLevel="GLOBAL" type="INTEGER" name="loadBalancer.port">
+            <DefaultValue>
+                <PrimitiveValue value="13131"/>
+            </DefaultValue>
+        </Parameter>
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+        <NamespaceIdentifier version="2.3.0-0-SNAPSHOT" name="cabRemoteInvocationServer"/>
+        <Parameter
+                description="when set to true the RMI server will create the server for you. Otherwise if a registry is not up and running, the server will fail to run"
+                instantiationLevel="GLOBAL" type="BOOLEAN" name="loadBalancer.alwaysCreateRegistry">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter
+                description="if set to true, will cause the client infrastructure to re-send the current request to the server."
+                instantiationLevel="GLOBAL" type="BOOLEAN" name="loadBalancer.retryOnTimeout">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter
+                description="The server runs a daemon thread that verifies the registry is running and that this server is registered properly. The thread wakes up every this number of milliseconds"
+                instantiationLevel="GLOBAL" type="INTEGER" name="loadBalancer.serverRecoveryDaemontimeInterval">
+            <DefaultValue>
+                <PrimitiveValue value="5000"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter
+                description="RMI is not firewall friendly. For this reason we support a port range in which the servers open a PTP connection with the client. The port range starts with this internal port value."
+                instantiationLevel="GLOBAL" type="INTEGER" name="loadBalancer.innerPort">
+            <DefaultValue>
+                <PrimitiveValue value="11223"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter
+                description="when set to true the server will override a running server if it finds one that is already registered by the same name. relvent for QC environments."
+                instantiationLevel="GLOBAL" type="BOOLEAN" name="loadBalancer.replaceExistingBinding">
+            <DefaultValue>
+                <PrimitiveValue value="true"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="the actual number of RMI servers supported on a single host" instantiationLevel="GLOBAL"
+                   type="INTEGER" name="loadBalancer.portRange">
+            <DefaultValue>
+                <PrimitiveValue value="50"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter
+                description="when set to true enabled internal heartbeat that should prevent the client from ever failing on RequestTimeoutException."
+                instantiationLevel="GLOBAL" type="BOOLEAN" name="loadBalancer.enableHeartBeat">
+            <DefaultValue>
+                <PrimitiveValue value="true"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter
+                description="the default port for the RMI Registry. The client will try and connect to a server on this host, unless override by a service specific port."
+                instantiationLevel="GLOBAL" type="INTEGER" name="loadBalancer.port">
+            <DefaultValue>
+                <PrimitiveValue value="13131"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter
+                description="When set to truwe enabled the daemon thread that verifies the registry is running and that this server is registered properly."
+                instantiationLevel="GLOBAL" type="BOOLEAN" name="loadBalancer.runServerRecoveryDaemon">
+            <DefaultValue>
+                <PrimitiveValue value="true"/>
+            </DefaultValue>
+        </Parameter>
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+        <NamespaceIdentifier version="2.1.0-0-SNAPSHOT" name="cabConfiguration"/>
+        <Parameter description="set to true if you want to have dyanmic supoprt enabled in your process"
+                   instantiationLevel="GLOBAL" type="BOOLEAN" name="dynamicConfigReload.enabled">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="define the perios of time to check for new config changes." instantiationLevel="GLOBAL"
+                   type="INTEGER" name="dynamicConfigReload.refreshDelay">
+            <DefaultValue>
+                <PrimitiveValue value="30000"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter
+                description="Set to true for enabling automatic reload using a daemon thread. This enables configuration to be re-loaded even if the component is not equesting a n value from the config at the time."
+                instantiationLevel="GLOBAL" type="BOOLEAN" name="dynamicConfigReload.autoUpdateEnabled">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>

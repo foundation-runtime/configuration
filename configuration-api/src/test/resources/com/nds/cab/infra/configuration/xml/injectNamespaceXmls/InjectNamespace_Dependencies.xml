@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NamespaceDefinitions>
+
+    <!--
+     A -> B
+     B -> C & D
+     C -> E version 1
+     D -> E version 2 
+     -->
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="A" version="1" />
+	    <InstallationProperties softwareName="A" defaultInstallPath="/opt/nds/uhe/A/eh?" />
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="B" version="1" />
+	    </NamespaceDependency>
+
+	    <Parameter name="booleanVariable" type="BOOLEAN" instantiationLevel="GLOBAL" description="..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="false" />
+	        </DefaultValue>
+	    </Parameter>
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="B" version="1" />
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="C" version="1" />
+	    </NamespaceDependency>
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="D" version="1" />
+	    </NamespaceDependency>
+
+	    <Parameter name="AnotherBooleanVariable" type="BOOLEAN" instantiationLevel="GLOBAL" description="..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="false" />
+	        </DefaultValue>
+	    </Parameter>
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="C" version="1" />
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="E" version="1" />
+	    </NamespaceDependency>
+
+	    <Parameter name="YetAnotherBooleanVariable" type="BOOLEAN" instantiationLevel="GLOBAL" description="..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="false" />
+	        </DefaultValue>
+	    </Parameter>
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="D" version="1" />
+	    
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="E" version="2" />
+	    </NamespaceDependency>
+	    
+	    <Parameter name="BooleanVariableNo4" type="BOOLEAN" instantiationLevel="GLOBAL" description="..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="false" />
+	        </DefaultValue>
+	    </Parameter>
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="E" version="1" />
+
+	    <Parameter name="stringVariable" type="STRING" instantiationLevel="GLOBAL" description="..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="On" />
+	        </DefaultValue>
+	    </Parameter>
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="E" version="2" />
+	    <Parameter name="stringVariable" type="STRING" instantiationLevel="GLOBAL" description="..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="Off" />
+	        </DefaultValue>
+	    </Parameter>
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>

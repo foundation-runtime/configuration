@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NamespaceDefinitions>
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="oldLinkNamespace" version="12" />
+
+	    <Parameter name="LINK.CABHE.host" type="STRING" instantiationLevel="GLOBAL"
+	               description="This parameter is CABHE host." >
+	        <DefaultValue>
+	            <PrimitiveValue value="LINK_HOST" />
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="link.carmClient.host" type="STRING" instantiationLevel="COMPONENT"
+	               description="This parameter is enabled by another boolean parameter." >
+	        <DefaultValue>
+	        	<PrimitiveValue value="${LINK.CABHE.host}"/>
+	        </DefaultValue>	            
+	    </Parameter>
+
+	    <Parameter name="link.bsmClient" type="STRUCTURE" instantiationLevel="GLOBAL"
+	               description="This parameter enables another integer parameter." >
+			<StructureDefinition>
+				<StructureMemberDefinition name="link.host" type="STRING" />
+				<StructureMemberDefinition name="link.port" type="INTEGER"/>
+			</StructureDefinition>
+	        <DefaultValue>
+	        	<StructureValue index="0">
+	        		<StructureMemberValue name="link.host" value="${LINK.CABHE.host}"/>
+	        	</StructureValue>
+	        </DefaultValue>
+	    </Parameter>
+	    
+	    <Parameter name="link.with.link.to" type="STRING" description="TBD">
+	    	<DefaultValue>
+	    		<PrimitiveValue value="">
+	    			<LinkTo namespaceName="oldLinkNamespace" namespaceVersion="12" parameterName="LINK.CABHE.host"/>
+	    		</PrimitiveValue>
+	    	</DefaultValue>
+	    </Parameter>
+
+    </NamespaceDefinition>
+</NamespaceDefinitions>
+

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NamespaceDefinitions>
+
+	    <!-- ********************** -->
+	    <!-- *** DEPENDENCIES:      -->
+	    <!-- *** A -> C + E         -->
+	    <!-- *** B -> C + D         -->
+	    <!-- *** C -> none          -->
+	    <!-- *** D -> none          -->
+	    <!-- *** E -> F + G         -->
+	    <!-- *** F -> none          -->
+	    <!-- *** G -> none          -->
+	    <!-- *** H -> B + C + A     -->
+	    <!-- ********************** -->
+
+	    <!-- *********************************** -->
+	    <!-- *** SORTED FULL DEPENDENCIES:       -->
+	    <!-- *** C -> none                       -->
+	    <!-- *** D -> none                       -->
+	    <!-- *** F -> none                       -->
+	    <!-- *** G -> none                       -->
+	    <!-- *** B -> C + D                      -->
+	    <!-- *** E -> F + G                      -->
+	    <!-- *** A -> C + E + F + G              -->
+	    <!-- *** H -> B + C + A + D + E + F + G  -->
+	    <!-- *********************************** -->
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="A" version="1" />
+	    <InstallationProperties softwareName="A" defaultInstallPath="/opt/nds/uhe/A/eh?" />
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="C" version="1" />
+	    </NamespaceDependency>
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="E" version="1" />
+	    </NamespaceDependency>
+
+	    <Parameter name="booleanVariable" type="BOOLEAN" instantiationLevel="GLOBAL" description="..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="false" />
+	        </DefaultValue>
+	    </Parameter>
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="B" version="1" />
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="C" version="1" />
+	    </NamespaceDependency>
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="D" version="1" />
+	    </NamespaceDependency>
+
+	    <Parameter name="booleanVariable" type="BOOLEAN" instantiationLevel="GLOBAL" description="..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="false" />
+	        </DefaultValue>
+	    </Parameter>
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="C" version="1" />
+	    <Parameter name="booleanVariable" type="BOOLEAN" instantiationLevel="GLOBAL" description="..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="false" />
+	        </DefaultValue>
+	    </Parameter>
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="D" version="1" />
+	    <Parameter name="booleanVariable" type="BOOLEAN" instantiationLevel="GLOBAL" description="..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="false" />
+	        </DefaultValue>
+	    </Parameter>
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="E" version="1" />
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="F" version="1" />
+	    </NamespaceDependency>
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="G" version="1" />
+	    </NamespaceDependency>
+
+	    <Parameter name="booleanVariable" type="BOOLEAN" instantiationLevel="GLOBAL" description="..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="false" />
+	        </DefaultValue>
+	    </Parameter>
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="F" version="1" />
+	    <Parameter name="booleanVariable" type="BOOLEAN" instantiationLevel="GLOBAL" description="..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="false" />
+	        </DefaultValue>
+	    </Parameter>
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="G" version="1" />
+	    <Parameter name="booleanVariable" type="BOOLEAN" instantiationLevel="GLOBAL" description="..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="false" />
+	        </DefaultValue>
+	    </Parameter>
+    </NamespaceDefinition>
+
+    <NamespaceDefinition>
+	    <NamespaceIdentifier name="H" version="1" />
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="B" version="1" />
+	    </NamespaceDependency>
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="C" version="1" />
+	    </NamespaceDependency>
+
+	    <NamespaceDependency>
+	        <NamespaceIdentifier name="A" version="1" />
+	    </NamespaceDependency>
+
+	    <Parameter name="booleanVariable" type="BOOLEAN" instantiationLevel="GLOBAL" description="..." >
+	        <DefaultValue>
+	            <PrimitiveValue value="false" />
+	        </DefaultValue>
+	    </Parameter>
+    </NamespaceDefinition>
+</NamespaceDefinitions>

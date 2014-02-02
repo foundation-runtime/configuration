@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ParameterInstantiations parameterId="42">
+    <HierarchyNode id="1" name="ProdX-East"   levelName="GROUP" />
+    <HierarchyNode id="2" name="ProdX-West"   levelName="GROUP" />
+    <HierarchyNode id="6" name="ProdX-East-1" levelName="COMPONENT" />
+    <HierarchyNode id="9" name="ProdX-East-4" levelName="COMPONENT" />
+</ParameterInstantiations>

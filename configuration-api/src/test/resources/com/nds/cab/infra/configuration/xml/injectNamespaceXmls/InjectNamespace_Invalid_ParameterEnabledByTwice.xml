@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This is intentionally an invalid XML -->
+<!--  A parameter enabled by another parameter that is enabled by another parameter should not be allowed. -->
+<NamespaceDefinitions>
+
+    <NamespaceDefinition>
+
+	    <NamespaceIdentifier name="enableBysNamespace" version="12" />
+	    <InstallationProperties softwareName="ProdX" defaultInstallPath="/opt/nds/uhe/ProdX/prodx" />
+
+	    <Parameter name="booleanVar1" 
+	               type="BOOLEAN"
+	               instantiationLevel="GLOBAL"
+	               description="This parameter enables another boolean parameter." >
+	        <DefaultValue>
+	            <PrimitiveValue value="false" />
+	        </DefaultValue>
+	    </Parameter>
+
+	    <Parameter name="booleanVar2EnabledByBooleanVar1" 
+	               type="BOOLEAN"
+	               instantiationLevel="COMPONENT"
+	               description="This parameter is enabled by another boolean parameter." >
+	        <EnabledBy parameterName="booleanVar1" operator="E">
+	            <Value>
+	                <PrimitiveValue value="true" />
+	            </Value>
+	        </EnabledBy>
+	    </Parameter>
+
+	    <Parameter name="booleanVar3EnabledByBooleanVar2" 
+	               type="BOOLEAN"
+	               instantiationLevel="COMPONENT"
+	               description="This parameter is enabled by yet another boolean parameter." >
+	        <EnabledBy parameterName="booleanVar2EnabledByBooleanVar1" operator="E">
+	            <Value>
+	                <PrimitiveValue value="true" />
+	            </Value>
+	        </EnabledBy>
+	    </Parameter>
+
+    </NamespaceDefinition>
+
+</NamespaceDefinitions>
+

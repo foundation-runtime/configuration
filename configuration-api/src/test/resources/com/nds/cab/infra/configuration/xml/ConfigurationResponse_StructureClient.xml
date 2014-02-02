@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ConfigurationResponse xsi:noNamespaceSchemaLocation="http://ch-infra.il.nds.com/cabResources/CCP_XML.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <NamespaceParameters>
+        <NamespaceIdentifier version="2.1" name="ProdY"/>
+        <Parameter requiresRestart="false" advanced="false" readOnly="false" hidden="false" required="true" isArray="false" description="Whether or not to use bsm-server" type="BOOLEAN" name="bsm-server.enabled">
+            <Value>
+                <PrimitiveValue value="true"/>
+            </Value>
+        </Parameter>
+        <Parameter requiresRestart="false" advanced="false" readOnly="false" hidden="false" required="true" isArray="true" description="The bsm-server structure does..." type="STRUCTURE" name="bsm-server">
+            <Value>
+                <StructureValue index="0">
+                    <StructureMemberValue value="hostA" name="bsm-server.host"/>
+                    <StructureMemberValue value="80" name="bsm-server.port"/>
+                </StructureValue>
+                <StructureValue index="1">
+                    <StructureMemberValue value="hostB" name="bsm-server.host"/>
+                    <StructureMemberValue value="8080" name="bsm-server.port"/>
+                </StructureValue>
+            </Value>
+        </Parameter>
+    </NamespaceParameters>
+</ConfigurationResponse>

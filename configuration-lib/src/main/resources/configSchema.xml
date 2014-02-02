@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<NamespaceDefinitions xsi:noNamespaceSchemaLocation="http://ch-infra.il.nds.com/cabResources/CCP_XML.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<NamespaceDefinition>
+		<NamespaceIdentifier version="TBD" name="TBD" />
+		<Parameter name="configuration.dynamicConfigReload.enabled" type="BOOLEAN" hidden="true" description="set to true if you want to have dyanmic supoprt enabled in your process" instantiationLevel="GLOBAL" advanced="true">
+			<DefaultValue>
+				<PrimitiveValue value="false" />
+			</DefaultValue>
+		</Parameter>
+		<Parameter name="configuration.dynamicConfigReload.refreshDelay" type="INTEGER" description="define the perios of time to check for new config changes." instantiationLevel="GLOBAL" unit="MILLISECONDS" advanced="true">
+			<DefaultValue>
+				<PrimitiveValue value="30000" />
+			</DefaultValue>
+		</Parameter>
+		<Parameter name="configuration.rejectInvalidConfiguration" type="BOOLEAN" description="when set to true will throw an exception if a validation violation was found" instantiationLevel="GLOBAL" advanced="true">
+			<DefaultValue>
+				<PrimitiveValue value="false"/>
+			</DefaultValue>
+		</Parameter>
+		<!-- <Parameter name="dynamicConfigReload.autoUpdateEnabled" type="BOOLEAN" hidden="true" description="Set to true for enabling automatic reload using a daemon thread. This enables configuration to be re-loaded even if the component is not equesting a n value from the config at the time." instantiationLevel="GLOBAL"> 
+			<DefaultValue> <PrimitiveValue value="false"/> </DefaultValue> </Parameter> -->
+	</NamespaceDefinition>
+</NamespaceDefinitions>
