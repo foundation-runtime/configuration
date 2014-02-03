@@ -53,7 +53,7 @@ public final class ConfigurationFactory {
 		if (context == null) {
 			synchronized (ConfigurationFactory.class) {
 				if (context == null) {
-					context = new ClassPathXmlApplicationContext(new String[] {"META-INF/ccpContext.xml"});
+					context = new ClassPathXmlApplicationContext(new String[] {"META-INF/configurationContext.xml"});
 				}
 			}
 		}

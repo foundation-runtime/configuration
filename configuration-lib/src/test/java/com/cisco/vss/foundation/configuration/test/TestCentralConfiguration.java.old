@@ -1,0 +1,241 @@
+package com.cisco.vss.foundation.configuration.test;
+
+import com.cisco.vss.foundation.environment.utils.EnvUtils;
+import org.apache.commons.configuration.Configuration;
+import org.junit.*;
+import org.springframework.beans.factory.BeanCreationException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.lang.reflect.Field;
+
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations = { "/applicationTestContext.xml", "/META-INF/ccpServerContext.xml" })
+public class TestCentralConfiguration {
+
+	// @Resource(name = "dbApiImpl")
+	private static DBAPI dbAPI;
+
+	// @Resource(name = "CCPServer")
+	private static Server ccpServer;
+
+	@BeforeClass
+	public static void initOnce() {
+
+		EnvUtils.updateEnv(CcpConstants.CCP_ENABLED, "true");
+		EnvUtils.updateEnv("_CCP_DB_IMPL", "oracle");
+
+		EnvUtils.updateEnv(CcpConstants.FQDN, "cadev8");
+		EnvUtils.updateEnv(CcpConstants.RPM_SOFTWARE_NAME, "BSM");
+		EnvUtils.updateEnv(CcpConstants.ARTIFACT_VERSION, "1.0");
+		EnvUtils.updateEnv(CcpConstants.INSTALL_DIR, "/usr/tv/connect");
+
+		EnvUtils.updateEnv(CcpConstants.CCP_SERVER_PORT, "7890");
+		EnvUtils.updateEnv(CcpConstants.CCP_SERVER, "localhost:7890");
+		EnvUtils.updateEnv(CcpConstants.CCP_DB_URL, "jdbc:oracle:thin:@columbia:1522:EMMG");
+		EnvUtils.updateEnv(CcpConstants.CCP_DB_USER, "ccp");
+		EnvUtils.updateEnv(CcpConstants.CCP_DB_PASSWORD, "ccp");
+		EnvUtils.updateEnv(CcpConstants.CCP_PASSWORD_ENCRYPTION, "false");
+		EnvUtils.updateEnv(CcpConstants.CCP_COMPONENT_CHECK_ENABLE,"false");
+		EnvUtils.updateEnv(CcpConstants.CCP_COMPONENT_CHECK_DELAY,"10000");
+		EnvUtils.updateEnv(CcpConstants.CCP_SERVICE_DISCOVERY_LEASE, "10");
+
+		ApplicationContext context = new ClassPathXmlApplicationContext("/META-INF/ccpServerContext.xml");
+		dbAPI = context.getBean("dbApiImpl", DBAPI.class);
+		ccpServer = context.getBean("CCPServer", Server.class);
+
+		new Thread(new RunServer(ccpServer)).start();
+
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Before
+	public void init() throws DBAPIException {
+
+		clearConfigurtionInConfigurationFactory();
+		resetParamInDB();
+		// new Thread(new RunServer(ccpServer)).start();
+
+		// try {
+		// Thread.sleep(3000);
+		// } catch (InterruptedException e) {
+		// e.printStackTrace();
+		// }
+
+	}
+
+	private static void clearConfigurtionInConfigurationFactory() {
+		try {
+			Field configField = ConfigurationFactory.class.getDeclaredField("context");
+			configField.setAccessible(true);
+			configField.set(ConfigurationFactory.class, null);
+
+			configField = CommonConfigurationsLoader.class.getDeclaredField("configuration");
+			configField.setAccessible(true);
+			configField.set(CommonConfigurationsLoader.class, null);
+
+			configField = CommonConfigurationsLoader.class.getDeclaredField("printedToLog");
+			configField.setAccessible(true);
+			configField.set(CommonConfigurationsLoader.class, Boolean.FALSE);
+		} catch (Exception e) {
+			e.printStackTrace(); // To change body of catch statement use File | Settings | File Templates.
+		}
+	}
+
+	@AfterClass
+	public static void post() {
+		
+		try {
+			 ccpServer.stop();
+			 dbAPI.deregisterClient(4);
+//			Thread.sleep(3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		EnvUtils.updateEnv(CcpConstants.CCP_ENABLED, "false");
+		clearConfigurtionInConfigurationFactory();
+	}
+
+	@Test()
+	public void getWebConfig() {
+		// init();
+		EnvUtils.updateEnv(CcpConstants.RPM_SOFTWARE_NAME, "ndsconsole");
+		try {
+			Configuration configuration = ConfigurationFactory.getConfiguration();
+			Assert.fail("sould not get here");
+		} catch (BeanCreationException bce) {
+			Throwable cause = bce.getCause().getCause().getCause().getCause();
+			if (cause == null || !(cause instanceof IllegalArgumentException)) {
+				Assert.fail("should have been an IllegalArgumentException but was: " + cause);
+			}
+		}
+
+		EnvUtils.updateEnv(CcpConstants.RPM_SOFTWARE_NAME, "BSM");
+	}
+
+	@Test
+	public void getConfig() {
+		// init();
+		EnvUtils.updateEnv(CcpConstants.ARTIFACT_NAME, "BSM");
+		Configuration configuration = ConfigurationFactory.getConfiguration();
+		String url = configuration.getString("url");
+		Assert.assertEquals("mylocalhost", url);
+	}
+
+	@Test
+	public void testDynamicReload() throws DBAPIException {
+
+		// stop();
+		EnvUtils.updateEnv(CcpConstants.ARTIFACT_NAME, "BSM");
+		Configuration configuration = ConfigurationFactory.getConfiguration();
+		String url = configuration.getString("url");
+		String value = "mylocalhost";
+		Assert.assertEquals(value, url);
+
+		PrimitiveValue newValue = new PrimitiveValue();
+		String newValueStr = "mylocalhost_123";
+		newValue.setValue(newValueStr);
+		dbAPI.updatePrimitive(12, 4, null, newValue);
+		
+		long refreshDelay = configuration.getLong("configuration.dynamicConfigReload.refreshDelay");
+
+		try {
+			Thread.sleep(refreshDelay+1000);
+		} catch (InterruptedException e) {
+			// ignore
+		}
+
+		url = configuration.getString("url");
+		Assert.assertEquals(newValueStr, url);
+
+		newValue.setValue(value);
+		dbAPI.updatePrimitive(12, 4, null, newValue);
+
+		try {
+			Thread.sleep(refreshDelay+1000);
+		} catch (InterruptedException e) {
+			// ignore
+		}
+
+		url = configuration.getString("url");
+		Assert.assertEquals(value, url);
+
+	}
+
+	// @Test
+	public void getHttpConfig() throws DBAPIException {
+		init();
+		EnvUtils.updateEnv(CcpConstants.ARTIFACT_NAME, "BSM");
+
+		// new Thread(new Runnable() {
+		//
+		// @Override
+		// public void run() {
+		// Startup.main(null);
+		// }
+		// }).start();
+		//
+		// try {
+		// Thread.sleep(2000);
+		// } catch (InterruptedException e) {
+		// //ignore
+		// }
+
+		EnvUtils.updateEnv(CcpConstants.CCP_DB_URL, "");
+		EnvUtils.updateEnv(CcpConstants.CCP_DB_USER, "");
+		EnvUtils.updateEnv(CcpConstants.CCP_DB_PASSWORD, "");
+		EnvUtils.updateEnv(CcpConstants.CCP_SERVER, "localhost:" + System.getenv(CcpConstants.CCP_SERVER_PORT));
+
+		clearConfigurtionInConfigurationFactory();
+
+		Configuration configuration = ConfigurationFactory.getConfiguration();
+		String port = configuration.getString("carmClient.1.port");
+		Assert.assertEquals("13333", port);
+	}
+
+	@After
+	public void stop() throws DBAPIException {
+		resetParamInDB();
+
+//		try {
+//			 ccpServer.stop();
+//			Thread.sleep(3000);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+	}
+
+	protected void resetParamInDB() throws DBAPIException {
+		PrimitiveValue newValue = new PrimitiveValue();
+		String newValueStr = "mylocalhost";
+		newValue.setValue(newValueStr);
+		dbAPI.updatePrimitive(12, 4, null, newValue);
+	}
+
+	private static class RunServer implements Runnable {
+
+		private Server ccpServer;
+
+		public RunServer(Server ccpServer) {
+			this.ccpServer = ccpServer;
+		}
+
+		@Override
+		public void run() {
+			try {
+				ccpServer.start();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+}

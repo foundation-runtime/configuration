@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:c="http://www.springframework.org/schema/c" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<import resource="classpath*:/META-INF/configurationContext.xml" />
+
+
+	<bean id="Bean1Factory" class="factorybeantest.Bean1Factory" c:factoryName="factory1">
+	</bean>
+
+	<bean id="bean1" parent="Factory">
+		<property name="arguments" value="1" />
+	</bean>
+
+	<bean id="bean2" parent="Factory">
+		<property name="arguments" value="2" />
+	</bean>
+
+	<bean id="bean3" parent="Factory">
+	</bean>
+
+	<bean id="spelSampleBean" class="factorybeantest.SPELSampleBean" lazy-init="false">
+		<property name="number" value="#{ ${sampleSPELNumber} * 10 }" />
+		<property name="stringList" value="${stringList}"/>
+		<!-- <property name="strings" value="#{T(java.util.Arrays).asList('${vam.rulesStatusEmailCodes}')}"/> -->
+		<property name="strings" value="${vam.rulesStatusEmailCodes}"/>
+	</bean>
+	
+	
+
+	<bean id="Factory" abstract="true" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetObject" ref="Bean1Factory" />
+		<property name="targetMethod" value="getInstance" />
+		<property name="arguments" value="3" />
+	</bean><!-- <bean id='tsDistributorChannel1' class='com.nds.dynamic.he.assg.input.timing.transportstream.InputDistributor'> <property name="inputReceiver"> Use for multicast transport stream receive <bean class='com.nds.dynamic.he.assg.input.timing.transportstream.MulticastInputReceiver'> <constructor-arg 
+		value="${dynamic.assg.channel1.timing.ts.multicastgroup}" /> <constructor-arg value="${dynamic.assg.channel1.timing.ts.port}" /> <constructor-arg value="${dynamic.assg.channel1.timing.ts.bindaddress}" /> <constructor-arg value="${dynamic.assg.timing.ts.preinstantiation-buffer-count}" /> </bean> Use for 
+		unicast transport stream receive <bean class='com.nds.dynamic.he.assg.input.timing.transportstream.UnicastInputReceiver'> <constructor-arg value="${dynamic.assg.timing.ts.port}" /> <constructor-arg value="${dynamic.assg.timing.ts.bindaddress}" /> </bean> </property> </bean> <bean id='tsDistributorChannel2' 
+		class='com.nds.dynamic.he.assg.input.timing.transportstream.InputDistributor'> <property name="inputReceiver"> Use for multicast transport stream receive <bean class='com.nds.dynamic.he.assg.input.timing.transportstream.MulticastInputReceiver'> <constructor-arg value="${dynamic.assg.channel2.timing.ts.multicastgroup}" 
+		/> <constructor-arg value="${dynamic.assg.channel2.timing.ts.port}" /> <constructor-arg value="${dynamic.assg.channel2.timing.ts.bindaddress}" /> <constructor-arg value="${dynamic.assg.timing.ts.preinstantiation-buffer-count}" /> </bean> Use for unicast transport stream receive <bean class='com.nds.dynamic.he.assg.input.timing.transportstream.UnicastInputReceiver'> 
+		<constructor-arg value="${dynamic.assg.timing.ts.port}" /> <constructor-arg value="${dynamic.assg.timing.ts.bindaddress}" /> </bean> </property> </bean> <bean id='tsDistributorChannel3' class='com.nds.dynamic.he.assg.input.timing.transportstream.InputDistributor'> <property name="inputReceiver"> Use 
+		for multicast transport stream receive <bean class='com.nds.dynamic.he.assg.input.timing.transportstream.MulticastInputReceiver'> <constructor-arg value="${dynamic.assg.channel3.timing.ts.multicastgroup}" /> <constructor-arg value="${dynamic.assg.channel3.timing.ts.port}" /> <constructor-arg value="${dynamic.assg.channel3.timing.ts.bindaddress}" 
+		/> <constructor-arg value="${dynamic.assg.timing.ts.preinstantiation-buffer-count}" /> </bean> Use for unicast transport stream receive <bean class='com.nds.dynamic.he.assg.input.timing.transportstream.UnicastInputReceiver'> <constructor-arg value="${dynamic.assg.timing.ts.port}" /> <constructor-arg 
+		value="${dynamic.assg.timing.ts.bindaddress}" /> </bean> </property> </bean> <bean id='tsDistributorChannel4' class='com.nds.dynamic.he.assg.input.timing.transportstream.InputDistributor'> <property name="inputReceiver"> Use for multicast transport stream receive <bean class='com.nds.dynamic.he.assg.input.timing.transportstream.MulticastInputReceiver'> 
+		<constructor-arg value="${dynamic.assg.channel4.timing.ts.multicastgroup}" /> <constructor-arg value="${dynamic.assg.channel4.timing.ts.port}" /> <constructor-arg value="${dynamic.assg.channel4.timing.ts.bindaddress}" /> <constructor-arg value="${dynamic.assg.timing.ts.preinstantiation-buffer-count}" 
+		/> </bean> Use for unicast transport stream receive <bean class='com.nds.dynamic.he.assg.input.timing.transportstream.UnicastInputReceiver'> <constructor-arg value="${dynamic.assg.timing.ts.port}" /> <constructor-arg value="${dynamic.assg.timing.ts.bindaddress}" /> </bean> </property> </bean> -->
+
+
+	<!--<bean id="tsDistributorChannels" class="com.nds.dynamic.he.assg.input.timing.transportstream.MyConfigObjectFactory">
+		<property name="configuration" ref="configuration" />
+		<property name="configPrefix" value="dynamic.assg.timing.ts.channel" />
+		<property name="idRef" value="tsDistributor" />
+	</bean>
+
+	<bean id="tsDistributor" class='com.nds.dynamic.he.assg.input.timing.transportstream.InputDistributor' scope="prototype">
+
+		<property name="inputReceiver">
+			<bean class="com.nds.dynamic.he.assg.input.timing.transportstream.MulticastInputReceiver"></bean>
+
+		</property>
+	</bean>-->
+
+</beans>

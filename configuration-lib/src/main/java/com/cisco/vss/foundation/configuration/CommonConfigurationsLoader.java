@@ -61,7 +61,7 @@ import java.util.concurrent.TimeUnit;
  * "http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
  * default-lazy-init="false">
  * <p/>
- * <import resource="classpath:/META-INF/ccpContext.xml" />
+ * <import resource="classpath:/META-INF/configurationContext.xml" />
  * <p/>
  * <bean id="sampleBean" class="com.nds.cab.sample.SampleBean"> <property
  * name="configuration" ref="configuration"/> </bean> </xmp>

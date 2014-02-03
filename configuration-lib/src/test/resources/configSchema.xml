@@ -1,0 +1,899 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<NamespaceDefinitions xsi:noNamespaceSchemaLocation="http://ch-infra.il.nds.com/cabResources/CCP_XML.xsd"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <NamespaceDefinition>
+        <NamespaceIdentifier version="TBD" name="TBD"/>
+
+        <ParameterType name="authenticator" type="STRUCTURE" description="authenticator base structure">
+            <StructureDefinition>
+                <StructureMemberDefinition type="BOOLEAN" name="isMock">
+                    <DefaultValue>
+                        <PrimitiveValue value="false"></PrimitiveValue>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition type="INTEGER" name="serverType">
+                    <DefaultValue>
+                        <PrimitiveValue value="0"></PrimitiveValue>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition type="INTEGER" name="sleepTime">
+                    <DefaultValue>
+                        <PrimitiveValue value="10"></PrimitiveValue>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition type="INTEGER" name="maxRequestTries">
+                    <DefaultValue>
+                        <PrimitiveValue value="3"></PrimitiveValue>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition type="INTEGER" name="responseTimeout">
+                    <DefaultValue>
+                        <PrimitiveValue value="300"></PrimitiveValue>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition type="INTEGER" name="maxNoResponses">
+                    <DefaultValue>
+                        <PrimitiveValue value="3"></PrimitiveValue>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition type="STRUCTURE" name="address" isArray="true" ignoreName="true">
+                    <StructureDefinition>
+                        <StructureMemberDefinition type="STRING" name="host">
+                            <DefaultValue>
+                                <PrimitiveValue value="host"></PrimitiveValue>
+                            </DefaultValue>
+                        </StructureMemberDefinition>
+                        <StructureMemberDefinition type="INTEGER" name="port">
+                            <DefaultValue>
+                                <PrimitiveValue value="-1"></PrimitiveValue>
+                            </DefaultValue>
+                        </StructureMemberDefinition>
+                        <StructureMemberDefinition type="STRING" name="key" required="false">
+                            <DefaultValue>
+                                <PrimitiveValue value="AABBCCDDEEFF00112233445566778899"></PrimitiveValue>
+                            </DefaultValue>
+                        </StructureMemberDefinition>
+                    </StructureDefinition>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+        </ParameterType>
+
+        <Parameter name="rmiclient" type="STRUCTURE" description="rmi client" isArray="true">
+            <StructureDefinition>
+                <StructureMemberDefinition name="host" type="STRING"></StructureMemberDefinition>
+                <StructureMemberDefinition name="port" type="INTEGER"/>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue index="1">
+                    <StructureMemberValue name="host" value="localhost"/>
+                    <StructureMemberValue name="port" value="1044"/>
+                </StructureValue>
+                <StructureValue index="2">
+                    <StructureMemberValue name="host" value="localhost2"/>
+                    <StructureMemberValue name="port" value="1045"/>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+        <Parameter name="domain.group" type="STRUCTURE" description="domain group structure" isArray="true">
+            <StructureDefinition>
+                <StructureMemberDefinition name="groupId" type="INTEGER"></StructureMemberDefinition>
+                <StructureMemberDefinition name="groupType" type="STRING"></StructureMemberDefinition>
+                <StructureMemberDefinition name="sharedKey" type="STRUCTURE" isArray="true">
+                    <StructureDefinition>
+                        <StructureMemberDefinition name="Number" type="INTEGER"></StructureMemberDefinition>
+                        <StructureMemberDefinition name="Type" type="STRING"></StructureMemberDefinition>
+                    </StructureDefinition>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition name="tierKey" type="STRUCTURE" isArray="true">
+                    <StructureDefinition>
+                        <StructureMemberDefinition name="Number" type="INTEGER"></StructureMemberDefinition>
+                        <StructureMemberDefinition name="Type" type="STRING"></StructureMemberDefinition>
+                    </StructureDefinition>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue index="1">
+                    <StructureMemberValue name="groupId" value="20"/>
+                    <StructureMemberValue name="groupType" value="Android"/>
+                    <StructureMemberValue name="sharedKey">
+                        <StructureValue index="1">
+                            <StructureMemberValue name="Number" value="1"/>
+                            <StructureMemberValue name="Type" value="SDK"/>
+                        </StructureValue>
+                        <StructureValue index="2">
+                            <StructureMemberValue name="Number" value="c"/>
+                            <StructureMemberValue name="Type" value="SDK2"/>
+                        </StructureValue>
+                    </StructureMemberValue>
+                    <StructureMemberValue name="tierKey">
+                        <StructureValue index="1">
+                            <StructureMemberValue name="Number" value="2"/>
+                            <!-- <StructureMemberValue name="Type" value="CW" /> -->
+                        </StructureValue>
+                        <StructureValue index="2">
+                            <!-- <StructureMemberValue name="Number" value="3" /> -->
+                            <StructureMemberValue name="Type" value="BR"/>
+                        </StructureValue>
+                    </StructureMemberValue>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter name="ecmserver.drms.channels" type="STRUCTURE" description="channels" isArray="true">
+            <StructureDefinition>
+                <StructureMemberDefinition name="channelId" type="INTEGER"/>
+                <StructureMemberDefinition name="tiers" type="STRUCTURE" isArray="true">
+                    <StructureDefinition>
+                        <StructureMemberDefinition name="tierId" type="INTEGER"/>
+                    </StructureDefinition>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue index="1">
+                    <StructureMemberValue name="channelId" value="100"/>
+                    <StructureMemberValue name="tiers">
+                        <StructureValue index="1">
+                            <StructureMemberValue name="tierId" value="1"/>
+                        </StructureValue>
+                        <StructureValue index="2">
+                            <StructureMemberValue name="tierId" value="2"/>
+                        </StructureValue>
+                    </StructureMemberValue>
+                </StructureValue>
+                <StructureValue index="2">
+                    <StructureMemberValue name="channelId" value="200"/>
+                    <StructureMemberValue name="tiers">
+                        <StructureValue index="1">
+                            <StructureMemberValue name="tierId" value="10"/>
+                        </StructureValue>
+                        <StructureValue index="2">
+                            <StructureMemberValue name="tierId" value="20"/>
+                        </StructureValue>
+                    </StructureMemberValue>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter name="parameter.count" type="INTEGER"
+                   description="sets the global default for the count parameter to 10">
+            <DefaultValue>
+                <PrimitiveValue value="5"></PrimitiveValue>
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter name="content.parameter.count" type="INTEGER"
+                   description="Overrides the default for the content group of API’s">
+            <DefaultValue>
+                <PrimitiveValue value="${parameter.count}"></PrimitiveValue>
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter name="content.list.parameter.count" type="INTEGER"
+                   description="Overrides the default for the content list group of API’s">
+            <DefaultValue>
+                <PrimitiveValue value="${content.parameter.count}"></PrimitiveValue>
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter name="filter.adults" type="BOOLEAN" description="sets the global default for the adult parameter">
+            <DefaultValue>
+                <PrimitiveValue value="false"></PrimitiveValue>
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter name="catalogue" type="STRUCTURE" description="catalogues info" isArray="true">
+            <StructureDefinition>
+                <StructureMemberDefinition name="id" type="INTEGER"/>
+                <StructureMemberDefinition name="filter.adult" type="BOOLEAN">
+                    <DefaultValue>
+                        <PrimitiveValue value="${filter.adult}"></PrimitiveValue>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition name="parameter.region" type="INTEGER"/>
+                <StructureMemberDefinition name="times" type="STRUCTURE" isArray="true">
+                    <StructureDefinition>
+                        <StructureMemberDefinition name="grouping" type="STRING"/>
+                        <StructureMemberDefinition name="filter.adult" type="BOOLEAN">
+                            <DefaultValue>
+                                <PrimitiveValue value="${filter.adult}"></PrimitiveValue>
+                            </DefaultValue>
+                        </StructureMemberDefinition>
+                    </StructureDefinition>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue index="1">
+                    <StructureMemberValue name="id" value="12345"/>
+                    <StructureMemberValue name="filter.adult" value="true"/>
+                    <StructureMemberValue name="parameter.region" value="23"/>
+                    <StructureMemberValue name="times">
+                        <StructureValue index="1">
+                            <StructureMemberValue name="grouping" value="12:00-15:00"/>
+                            <StructureMemberValue name="filter.adult" value="false"/>
+                        </StructureValue>
+                        <StructureValue index="2">
+                            <StructureMemberValue name="grouping" value="15:01-19:00"/>
+                        </StructureValue>
+                    </StructureMemberValue>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter name="NDS_Console.plugins" type="STRING" hidden="true" instantiationLevel="GLOBAL" advanced="true"
+                   isArray="true" description="Plugin Order for modules as loaded in NDS Console">
+            <DefaultValue>
+                <!-- <PrimitiveValue value="ResourceManagement.swf,ConsumerManagement.swf,ScenarioManagement.swf,OfferManagement.swf,ServiceManagement.swf,service_config_pid_management.swf,ScheduleUI.swf,Monitor.swf,SDMSConsole.swf,vcm-ui.swf,ItvTransmissionSystem.swf,Reports.swf,HighlightManager.swf,EPGAdsConsole.swf,dcui.swf,UserManagement.swf,DPConsole.swf,Dashboard.swf,CabConfigurationModule.swf,CustomerManagement.swf,UserManagementSystem.swf,cms_ui.swf,LogViewer.swf,vam-ui.swf"/> -->
+                <PrimitiveValue value="ResourceManagement.swf" index="1"/>
+                <PrimitiveValue value="ConsumerManagement.swf" index="2"/>
+                <PrimitiveValue value="ScenarioManagement.swf" index="3"/>
+                <PrimitiveValue value="OfferManagement.swf" index="4"/>
+                <PrimitiveValue value="ServiceManagement.swf" index="5"/>
+                <PrimitiveValue value="service_config_pid_management.swf" index="6"/>
+                <PrimitiveValue value="ScheduleUI.swf" index="7"/>
+                <PrimitiveValue value="Monitor.swf" index="8"/>
+                <PrimitiveValue value="SDMSConsole.swf" index="9"/>
+                <PrimitiveValue value="vcm-ui.swf" index="10"/>
+                <PrimitiveValue value="ItvTransmissionSystem.swf" index="11"/>
+                <PrimitiveValue value="Reports.swf" index="12"/>
+                <PrimitiveValue value="HighlightManager.swf" index="13"/>
+                <PrimitiveValue value="EPGAdsConsole.swf" index="14"/>
+                <PrimitiveValue value="dcui.swf" index="15"/>
+                <PrimitiveValue value="UserManagement.swf" index="16"/>
+                <PrimitiveValue value="DPConsole.swf" index="17"/>
+                <PrimitiveValue value="Dashboard.swf" index="18"/>
+                <PrimitiveValue value="CabConfigurationModule.swf" index="19"/>
+                <PrimitiveValue value="CustomerManagement.swf" index="20"/>
+                <PrimitiveValue value="UserManagementSystem.swf" index="21"/>
+                <PrimitiveValue value="cms_ui.swf" index="22"/>
+                <PrimitiveValue value="LogMonitor.swf" index="23"/>
+                <PrimitiveValue value="vam-ui.swf" index="24"/>
+
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter name="itvts.idm.applicationProfileMidleware" type="STRUCTURE" description="TBD" isArray="true">
+
+            <StructureDefinition>
+                <StructureMemberDefinition name="id" type="INTEGER"/>
+                <StructureMemberDefinition name="middlewareVersion" type="STRUCTURE" isArray="true">
+                    <StructureDefinition>
+                        <StructureMemberDefinition name="name" type="STRING"></StructureMemberDefinition>
+                        <StructureMemberDefinition name="major" type="STRING"></StructureMemberDefinition>
+                        <StructureMemberDefinition name="minor" type="STRING"></StructureMemberDefinition>
+                        <StructureMemberDefinition name="micro" type="STRING"></StructureMemberDefinition>
+                    </StructureDefinition>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+        </Parameter>
+
+
+        <!-- catalogue.1=12345 # creates a catalogue array entry (number 1) and sets that catalogues ID to 12345 catalogue.1.filter.adult = true # sets the default of the adult flag for catalogue ID 12345 to be true catalogue.1.parameter.region=23 # sets the default region for catalogue ID 12345 to be 23 catalogue.1.time.1=12:00-15:00
+            # sets the first time grouping for catalogue 1 to be 12:00-15:00 catalogue.1.time.1.filter.adult=false # sets the default value for the adult flag on catalogue ID 12345 at 12:00-15:00 UTC to be false catalogue.1.time.2=15:01-19:00 # sets the 2nd time grouping for catalogue 1 to be 15:01-19:00 -->
+
+        <Parameter name="EmmdClient" type="STRUCTURE" description="rmi client" isArray="true">
+            <StructureDefinition>
+                <StructureMemberDefinition name="retryDelay" type="STRING"/>
+                <StructureMemberDefinition name="connections" ignoreName="true" isArray="true" type="STRUCTURE">
+                    <StructureDefinition>
+                        <StructureMemberDefinition name="host" type="STRING"/>
+                    </StructureDefinition>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue index="MUX-A">
+                    <StructureMemberValue name="retryDelay" value="3000"/>
+                    <StructureMemberValue name="connections" index="1">
+                        <StructureValue>
+                            <StructureMemberValue name="host" value="vgc1a"></StructureMemberValue>
+                        </StructureValue>
+                    </StructureMemberValue>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter name="enumTest" type="STRING" description="TBD">
+            <Range>
+                <StringEnum value="option 1"/>
+                <StringEnum value="option 2"/>
+                <StringEnum value="option 3"/>
+            </Range>
+        </Parameter>
+
+        <Parameter name="rangeTest" type="INTEGER" description="TBD">
+            <Range>
+                <ValueRange min="10" max="20"/>
+            </Range>
+        </Parameter>
+
+        <Parameter name="rangeTestArray" type="INTEGER" isArray="true" description="TBD"/>
+        <Parameter name="rangeTestArray2" type="INTEGER" isArray="true" description="TBD"/>
+
+        <!-- <Parameter name="EmmdClient2" type="STRUCTURE" description="rmi client" isArray="false"> <StructureDefinition> <StructureMemberDefinition name="mux" type="STRUCTURE" isArray="true" ignoreName="true"> <StructureDefinition> <StructureMemberDefinition name="retryDelay" type="STRING" /> <StructureMemberDefinition
+            name="connections" ignoreName="true" type="STRUCTURE"> <StructureDefinition> <StructureMemberDefinition name="host" type="STRING" /> </StructureDefinition> </StructureMemberDefinition> </StructureDefinition> </StructureMemberDefinition> </StructureDefinition> <DefaultValue> <StructureValue> <StructureMemberValue
+            name="mux" index="MUX_A"> <StructureValue> <StructureMemberValue name="retryDelay" value="3000" /> <StructureMemberValue name="connections" index="1"> <StructureValue> <StructureMemberValue name="host" value="vgc1a"></StructureMemberValue> </StructureValue> </StructureMemberValue> </StructureValue> </StructureMemberValue>
+            </StructureValue> </DefaultValue> </Parameter> -->
+
+
+        <Parameter name="service.xstream" type="STRUCTURE" isArray="false"
+                   description="Connection to Xstream server (when relevant)" requiresRestart="false">
+            <StructureDefinition>
+                <StructureMemberDefinition name="countries" isArray="true" type="STRUCTURE" ignoreName="true">
+                    <StructureDefinition>
+                        <StructureMemberDefinition name="connection" type="STRUCTURE" isArray="true" ignoreName="true">
+                            <StructureDefinition>
+                                <StructureMemberDefinition name="host" type="STRING"/>
+                                <StructureMemberDefinition name="port" type="INTEGER"/>
+                            </StructureDefinition>
+                        </StructureMemberDefinition>
+                    </StructureDefinition>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue>
+                    <StructureMemberValue name="countries">
+                        <StructureValue index="NOR">
+                            <StructureMemberValue name="connection">
+                                <StructureValue index="1">
+                                    <StructureMemberValue name="host" value="vgc1a"/>
+                                    <StructureMemberValue name="port" value="80"/>
+                                </StructureValue>
+                                <StructureValue index="2">
+                                    <StructureMemberValue name="host" value="vgc1b"/>
+                                    <StructureMemberValue name="port" value="80"/>
+                                </StructureValue>
+                            </StructureMemberValue>
+                        </StructureValue>
+                    </StructureMemberValue>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter name="tms.delivery.message.remotedata.retriever" type="STRUCTURE"
+                   description="The details of remote data retriever fro retrieving device and household info.The '{householdId}' and {deviceId} token in the parameter's value will be replaced with the real Id being processed.">
+            <StructureDefinition>
+                <StructureMemberDefinition name="host" type="STRING"/>
+                <StructureMemberDefinition name="port" type="INTEGER"/>
+                <StructureMemberDefinition name="householdUrl" type="STRING"/>
+                <StructureMemberDefinition name="deviceUrl" type="STRING"/>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue>
+                    <StructureMemberValue name="host" value="vgc1a"/>
+                    <StructureMemberValue name="port" value="6040"/>
+                    <StructureMemberValue name="householdUrl" value="/upm/households/{householdId}"/>
+                    <StructureMemberValue name="deviceUrl" value="/upm/devices/{deviceId}"/>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter description="Season Content Group Enabled" type="BOOLEAN" name="vam.seasonContentGroupEnabled"
+                   advanced="true">
+            <DefaultValue>
+                <PrimitiveValue value="true"/>
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter description="Series Group Type Namespace" type="STRING" name="vam.seriesGroupTypeNamespace"
+                   advanced="true">
+            <DefaultValue>
+                <PrimitiveValue value="urn:nnds:vam:group:series:"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="Season Group Type Namespace" type="STRING" name="vam.seasonGroupTypeNamespace"
+                   advanced="true">
+            <DefaultValue>
+                <PrimitiveValue value="urn:nnds:vam:group:season:"/>
+            </DefaultValue>
+        </Parameter>
+
+
+        <Parameter name="tms.delivery.message.remotedata.retriever" type="STRUCTURE"
+                   description="The details of remote data retriever fro retrieving device and household info.The '{householdId}' and {deviceId} token in the parameter's value will be replaced with the real Id being processed.">
+            <StructureDefinition>
+                <StructureMemberDefinition name="host" type="STRING">
+                    <DefaultValue>
+                        <PrimitiveValue value="vgc1a"></PrimitiveValue>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition name="port" type="INTEGER">
+                    <DefaultValue>
+                        <PrimitiveValue value="6040"></PrimitiveValue>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition name="householdUrl" type="STRING">
+                    <DefaultValue>
+                        <PrimitiveValue value="/upm/households/{householdId}"></PrimitiveValue>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition name="deviceUrl" type="STRING">
+                    <DefaultValue>
+                        <PrimitiveValue value="/upm/devices/{deviceId}"></PrimitiveValue>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+        </Parameter>
+
+        <!-- <Parameter name="itvts.idm.applicationProfile" type="STRUCTURE" description="Application profile which defines the STB platform that can run this application" isArray="true"> <DefaultValue> <PrimitiveValue value="1001" index="1" /> </DefaultValue> </Parameter> -->
+        <Parameter name="itvts.idm.applicationProfile" required="false" type="STRUCTURE"
+                   description="MiddlewareVersions for an application profile that can run this application."
+                   isArray="true">
+            <StructureDefinition>
+                <!-- <StructureMemberDefinition name="itvts.idm.applicationProfile" type="INTEGER" /> -->
+                <StructureMemberDefinition name="middlewareVersion" type="STRUCTURE" isArray="true">
+                    <StructureDefinition>
+                        <StructureMemberDefinition name="name" type="STRING"></StructureMemberDefinition>
+                        <StructureMemberDefinition name="major" type="STRING"></StructureMemberDefinition>
+                        <StructureMemberDefinition name="minor" type="STRING"></StructureMemberDefinition>
+                        <StructureMemberDefinition name="micro" type="STRING"></StructureMemberDefinition>
+                    </StructureDefinition>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+        </Parameter>
+
+        <Parameter name="stringList" type="STRING" description="TBD">
+            <DefaultValue>
+                <PrimitiveValue value="one,two,three"></PrimitiveValue>
+            </DefaultValue>
+        </Parameter>
+
+        <!-- <Parameter name="itvts.icd.pait.profile" required="false" type="STRUCTURE" description="Multiple pait profiles that are supported" isArray="true"> <StructureDefinition> <StructureMemberDefinition name="objectPath" type="STRING" /> <StructureMemberDefinition name="validationCommand" type="STRING"
+            /> <StructureMemberDefinition name="applicationProfile.id" type="INTEGER" isArray="true" /> </StructureDefinition> <DefaultValue> <StructureValue index="1"> <StructureMemberValue name="objectPath" value="signaling.config" /> <StructureMemberValue name="applicationProfile.id" index="1" value="1001" />
+            <StructureMemberValue name="applicationProfile.id" index="2" value="1002" /> </StructureValue> </DefaultValue> </Parameter> -->
+
+
+        <Parameter name="itvts.icd.pait.profile" required="false" type="STRUCTURE"
+                   description="Multiple pait profiles that are supported" isArray="true">
+            <StructureDefinition>
+                <StructureMemberDefinition name="objectPath" type="STRING"/>
+                <StructureMemberDefinition name="validationCommand" type="STRING"/>
+                <StructureMemberDefinition name="applicationProfile" type="STRUCTURE" isArray="true">
+
+                    <StructureDefinition>
+                        <StructureMemberDefinition name="id" type="INTEGER"/>
+                        <StructureMemberDefinition name="origin" type="STRING"/>
+                    </StructureDefinition>
+
+                </StructureMemberDefinition>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue index="1">
+                    <StructureMemberValue name="objectPath" value="signaling.config"/>
+                    <StructureMemberValue name="applicationProfile" index="1">
+                        <StructureValue>
+                            <StructureMemberValue name="id" value="1001"/>
+                            <StructureMemberValue name="origin" value="my origin 1"/>
+                        </StructureValue>
+                    </StructureMemberValue>
+                    <StructureMemberValue name="applicationProfile" index="2">
+                        <StructureValue>
+                            <StructureMemberValue name="id" value="1002"/>
+                            <StructureMemberValue name="origin" value="my origin 2"/>
+                        </StructureValue>
+                    </StructureMemberValue>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter name="service.cmdc" type="STRUCTURE" description="Connection details for CMDC service">
+            <StructureDefinition>
+                <StructureMemberDefinition name="connections" type="STRUCTURE" isArray="true"
+                                           description="server host/port list" ignoreName="true">
+                    <StructureDefinition>
+                        <StructureMemberDefinition name="host" type="STRING">
+                            <DefaultValue>
+                                <PrimitiveValue value="vgc1a"/>
+                            </DefaultValue>
+                        </StructureMemberDefinition>
+                        <StructureMemberDefinition name="port" type="INTEGER">
+                            <DefaultValue>
+                                <PrimitiveValue value="5600"/>
+                            </DefaultValue>
+                            <Range>
+                                <ValueRange min="0" max="65535"/>
+                            </Range>
+                        </StructureMemberDefinition>
+                    </StructureDefinition>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition name="retryDelay" type="INTEGER"/>
+                <StructureMemberDefinition name="waitingTime" type="INTEGER"/>
+                <StructureMemberDefinition name="numberOfRetries" type="INTEGER"/>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue>
+                    <StructureMemberValue name="connections">
+                        <StructureValue index="1">
+                            <StructureMemberValue value="vgc1a" name="host"/>
+                            <StructureMemberValue name="port" value="5600"/>
+                        </StructureValue>
+                    </StructureMemberValue>
+                    <StructureMemberValue value="60000" name="waitingTime"/>
+                    <StructureMemberValue value="3" name="numberOfRetries"/>
+                    <StructureMemberValue value="1500" name="retryDelay"/>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter name="dummyKey" type="STRING" description="test validation of orphan parameters"/>
+
+        <Parameter requiresRestart="true" required="true" advanced="true" isArray="true"
+                   description="Smart card feature set" type="STRUCTURE" name="smartcardAdaptor.cardFeatures">
+            <StructureDefinition>
+                <StructureMemberDefinition required="true" advanced="true"
+                                           description="The card family category association" type="STRING"
+                                           name="cardFamily"></StructureMemberDefinition>
+                <StructureMemberDefinition required="true" advanced="true"
+                                           description="Indicates whether or not the card supports SBM feature"
+                                           type="BOOLEAN" name="supportSbm">
+                    <DefaultValue>
+                        <PrimitiveValue value="true"/>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition required="true" advanced="true"
+                                           description="Indicates the maximum number of SBM blocks available"
+                                           type="STRING" name="maxSbmBlocks">
+                    <Range>
+                        <StringEnum value="0"/>
+                        <StringEnum value="4"/>
+                        <StringEnum value="8"/>
+                        <StringEnum value="16"/>
+                    </Range>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition required="true" advanced="true" isArray="true"
+                                           description="Indicates the MSB per SBM block" type="STRING" name="sbmMSB">
+                    <DefaultValue>
+                        <PrimitiveValue value="0x00" index="0"/>
+                        <PrimitiveValue value="0x01" index="1"/>
+                        <PrimitiveValue value="0x02" index="2"/>
+                        <PrimitiveValue value="0x03" index="3"/>
+                        <PrimitiveValue value="0x04" index="4"/>
+                        <PrimitiveValue value="0x05" index="5"/>
+                        <PrimitiveValue value="0x06" index="6"/>
+                        <PrimitiveValue value="0x07" index="7"/>
+                        <PrimitiveValue value="0x08" index="8"/>
+                        <PrimitiveValue value="0x09" index="9"/>
+                        <PrimitiveValue value="0x0a" index="10"/>
+                        <PrimitiveValue value="0x0b" index="11"/>
+                        <PrimitiveValue value="0x0c" index="12"/>
+                        <PrimitiveValue value="0x0d" index="13"/>
+                        <PrimitiveValue value="0x0e" index="14"/>
+                        <PrimitiveValue value="0x0f" index="15"/>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition required="true" advanced="true"
+                                           description="Indicates the maximum number of personal region areas"
+                                           type="STRING" name="maxRegions">
+                    <Range>
+                        <StringEnum value="1"/>
+                        <StringEnum value="4"/>
+                    </Range>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition required="true" advanced="true"
+                                           description="The initial card counter loaded upon card and serialization data loading"
+                                           type="INTEGER" name="initialCounter">
+                    <DefaultValue>
+                        <PrimitiveValue value="1000"/>
+                    </DefaultValue>
+                    <Range>
+                        <ValueRange min="1"/>
+                    </Range>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition required="true" advanced="true"
+                                           description="The maximum number of title-OPPV authorizations allowed for a single smart card"
+                                           type="INTEGER" name="maxNumOfOPPVs">
+                    <DefaultValue>
+                        <PrimitiveValue value="25"/>
+                    </DefaultValue>
+                    <Range>
+                        <ValueRange min="1"/>
+                    </Range>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+        </Parameter>
+
+        <Parameter name="authenticator.Unilateral.SSH.enable" type="BOOLEAN"
+                   description="Unilateral SSH authenticator isEnable parameter" isArray="false">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter name="authenticator.Unilateral.SSH" type="STRUCTURE"
+                   description="Unilateral SSH authenticator parameters" isArray="false">
+            <StructureDefinition>
+                <StructureMemberDefinition type="BOOLEAN" name="isMock"/>
+                <StructureMemberDefinition type="INTEGER" name="serverType"/>
+                <StructureMemberDefinition type="INTEGER" name="sleepTime"/>
+                <StructureMemberDefinition type="INTEGER" name="maxRequestTries"/>
+                <StructureMemberDefinition type="INTEGER" name="responseTimeout"/>
+                <StructureMemberDefinition type="INTEGER" name="maxNoResponses"/>
+                <StructureMemberDefinition type="INTEGER" name="chipType" isArray="true" required="false"/>
+                <StructureMemberDefinition type="STRUCTURE" name="address" isArray="true" ignoreName="true"
+                                           required="false">
+                    <StructureDefinition>
+                        <StructureMemberDefinition type="INTEGER" name="CasId" required="false"/>
+                        <StructureMemberDefinition type="STRING" name="host" required="false"/>
+                        <StructureMemberDefinition type="INTEGER" name="port" required="false"/>
+                    </StructureDefinition>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue>
+                    <StructureMemberValue name="isMock" value="false"/>
+                    <StructureMemberValue name="serverType" value="0"/>
+                    <StructureMemberValue name="sleepTime" value="10"/>
+                    <StructureMemberValue name="maxRequestTries" value="3"/>
+                    <StructureMemberValue name="responseTimeout" value="300"/>
+                    <StructureMemberValue name="maxNoResponses" value="3"/>
+                    <StructureMemberValue name="address">
+                        <StructureValue index="1">
+                            <StructureMemberValue name="host" value="host"/>
+                            <StructureMemberValue name="port" value="-1"/>
+                        </StructureValue>
+                    </StructureMemberValue>
+                </StructureValue>
+            </DefaultValue>
+            <EnabledBy parameterName="authenticator.Unilateral.SSH.enable" operator="E">
+                <Value>
+                    <PrimitiveValue value="true"></PrimitiveValue>
+                </Value>
+            </EnabledBy>
+        </Parameter>
+
+        <Parameter description="RMI Client TMS Messages Storage setting" type="STRUCTURE"
+                   name="tms.storage.messages.rmi">
+            <StructureDefinition>
+                <StructureMemberDefinition ignoreName="true" isArray="true" type="STRUCTURE" name="connection">
+                    <StructureDefinition>
+                        <StructureMemberDefinition type="STRING" name="host"/>
+                        <StructureMemberDefinition type="INTEGER" name="port">
+                            <Range>
+                                <ValueRange max="65535" min="0"/>
+                            </Range>
+                        </StructureMemberDefinition>
+                    </StructureDefinition>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition type="INTEGER" name="numberOfRetries"/>
+                <StructureMemberDefinition type="INTEGER" name="retryDelay"/>
+                <StructureMemberDefinition type="INTEGER" name="waitingTime"/>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue>
+                    <StructureMemberValue name="connection">
+                        <StructureValue index="1">
+                            <StructureMemberValue value="vgc1a" name="host"/>
+                            <StructureMemberValue value="13131" name="port"/>
+                        </StructureValue>
+                        <StructureValue index="2">
+                            <StructureMemberValue value="vgc1b" name="host"/>
+                            <StructureMemberValue value="13131" name="port"/>
+                        </StructureValue>
+                    </StructureMemberValue>
+                    <StructureMemberValue value="3" name="numberOfRetries"/>
+                    <StructureMemberValue value="1500" name="retryDelay"/>
+                    <StructureMemberValue value="60000" name="waitingTime"/>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter name="service.queue.connections" isArray="true" type="STRUCTURE"
+                   description="Connection identifier for queue server(s). For HornetQ this is the connection to HornetQ's jndi service.">
+            <StructureDefinition>
+                <StructureMemberDefinition name="host" type="STRING"/>
+                <StructureMemberDefinition name="port" type="INTEGER">
+                    <DefaultValue>
+                        <PrimitiveValue value="5902"/>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition name="jmxPort" type="INTEGER">
+                    <DefaultValue>
+                        <PrimitiveValue value="3900"/>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue index="1">
+                    <StructureMemberValue name="host" value="vgc1a"/>
+                    <StructureMemberValue name="port" value="5902"/>
+                    <StructureMemberValue name="jmxPort" value="3900"/>
+                </StructureValue>
+            </DefaultValue>
+            <EnabledBy parameterName="service.queue.isEnabled" operator="E">
+                <Value>
+                    <PrimitiveValue value="true"/>
+                </Value>
+            </EnabledBy>
+        </Parameter>
+
+
+        <Parameter name="tms.tmm.behavior" type="STRUCTURE" isArray="true"
+                   description="Definition of behavior of message source for sending messages through TMS">
+            <StructureDefinition>
+                <StructureMemberDefinition name="name" type="STRING"/>
+                <StructureMemberDefinition name="deliveryMechanisms" type="STRING"/>
+                <StructureMemberDefinition name="isAutoDelete" type="BOOLEAN"/>
+                <StructureMemberDefinition name="messageExpirationTime" type="STRING"/>
+                <StructureMemberDefinition name="filters.deviceTypes" type="STRING"/>
+                <StructureMemberDefinition name="emmdConfig" type="STRUCTURE" isArray="true">
+                    <StructureDefinition>
+                        <StructureMemberDefinition name="immediatePriority" type="INTEGER"/>
+                        <!-- <StructureMemberDefinition name="sendUrgentToAllTransponders" type="STRING" /> -->
+                        <StructureMemberDefinition name="urgentPersistentPriority.initialPriority" type="INTEGER"/>
+                        <StructureMemberDefinition name="urgentPersistentPriority.reassignPriority" type="INTEGER"/>
+                        <StructureMemberDefinition name="urgentPersistentPriority.reassignTime" type="STRING"/>
+                        <StructureMemberDefinition name="persistentPriority.initialPriority" type="INTEGER"/>
+                        <StructureMemberDefinition name="persistentPriority.reassignPriority" type="INTEGER"/>
+                        <StructureMemberDefinition name="persistentPriority.reassignTime" type="STRING"/>
+                    </StructureDefinition>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue index="1">
+                    <StructureMemberValue name="name" value="otaBehavior"/>
+                    <StructureMemberValue name="deliveryMechanisms" value="ota"/>
+                </StructureValue>
+                <StructureValue index="2">
+                    <StructureMemberValue name="name" value="xmppBehavior"/>
+                    <StructureMemberValue name="deliveryMechanisms" value="xmpp"/>
+                </StructureValue>
+                <StructureValue index="3">
+                    <StructureMemberValue name="name" value="appleBehavior"/>
+                    <StructureMemberValue name="deliveryMechanisms" value="apple"/>
+                </StructureValue>
+                <StructureValue index="4">
+                    <StructureMemberValue name="name" value="androidBehavior"/>
+                    <StructureMemberValue name="deliveryMechanisms" value="android"/>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter name="tms.tmm.rmiNotificatorOnDemandServer2" type="STRUCTURE"
+                   description="settings for the secondary ODS (when applicable)">
+            <StructureDefinition>
+                <StructureMemberDefinition name="numberOfRetries" type="INTEGER"/>
+                <StructureMemberDefinition name="retryDelay" type="INTEGER"/>
+                <StructureMemberDefinition name="serviceName" type="STRING" hidden="true"/>
+                <StructureMemberDefinition name="waitingTime" type="INTEGER"/>
+                <StructureMemberDefinition name="connections" type="STRUCTURE" isArray="true" ignoreName="true">
+                    <StructureDefinition>
+                        <StructureMemberDefinition name="host" type="STRING"/>
+                        <StructureMemberDefinition name="port" type="STRING"/>
+                    </StructureDefinition>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue>
+                    <StructureMemberValue name="numberOfRetries" value="5"/>
+                    <StructureMemberValue name="retryDelay" value="1500"/>
+                    <StructureMemberValue name="serviceName" value="notificationHandlerRMI"/>
+                    <StructureMemberValue name="waitingTime" value="60000"/>
+                    <StructureMemberValue name="connections">
+                        <StructureValue index="1">
+                            <StructureMemberValue name="host" value="vgc1a"/>
+                            <StructureMemberValue name="port" value="13131"/>
+                        </StructureValue>
+                        <StructureValue index="2">
+                            <StructureMemberValue name="host" value="vgc1b"/>
+                            <StructureMemberValue name="port" value="13131"/>
+                        </StructureValue>
+                    </StructureMemberValue>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="VAM Rules Status Email Codes" type="STRING" name="vam.rulesStatusEmailCodes"
+                   advanced="true">
+            <DefaultValue>
+                <PrimitiveValue value="0x1001, 0x1004, 0x1005"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter name="upm.configuration" type="STRUCTURE" description="UPM static configuration per group"
+                   isArray="true">
+            <StructureDefinition>
+                <StructureMemberDefinition name="servers" type="STRUCTURE" description="Servers' Configuration"
+                                           isArray="true">
+                    <StructureDefinition>
+                        <StructureMemberDefinition name="URI" type="STRING"/>
+                        <StructureMemberDefinition name="timeout" type="STRING"/>
+                        <StructureMemberDefinition name="numRetries" type="STRING"/>
+                        <StructureMemberDefinition name="port" type="INTEGER" required="true"/>
+                        <StructureMemberDefinition name="source" type="STRING" required="false"/>
+                    </StructureDefinition>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition name="languages" type="STRING"
+                                           description="List of supported languages, sorted by priorities"
+                                           isArray="true"/>
+                <StructureMemberDefinition name="timezoneInfo.localTimeOffset" type="STRING"
+                                           description="The time offset including the offset polarity, example +02:00"/>
+                <StructureMemberDefinition name="timezoneInfo.timeOfChange" type="STRING"
+                                           description="The date and time in MJD and UTC when the next time change will take place, example 2012-03-30T02:00:00"/>
+                <StructureMemberDefinition name="timezoneInfo.nextTimeOffset" type="STRING"
+                                           description="The next time offset time after the change including the offset polarity, example +01:00"/>
+            </StructureDefinition>
+        </Parameter>
+
+
+        <Parameter name="authenticator.Unilateral.SAC.enable" type="BOOLEAN"
+                   description="Unilateral SAC authenticator isEnable parameter" isArray="false">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter name="authenticator.Unilateral.SAC" type="STRUCTURE"
+                   description="Unilateral SAC authenticator parameters" isArray="false" base="authenticator">
+            <DefaultValue>
+                <StructureValue>
+                    <StructureMemberValue name="authenticator">
+                        <StructureValue>
+                            <StructureMemberValue name="address">
+                                <StructureValue index="1">
+                                    <StructureMemberValue name="host" value="host"/>
+                                    <StructureMemberValue name="port" value="-1"/>
+                                    <StructureMemberValue name="key" value="AABBCCDDEEFF00112233445566778899"/>
+                                </StructureValue>
+                            </StructureMemberValue>
+                        </StructureValue>
+                    </StructureMemberValue>
+                </StructureValue>
+            </DefaultValue>
+            <EnabledBy parameterName="authenticator.Unilateral.SAC.enable" operator="E">
+                <Value>
+                    <PrimitiveValue value="true"></PrimitiveValue>
+                </Value>
+            </EnabledBy>
+        </Parameter>
+
+        <Parameter name="service.cache" type="STRUCTURE" description="Memcached server communication" required="true"
+                   isArray="true">
+            <StructureDefinition>
+                <StructureMemberDefinition name="host" type="STRING"/>
+                <StructureMemberDefinition name="port" type="INTEGER">
+                    <DefaultValue>
+                        <PrimitiveValue value="11211"/>
+                    </DefaultValue>
+                    <Range>
+                        <ValueRange min="10000"/>
+                    </Range>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue index="1">
+                    <StructureMemberValue name="host" value="vgc1a"/>
+                </StructureValue>
+                <StructureValue index="2">
+                    <StructureMemberValue name="host" value="vgc1b"/>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+
+        <Parameter name="imageSelector" type="STRUCTURE" description="An image selector" isArray="true">
+            <StructureDefinition>
+                <StructureMemberDefinition name="a" type="STRING">
+                    <DefaultValue>
+                        <PrimitiveValue value="default for A"/>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition name="b" type="INTEGER">
+                    <DefaultValue>
+                        <PrimitiveValue value="122"/>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition name="c" type="STRING">
+                    <DefaultValue>
+                        <PrimitiveValue value="default for C"/>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition name="d" type="STRING">
+                    <DefaultValue>
+                        <PrimitiveValue value="default for D"/>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition name="e" type="INTEGER">
+                    <DefaultValue>
+                        <PrimitiveValue value="133"/>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+        </Parameter>
+
+
+    </NamespaceDefinition>
+</NamespaceDefinitions>

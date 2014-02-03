@@ -62,5 +62,11 @@
             <artifactId>http-client-apache</artifactId>
             <version>${http-client-apache-version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.cisco.vss.foundation</groupId>
+            <artifactId>logging-lib</artifactId>
+            <version>${logging-lib-version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>	
 </project>
