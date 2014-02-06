@@ -71,4 +71,10 @@ public class FoundationCompositeConfiguration extends CompositeConfiguration {
 		cache.put(key, value);
 	}
 
+    @Override
+    public void setProperty(String key, Object value) {
+        super.setProperty(key, value);
+        updateCache(key, value);
+    }
+
 }
