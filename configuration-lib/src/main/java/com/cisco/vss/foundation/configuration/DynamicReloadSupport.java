@@ -18,10 +18,8 @@ import java.util.TimerTask;
  * When enabled the configuration in memory map will be updated upon file changes within a configuration refresh delay period.<br>
  * Client interested in getting notifications of configuration reload should register via {@link CabConfigurationListenerRegistry#addCabConfigurationListener(CabConfigurationListener)} API.
  * 
- * @Deprecated
  * @author Yair Ogen
  */
-@Deprecated
 public class DynamicReloadSupport {
 
 	private static final Logger LOGGER = Logger.getLogger(DynamicReloadSupport.class);
