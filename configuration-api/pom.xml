@@ -11,7 +11,7 @@
     <name>configuration-api</name>
     <version>0.0.0-1-SNAPSHOT</version>
     <description>This project is...</description>
-    <url>https://github.com/foundation-runtime/configuration/configuration-api</url>
+    <url>https://github.com/foundation-runtime/configuration/tree/master/configuration-api</url>
     <packaging>jar</packaging>
     <licenses>
         <license>
@@ -41,7 +41,7 @@
         </developer>
     </developers>
     <scm>
-        <url>https://github.com/foundation-runtime/configuration/configuration-api</url>
+        <url>https://github.com/foundation-runtime/configuration/tree/master/configuration-api</url>
     </scm>
     <organization>
         <name>Cisco</name>
