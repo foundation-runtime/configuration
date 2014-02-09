@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<NamespaceDefinitions xsi:noNamespaceSchemaLocation="http://ch-infra.il.nds.com/cabResources/CCP_XML.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <NamespaceDefinition>
+        <NamespaceIdentifier version="3.23.0-1" name="carm"/>
+        <NamespaceDependency>
+            <NamespaceIdentifier version="3.23.0-0" name="cabConfiguration"/>
+        </NamespaceDependency>
+        <NamespaceDependency>
+            <NamespaceIdentifier version="3.0.1-1" name="cabPwdManagement"/>
+        </NamespaceDependency>
+        <NamespaceDependency>
+            <NamespaceIdentifier version="3.23.1-0" name="infra-db"/>
+        </NamespaceDependency>
+        <NamespaceDependency>
+            <NamespaceIdentifier version="3.23.0-1" name="cabCommunication"/>
+            <ParameterOverride instantiationLevel="COMPONENT" name="service.rmi.innerPort">
+                <InstallDefault>
+                    <PrimitiveValue value="5149"/>
+                </InstallDefault>
+            </ParameterOverride>
+        </NamespaceDependency>
+        <NamespaceDependency>
+            <NamespaceIdentifier version="3.23.0-0" name="cabMonitoring"/>
+            <ParameterOverride instantiationLevel="COMPONENT" name="service.mxagentRegistry.innerPort">
+                <InstallDefault>
+                    <PrimitiveValue value="3140"/>
+                </InstallDefault>
+            </ParameterOverride>
+            <ParameterOverride instantiationLevel="COMPONENT" name="service.mxagentRegistry.port">
+                <InstallDefault>
+                    <PrimitiveValue value="3000"/>
+                </InstallDefault>
+            </ParameterOverride>
+        </NamespaceDependency>
+        <Parameter isArray="false" description="ACG client" type="STRUCTURE" name="service.acg">
+            <StructureDefinition>
+                <StructureMemberDefinition type="STRING" name="host"/>
+                <StructureMemberDefinition type="INTEGER" name="port">
+                	<DefaultValue>
+                		<PrimitiveValue value="330"/>
+                	</DefaultValue>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue>
+                    <StructureMemberValue value="vgc1a" name="host"/>
+                    <StructureMemberValue value="5110" name="port"/>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+        <Parameter isArray="true" description="ACG client" type="STRUCTURE" name="service.carm">
+            <StructureDefinition>
+                <StructureMemberDefinition type="STRING" name="host"/>
+                <StructureMemberDefinition type="INTEGER" name="port"/>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue index="1">
+                    <StructureMemberValue value="vgc1a" name="host"/>
+                    <StructureMemberValue value="5110" name="port"/>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+        <Parameter isArray="false" description="ACG client" type="STRUCTURE" name="service.bsm">
+            <StructureDefinition>
+                <StructureMemberDefinition type="STRING" name="host"/>
+                <StructureMemberDefinition type="INTEGER" name="port"/>
+                <StructureMemberDefinition name="nested" type="STRUCTURE">
+                	<StructureDefinition>
+                		<StructureMemberDefinition type="STRING" name="host">
+                			<DefaultValue>
+                				<PrimitiveValue value="vgc1a"></PrimitiveValue>
+                			</DefaultValue>
+                		</StructureMemberDefinition>
+                		<StructureMemberDefinition type="INTEGER" name="port"/>
+                	</StructureDefinition>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+        </Parameter>
+        <Parameter isArray="true" description="ACG client" type="STRUCTURE" name="service.bb">
+            <StructureDefinition>
+                <StructureMemberDefinition type="STRING" name="host"/>
+                <StructureMemberDefinition type="INTEGER" name="port"/>
+                <StructureMemberDefinition name="nested" type="STRUCTURE" isArray="true">
+                	<StructureDefinition>
+                		<StructureMemberDefinition type="STRING" name="host"/>
+                		<StructureMemberDefinition type="INTEGER" name="port">
+                			<DefaultValue>
+                				<PrimitiveValue value="222"/>
+                			</DefaultValue>
+                		</StructureMemberDefinition>
+                	</StructureDefinition>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+        </Parameter>
+        <Parameter isArray="true" description="ACG client" type="STRUCTURE" name="service.ignoreName">
+            <StructureDefinition>
+                <StructureMemberDefinition type="STRING" name="host1"/>
+                <StructureMemberDefinition type="INTEGER" name="port1"/>
+                <StructureMemberDefinition name="nested" type="STRUCTURE" isArray="true" ignoreName="true">
+                	<StructureDefinition>
+                		<StructureMemberDefinition type="STRING" name="host2"/>
+                		<StructureMemberDefinition type="INTEGER" name="port2">
+                			<DefaultValue>
+                				<PrimitiveValue value="222"/>
+                			</DefaultValue>
+                		</StructureMemberDefinition>
+                	</StructureDefinition>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+        </Parameter>
+        <Parameter unit="DAYS" advanced="true" description="Number of days to store expired product in the database" type="INTEGER" name="database.carm.tidyupProducts">
+            <DefaultValue>
+                <PrimitiveValue value="90"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="The usage of the same ServiceId for different not overlapping Products" type="BOOLEAN" name="serviceidMultiUsage.isEnabled">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="Default value of the flag DifferentServiceIdsAllowed in CreateProduct API" type="BOOLEAN" name="defaultDifferentServiceIds.isEnabled">
+            <DefaultValue>
+                <PrimitiveValue value="true"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter unit="DAYS" description="Days of maximum future period of product" type="INTEGER" name="productMaxFuture">
+            <DefaultValue>
+                <PrimitiveValue value="720"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter isArray="true" description="List of product types for syncronization with EMMG" type="INTEGER" name="emmgSync.caProductType">
+            <DefaultValue>
+                <PrimitiveValue index="1" value="2"/>
+                <PrimitiveValue index="2" value="4"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="Synchronization with EMMG (queue)" type="BOOLEAN" name="emmgSync.isEnabled">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter hidden="true" description="CARM Project name" type="STRING" name="projectName">
+            <DefaultValue>
+                <PrimitiveValue value="CARM"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter unit="milliseconds" hidden="true" description="Ms of waiting for lock of ServiceId" type="INTEGER" name="database.carm.serviceidLockingTimeout">
+            <DefaultValue>
+                <PrimitiveValue value="200"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="The permission for monitoring" type="BOOLEAN" name="monitoring.isEnabled">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter hidden="true" description="CARM instance name for monitoring" type="STRING" name="instanceID">
+            <DefaultValue>
+                <PrimitiveValue value="CARMInstance1"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="the service name for the CARM RMI server" type="STRING" name="CarmGenericRMI.servicename">
+            <DefaultValue>
+                <PrimitiveValue value="CarmGenericRMI"/>
+            </DefaultValue>
+        </Parameter>
+    </NamespaceDefinition>
+    <NamespaceDefinition>
+        <NamespaceIdentifier version="3.23.0-0" name="cabConfiguration"/>
+        <Parameter hidden="true" description="set to true if you want to have dyanmic supoprt enabled in your process" instantiationLevel="GLOBAL" type="BOOLEAN" name="dynamicConfigReload.enabled">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter unit="MILLISECONDS" advanced="true" description="define the perios of time to check for new config changes." instantiationLevel="GLOBAL" type="INTEGER" name="dynamicConfigReload.refreshDelay">
+            <DefaultValue>
+                <PrimitiveValue value="30000"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange min="0"/>
+            </Range>
+        </Parameter>
+        <Parameter hidden="true" description="Set to true for enabling automatic reload using a daemon thread. This enables configuration to be re-loaded even if the component is not equesting a n value from the config at the time." instantiationLevel="GLOBAL" type="BOOLEAN" name="dynamicConfigReload.autoUpdateEnabled">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+    </NamespaceDefinition>
+    <NamespaceDefinition>
+        <NamespaceIdentifier version="3.0.1-1" name="cabPwdManagement"/>
+        <Parameter hidden="true" description="when set to true enforces the password to contain numeric characters" type="BOOLEAN" name="passwordQuality.checkNumericCharacterIncluded">
+            <DefaultValue>
+                <PrimitiveValue value="true "/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter hidden="true" description="when set to true will enforce encrypted password not to include Oracle Specific forbidden characters (.,@,$,%,&amp;,?,{,},;,~,''). Also enforces that password does not start with '#' or'_'." type="BOOLEAN" name="passwordQuality.enforceOracleSpecificRules">
+            <DefaultValue>
+                <PrimitiveValue value="true "/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter hidden="true" description="define the minimum length of the password" type="INTEGER" name="passwordQuality.minimumPasswordLength">
+            <DefaultValue>
+                <PrimitiveValue value="8"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange min="0"/>
+            </Range>
+            <EnabledBy operator="E" parameterName="passwordQuality.checkMinimumPasswordLength">
+                <Value>
+                    <PrimitiveValue value="true"/>
+                </Value>
+            </EnabledBy>
+        </Parameter>
+        <Parameter hidden="true" description="when set to true enforces the password to contain a minimum length" type="BOOLEAN" name="passwordQuality.checkMinimumPasswordLength">
+            <DefaultValue>
+                <PrimitiveValue value="true "/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter hidden="true" description="when set to true enforces the password to contain non alpha-numeric characters" type="BOOLEAN" name="passwordQuality.checkNonAlphaNumericIncluded">
+            <DefaultValue>
+                <PrimitiveValue value="true "/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter hidden="true" description="when set to true enforces the password to contain both upper and lower case characters" type="BOOLEAN" name="passwordQuality.checkUpperAndLowerCaseIncluded">
+            <DefaultValue>
+                <PrimitiveValue value="true "/>
+            </DefaultValue>
+        </Parameter>
+    </NamespaceDefinition>
+    <NamespaceDefinition>
+        <NamespaceIdentifier version="3.23.1-0" name="infra-db"/>
+        <Parameter advanced="true" required="false" description="Optional and advanced. Specify a fully qualified class name of a lob handler to be set on a iBatis SqlClient object." type="STRING" name="sqlMapFactory.lobHandler">
+            <DefaultValue>
+                <PrimitiveValue value=""/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter unit="MILLISECONDS" description="Between the retries defined, the connection will 'sleep' for this amount of milliseconds." type="INTEGER" name="infra.connectionPool.acquireRetryDelay">
+            <DefaultValue>
+                <PrimitiveValue value="1500"/>
+            </DefaultValue>
+            <EnabledBy operator="GT" parameterName="infra.connectionPool.acquireRetryAttempts">
+                <Value>
+                    <PrimitiveValue value="0"/>
+                </Value>
+            </EnabledBy>
+        </Parameter>
+        <Parameter advanced="true" description="The DB driver class name. Internal value should not be changed." type="STRING" name="database.driverClassName">
+            <DefaultValue>
+                <PrimitiveValue value="oracle.jdbc.driver.OracleDriver"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="The minimum number of live connection in the DB connection pool at any given moment." type="INTEGER" name="infra.connectionPool.minLimit">
+            <DefaultValue>
+                <PrimitiveValue value="2"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="f the current number of connection in the pool is not high enough, increment by this number and acquire more connections." type="INTEGER" name="infra.connectionPool.acquireIncrement">
+            <DefaultValue>
+                <PrimitiveValue value="5"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter unit="SECONDS" description="Time in seconds. Specified the frequency of testing connections in the pool and validating them." type="INTEGER" name="infra.connectionPool.idleConnectionTestPeriod">
+            <DefaultValue>
+                <PrimitiveValue value="60"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter unit="SECONDS" description="Time in seconds. Specifies the amount of time allowed to pass between checking out a connection and checking it back in. Zero value maens no timeout." type="INTEGER" name="infra.connectionPool.abondenedConnectionTimeout">
+            <DefaultValue>
+                <PrimitiveValue value="0"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="Disable the encryption requirement on the password defined in the config file." type="BOOLEAN" name="infra.encryptionEnabled">
+            <DefaultValue>
+                <PrimitiveValue value="true"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="nable or disable the Oracle Tag feature." type="BOOLEAN" name="infra.addOracleTag">
+            <DefaultValue>
+                <PrimitiveValue value="true"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="The maximum number of live connection in the DB connection pool at any given moment." type="INTEGER" name="infra.connectionPool.maxLimit">
+            <DefaultValue>
+                <PrimitiveValue value="50"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="When set to true, will test the connection prior to checking it out from the pool. This makes sure the connection is valid before the user tries to use it." type="BOOLEAN" name="infra.connectionPool.validateConnection">
+            <DefaultValue>
+                <PrimitiveValue value="true"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter unit="MILLISECONDS" description="Time in milliseconds. Specified the time in which client API will wait while chceking out a connection from the pool." type="INTEGER" name="infra.connectionPool.checkoutTimeout">
+            <DefaultValue>
+                <PrimitiveValue value="5000"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter unit="SECONDS" description="Time in seconds. Specifies the time an idle connection will remain in the pool before being killed." type="INTEGER" name="infra.connectionPool.inactivityTimeout">
+            <DefaultValue>
+                <PrimitiveValue value="1800"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="Defines wether to commit a transaction once the connection is closed." type="BOOLEAN" name="infra.connectionPool.autoCommitOnClose">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="If a connection (in one of the test periods or upon checkout sequence) turns out to be not valid, the connection pool will retry acquiring other connection from the pool/DB server. This parameter configures the number of retries." type="INTEGER" name="infra.connectionPool.acquireRetryAttempts">
+            <DefaultValue>
+                <PrimitiveValue value="3"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="Setting this value to a number higher than '0' will enable statement caching. Caching is on a per connection basis." type="INTEGER" name="infra.connectionPool.maxStatementsLimit">
+            <DefaultValue>
+                <PrimitiveValue value="150"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter advanced="true" description="the number of threads used by the connection pool for its async logic" type="INTEGER" name="infra.connectionPool.numOfHelperThreads">
+            <DefaultValue>
+                <PrimitiveValue value="5"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter unit="SECONDS" description="Time in seconds. Specifies the time an idle connection that was never used even once will remain in the pool before being killed." type="INTEGER" name="infra.connectionPool.inactivityTimeoutforNonUsedConnection">
+            <DefaultValue>
+                <PrimitiveValue value="1800"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="The number of live connections in the DB to be initialized when pool if first created." type="INTEGER" name="infra.connectionPool.initialLimit">
+            <DefaultValue>
+                <PrimitiveValue value="2"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="Defines wether to force a commit when no updates were done. Set to true to prevent a 'select for update' from locking a row without any means of releasing the lock." type="BOOLEAN" name="infra.transactionManager.forceCommit">
+            <DefaultValue>
+                <PrimitiveValue value="true"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter advanced="true" description="the implementation bean of teh underlaying data source" type="STRING" name="infra.dataSource.impl">
+            <DefaultValue>
+                <PrimitiveValue value="c3p0DataSource"/>
+            </DefaultValue>
+            <Range>
+                <StringEnum value="c3p0DataSource"/>
+                <StringEnum value="dbcpDataSource"/>
+            </Range>
+        </Parameter>
+        <Parameter description="when set to true enabled a pool of prepared statements" type="BOOLEAN" name="infra.connectionPool.isPreparedStatementsPoolEnabled">
+            <DefaultValue>
+                <PrimitiveValue value="true"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="when set to false sets auto commit = false on the jdbc connection" type="BOOLEAN" name="infra.defautlAutoCommit">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter advanced="true" description="when set to true will cause the component at start-up to infinetly try to a connect to a database." type="BOOLEAN" name="infra.db.infiniteInitRetryEnabled">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+    </NamespaceDefinition>
+    <NamespaceDefinition>
+        <NamespaceIdentifier version="3.23.0-1" name="cabCommunication"/>
+        <ParameterType description="The defaulat RMI Client Structure" type="STRUCTURE" name="service.rmi.base">
+            <StructureDefinition>
+                <StructureMemberDefinition description="RMI is not firewall friendly. For this reason we support a port range in which the servers open a PTP connection with the client. The port range starts with this internal port value." advanced="true" type="INTEGER" name="innerPort"/>
+                <StructureMemberDefinition description="the number of times the client will retry connectiong to a server when facing communication errors" advanced="true" type="INTEGER" name="numberOfRetries">
+                    <DefaultValue>
+                        <PrimitiveValue value="3"/>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition unit="MILLISECONDS" description="the period of time to wait between retries that occur when communication errors are encoutered." advanced="true" type="INTEGER" name="retryDelay">
+                    <DefaultValue>
+                        <PrimitiveValue value="1500"/>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition unit="MILLISECONDS" description="if the number of retries was exausted the server instance that is not working is marked as down in internal client state. The client in return will not attemp to reconnect to the server for thie configured amount of time" advanced="true" type="INTEGER" name="waitingTime">
+                    <DefaultValue>
+                        <PrimitiveValue value="60000"/>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition unit="MILLISECONDS" description="the default read timeout for the server. If in this perios of time, the client will not get any response an error will be thrown." advanced="true" type="INTEGER" name="readTimeout">
+                    <DefaultValue>
+                        <PrimitiveValue value="300000"/>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition unit="MILLISECONDS" description="the default write timeout for the server. If in this perios of time, the client will not get any response an error will be thrown." advanced="true" type="INTEGER" name="writeTimeout">
+                    <DefaultValue>
+                        <PrimitiveValue value="5000"/>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition unit="MILLISECONDS" description="the default connect timeout for the server. If in this perios of time, the client will not get any response an error will be thrown." advanced="true" type="INTEGER" name="connectTimeout">
+                    <DefaultValue>
+                        <PrimitiveValue value="5000"/>
+                    </DefaultValue>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition description="the load balancing strategy. can be either failOverStrategy or roundRobinStrategy" advanced="true" type="STRING" name="strategy">
+                    <DefaultValue>
+                        <PrimitiveValue value="failOverStrategy"/>
+                    </DefaultValue>
+                    <Range>
+                        <StringEnum value="failOverStrategy"/>
+                        <StringEnum value="roundRobinStrategy"/>
+                        <StringEnum value="activeActiveStrategy"/>
+                    </Range>
+                </StructureMemberDefinition>
+                <StructureMemberDefinition ignoreName="true" isArray="true" type="STRUCTURE" name="server">
+                    <StructureDefinition>
+                        <StructureMemberDefinition type="STRING" name="host"/>
+                        <StructureMemberDefinition type="INTEGER" name="port"/>
+                    </StructureDefinition>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+        </ParameterType>
+        <Parameter isArray="true" description="HTTP client" type="STRUCTURE" name="service.http">
+            <StructureDefinition>
+                <StructureMemberDefinition type="STRING" name="host"/>
+                <StructureMemberDefinition type="INTEGER" name="port" isArray="true">
+                <DefaultValue>
+                	<PrimitiveValue value="2222" index="1"/>
+                	<PrimitiveValue value="3333" index="2"/>
+                </DefaultValue>
+                </StructureMemberDefinition>
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue>
+                    <StructureMemberValue value="vgc1a" name="host"/>
+                    <StructureMemberValue value="5110" name="port" index="1"/>
+                    <StructureMemberValue value="5110" name="port" index="2"/>
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+        <Parameter unit="MILLISECONDS" description="The server runs a daemon thread that verifies the registry is running and that this server is registered properly. The thread wakes up every this number of milliseconds" instantiationLevel="GLOBAL" type="INTEGER" name="service.rmi.serverRecoveryDaemontimeInterval">
+            <DefaultValue>
+                <PrimitiveValue value="5000"/>
+            </DefaultValue>
+            <EnabledBy operator="E" parameterName="service.rmi.runServerRecoveryDaemon">
+                <Value>
+                    <PrimitiveValue value="true"/>
+                </Value>
+            </EnabledBy>
+        </Parameter>
+        <Parameter advanced="true" description="RMI is not firewall friendly. For this reason we support a port range in which the servers open a PTP connection with the client. The port range starts with this internal port value." instantiationLevel="GLOBAL" type="INTEGER" name="service.rmi.innerPort"/>
+        <Parameter description="when set to true the server will override a running server if it finds one that is already registered by the same name. relvent for QC environments." instantiationLevel="GLOBAL" type="BOOLEAN" name="service.rmi.replaceExistingBinding">
+            <DefaultValue>
+                <PrimitiveValue value="true"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter advanced="true" description="when set to true will expose service details and server connection deatils to cab monitoring." type="BOOLEAN" name="service.rmi.monitoringEnabled">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="the actual number of RMI servers supported on a single host" instantiationLevel="GLOBAL" type="INTEGER" name="service.rmi.portRange">
+            <DefaultValue>
+                <PrimitiveValue value="10"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange max="10" min="0"/>
+            </Range>
+        </Parameter>
+        <Parameter advanced="true" description="when set to true enabled internal heartbeat that should prevent the client from ever failing on RequestTimeoutException." instantiationLevel="GLOBAL" type="BOOLEAN" name="service.rmi.enableHeartBeat">
+            <DefaultValue>
+                <PrimitiveValue value="true"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter advanced="true" description="the default port for the RMI Registry. The client will try and connect to a server on this host, unless override by a service specific port." instantiationLevel="GLOBAL" type="INTEGER" name="service.rmi.port">
+            <DefaultValue>
+                <PrimitiveValue value="13131"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange min="10000"/>
+            </Range>
+        </Parameter>
+        <Parameter description="When set to truwe enabled the daemon thread that verifies the registry is running and that this server is registered properly." instantiationLevel="GLOBAL" type="BOOLEAN" name="service.rmi.runServerRecoveryDaemon">
+            <DefaultValue>
+                <PrimitiveValue value="true"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter unit="MILLISECONDS" advanced="true" description="the default read timeout for the server. If in this perios of time, the client will not get any response an error will be thrown." instantiationLevel="GLOBAL" type="INTEGER" name="service.rmi.readTimeout">
+            <DefaultValue>
+                <PrimitiveValue value="300000"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange min="0"/>
+            </Range>
+        </Parameter>
+        <Parameter unit="MILLISECONDS" advanced="true" description="the default read timeout for the udp server. If in this perios of time, the client will not get any response an error will be thrown." instantiationLevel="GLOBAL" type="INTEGER" name="service.udp.readTimeout">
+            <DefaultValue>
+                <PrimitiveValue value="3000"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange min="0"/>
+            </Range>
+        </Parameter>
+        <Parameter unit="MILLISECONDS" advanced="true" description="the default read timeout for the mama server. If in this perios of time, the client will not get any response an error will be thrown." instantiationLevel="GLOBAL" type="INTEGER" name="service.mama.readTimeout">
+            <DefaultValue>
+                <PrimitiveValue value="3000"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange min="0"/>
+            </Range>
+        </Parameter>
+        <Parameter unit="MILLISECONDS" advanced="true" description="the default read timeout for the http server. If in this perios of time, the client will not get any response an error will be thrown." instantiationLevel="GLOBAL" type="INTEGER" name="service.http.readTimeout">
+            <DefaultValue>
+                <PrimitiveValue value="3000"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange min="0"/>
+            </Range>
+        </Parameter>
+        <Parameter unit="MILLISECONDS" advanced="true" description="the default connect timeout for the server. If in this perios of time, the client will not get any response an error will be thrown." instantiationLevel="GLOBAL" type="INTEGER" name="service.rmi.connectTimeout">
+            <DefaultValue>
+                <PrimitiveValue value="5000"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange min="0"/>
+            </Range>
+        </Parameter>
+        <Parameter unit="MILLISECONDS" advanced="true" description="the default write timeout for the server. If in this perios of time, the client will not get any response an error will be thrown." instantiationLevel="GLOBAL" type="INTEGER" name="service.rmi.writeTimeout">
+            <DefaultValue>
+                <PrimitiveValue value="5000"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange min="0"/>
+            </Range>
+        </Parameter>
+        <Parameter advanced="true" description="if set to true, will cause the client infrastructure to re-send the current request to the server." instantiationLevel="GLOBAL" type="BOOLEAN" name="service.rmi.retryOnTimeout">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange min="0"/>
+            </Range>
+            <EnabledBy operator="GT" parameterName="service.rmi.numberOfRetries">
+                <Value>
+                    <PrimitiveValue value="0"/>
+                </Value>
+            </EnabledBy>
+        </Parameter>
+        <Parameter advanced="true" description="the number of times the client will retry connectiong to a server when facing communication errors" instantiationLevel="GLOBAL" type="INTEGER" name="service.rmi.numberOfRetries">
+            <DefaultValue>
+                <PrimitiveValue value="3"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange min="0"/>
+            </Range>
+        </Parameter>
+        <Parameter advanced="true" description="the load balancing strategy. can be either failOverStrategy or roundRobinStrategy" instantiationLevel="GLOBAL" type="STRING" name="service.rmi.strategy">
+            <DefaultValue>
+                <PrimitiveValue value="failOverStrategy"/>
+            </DefaultValue>
+            <Range>
+                <StringEnum value="failOverStrategy"/>
+                <StringEnum value="roundRobinStrategy"/>
+                <StringEnum value="activeActiveStrategy"/>
+            </Range>
+        </Parameter>
+        <Parameter unit="MILLISECONDS" advanced="true" description="the period of time to wait between retries that occur when communication errors are encoutered." instantiationLevel="GLOBAL" type="INTEGER" name="service.rmi.retryDelay">
+            <DefaultValue>
+                <PrimitiveValue value="1500"/>
+            </DefaultValue>
+            <EnabledBy operator="GT" parameterName="service.rmi.numberOfRetries">
+                <Value>
+                    <PrimitiveValue value="0"/>
+                </Value>
+            </EnabledBy>
+        </Parameter>
+        <Parameter hidden="true" description="Should be set to true for a component that is first in chain to allow efficient redundancy." instantiationLevel="GLOBAL" type="BOOLEAN" name="service.rmi.firstInChain">
+            <DefaultValue>
+                <PrimitiveValue value="true"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter unit="MILLISECONDS" advanced="true" description="if the number of retries was exausted the server instance that is not working is marked as down in internal client state. The client in return will not attemp to reconnect to the server for thie configured amount of time" instantiationLevel="GLOBAL" type="INTEGER" name="service.rmi.waitingTime">
+            <DefaultValue>
+                <PrimitiveValue value="60000"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange min="0"/>
+            </Range>
+        </Parameter>
+        <Parameter unit="MILLISECONDS" advanced="true" description="no error log isn't sent on connection problems to the data master during the first 2 minutes." type="INTEGER" name="m2notification.noDatamasterWaiverTime">
+            <DefaultValue>
+                <PrimitiveValue value="120000"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange min="0"/>
+            </Range>
+        </Parameter>
+        <Parameter advanced="true" hidden="true" description=" max concurrent handlers" type="INTEGER" name="m2notification.maxConcurrentHandlers">
+            <DefaultValue>
+                <PrimitiveValue value="50"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange min="0"/>
+            </Range>
+        </Parameter>
+        <Parameter unit="MILLISECONDS" advanced="true" description="waiting time before retry when no Data master Server isn't available (10 sec)" type="INTEGER" name="m2notification.pauseBeforeReregistrationAttempt">
+            <DefaultValue>
+                <PrimitiveValue value="10000"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange min="0"/>
+            </Range>
+        </Parameter>
+        <Parameter unit="MILLISECONDS" hidden="true" description="added time on the RMI socket to avoid the connection to be closed before the blocking time. the timeout of the rmi socket is m2notification.notificationWaitTime + datasetNotification.securityRMItimeout" type="INTEGER" name="m2notification.notificationWaitTimeRmiDelta">
+            <DefaultValue>
+                <PrimitiveValue value="50000"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange min="0"/>
+            </Range>
+        </Parameter>
+        <Parameter unit="MILLISECONDS" hidden="true" description="default blocking time of the RMI call from the dataset client to the datamaster" type="INTEGER" name="m2notification.notificationWaitTime">
+            <DefaultValue>
+                <PrimitiveValue value="120000"/>
+            </DefaultValue>
+            <Range>
+                <ValueRange min="0"/>
+            </Range>
+        </Parameter>
+        <Parameter description="enable notification" type="BOOLEAN" name="m2notification.enabled">
+            <DefaultValue>
+                <PrimitiveValue value="true"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="set to true inorder to enable rnmi sniffing." type="BOOLEAN" name="service.rmi.rmiSnifferEnabled">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="in case of failure to connect to the rmiregsitry - how many time should we retry?" type="INTEGER" name="rmiregistry.numberOfRetries">
+            <DefaultValue>
+                <PrimitiveValue value="3"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter unit="MILLISECONDS" description="in case of failure to connect to the rmiregsitry - how long should we wait between retries?" type="INTEGER" name="rmiregistry.retryDelay">
+            <DefaultValue>
+                <PrimitiveValue value="2000"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="If rmi sniffer is enabled allows you to folter which classes andor methods you do not want to sniffer. In the cvalue you can detail a list of pairs, where each pair represents a class name and a method name. I.e. {className}:{methodName};{className}:{methodName};{className}:{methodName};... You can use '*' as an abbreviation for 'all methods'. Useful when you want to filter all methods in a given class" type="STRING" name="service.rmi.rmiSnifferFilter">
+            <EnabledBy operator="E" parameterName="service.rmi.rmiSnifferEnabled">
+                <Value>
+                    <PrimitiveValue value="true"/>
+                </Value>
+            </EnabledBy>
+        </Parameter>
+        <Parameter hidden="true" description="the mq vendor name" type="STRING" name="service.mq.vendor">
+            <DefaultValue>
+                <PrimitiveValue value="hornetq"/>
+            </DefaultValue>
+            <Range>
+                <StringEnum value="hornetq"/>
+            </Range>
+        </Parameter>
+    </NamespaceDefinition>
+    <NamespaceDefinition>
+        <NamespaceIdentifier version="3.23.0-0" name="cabMonitoring"/>
+        <Parameter description="default mx port" type="STRING" name="service.mxagentRegistry.port">
+            <DefaultValue>
+                <PrimitiveValue value="3000"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="default exported port" type="STRING" name="service.mxagentRegistry.innerPort">
+            <DefaultValue>
+                <PrimitiveValue value="4000"/>
+            </DefaultValue>
+        </Parameter>
+        <Parameter description="true/false to spawn rmi registry process in process or new thread" type="STRING" name="service.mxagentRegistry.inProcess">
+            <DefaultValue>
+                <PrimitiveValue value="false"/>
+            </DefaultValue>
+        </Parameter>
+    </NamespaceDefinition>
+</NamespaceDefinitions>
