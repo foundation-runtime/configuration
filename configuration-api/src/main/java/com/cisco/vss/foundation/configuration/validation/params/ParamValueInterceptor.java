@@ -1,4 +1,4 @@
-package com.cisco.vss.foundation.configuration.wrapper.params;
+package com.cisco.vss.foundation.configuration.validation.params;
 
 /**
  * Created By: kgreen

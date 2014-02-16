@@ -1,18 +1,18 @@
 package com.cisco.vss.foundation.configuration.test.wrapper;
 
 import com.cisco.vss.foundation.configuration.*;
-import com.cisco.vss.foundation.configuration.wrapper.BaseConfiguration;
-import com.cisco.vss.foundation.configuration.wrapper.exceptions.GeneralConfigException;
-import com.cisco.vss.foundation.configuration.wrapper.params.*;
+import com.cisco.vss.foundation.configuration.validation.BaseConfiguration;
+import com.cisco.vss.foundation.configuration.validation.exceptions.GeneralConfigException;
+import com.cisco.vss.foundation.configuration.validation.params.*;
 import org.apache.commons.configuration.Configuration;
 import org.junit.*;
 
 import java.util.*;
 
-import static com.cisco.vss.foundation.configuration.wrapper.BaseConfiguration.*;
-import static com.cisco.vss.foundation.configuration.wrapper.params.ParamReaders.*;
-import static com.cisco.vss.foundation.configuration.wrapper.params.ParamValidators.*;
-import static com.cisco.vss.foundation.configuration.wrapper.params.ParamValidators.getValidator;
+import static com.cisco.vss.foundation.configuration.validation.BaseConfiguration.*;
+import static com.cisco.vss.foundation.configuration.validation.params.ParamReaders.*;
+import static com.cisco.vss.foundation.configuration.validation.params.ParamValidators.*;
+import static com.cisco.vss.foundation.configuration.validation.params.ParamValidators.getValidator;
 
 /**
  * Created By: kgreen

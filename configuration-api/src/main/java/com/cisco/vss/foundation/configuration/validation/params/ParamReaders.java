@@ -1,7 +1,7 @@
-package com.cisco.vss.foundation.configuration.wrapper.params;
+package com.cisco.vss.foundation.configuration.validation.params;
 
 import com.cisco.vss.foundation.configuration.ConfigUtil;
-import com.cisco.vss.foundation.configuration.wrapper.exceptions.GeneralConfigException;
+import com.cisco.vss.foundation.configuration.validation.exceptions.GeneralConfigException;
 import org.apache.commons.configuration.Configuration;
 
 import java.util.*;

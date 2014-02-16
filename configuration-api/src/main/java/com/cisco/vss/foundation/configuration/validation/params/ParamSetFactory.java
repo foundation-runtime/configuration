@@ -1,11 +1,11 @@
-package com.cisco.vss.foundation.configuration.wrapper.params;
+package com.cisco.vss.foundation.configuration.validation.params;
 
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.cisco.vss.foundation.configuration.wrapper.params.ParamReaders.*;
-import static com.cisco.vss.foundation.configuration.wrapper.params.ParamValidators.*;
+import static com.cisco.vss.foundation.configuration.validation.params.ParamReaders.*;
+import static com.cisco.vss.foundation.configuration.validation.params.ParamValidators.*;
 
 /**
  * Created By: kgreen

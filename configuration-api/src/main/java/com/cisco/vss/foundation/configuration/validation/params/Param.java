@@ -1,7 +1,7 @@
-package com.cisco.vss.foundation.configuration.wrapper.params;
+package com.cisco.vss.foundation.configuration.validation.params;
 
-import com.cisco.vss.foundation.configuration.wrapper.BaseConfiguration;
-import com.cisco.vss.foundation.configuration.wrapper.params.ParamValidators.*;
+import com.cisco.vss.foundation.configuration.validation.BaseConfiguration;
+import com.cisco.vss.foundation.configuration.validation.params.ParamValidators.*;
 
 /**
 * Created By: kgreen

@@ -1,4 +1,4 @@
-package com.cisco.vss.foundation.configuration.wrapper.exceptions;
+package com.cisco.vss.foundation.configuration.validation.exceptions;
 
 /**
  * Input parameters validation exception
