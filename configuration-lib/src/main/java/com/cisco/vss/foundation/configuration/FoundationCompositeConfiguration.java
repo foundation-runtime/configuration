@@ -68,8 +68,12 @@ public class FoundationCompositeConfiguration extends CompositeConfiguration {
 	}
 
 	public void updateCache(String key, Object value) {
-		cache.put(key, value);
-	}
+        if (value == null) {
+            cache.remove(key);
+        }else{
+            cache.put(key, value);
+        }
+    }
 
     @Override
     public void setProperty(String key, Object value) {
