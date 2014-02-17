@@ -293,13 +293,10 @@ public class ParamValidators {
             // validate hexadecimal value length in bits
             if (lengthInBits) {
 
-                byte[] bytes = new byte[0];
+                byte[] bytes = null;
                 try {
                     bytes = Hex.decodeHex(hexValue.toCharArray());
                 } catch (DecoderException e) {
-                    return "'" + hexValue + "' hexadecimal value cannot be converted to bits.";
-                }
-                if (bytes == null) {
                     return "'" + hexValue + "' hexadecimal value cannot be converted to bits.";
                 }
 
