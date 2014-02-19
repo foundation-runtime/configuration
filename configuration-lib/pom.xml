@@ -3,13 +3,13 @@
     <parent>
 		<groupId>com.cisco.vss.foundation</groupId>
 		<artifactId>foundation-common-base</artifactId>
-		<version>0.0.0-2-SNAPSHOT</version>
+		<version>0.0.0-3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.cisco.vss.foundation</groupId>
     <artifactId>configuration-lib</artifactId>
     <name>configuration-lib</name>
-    <version>0.0.0-2-SNAPSHOT</version>
+    <version>0.0.0-3-SNAPSHOT</version>
     <description>This project is the implementation library for configuration in the cisco vss foundation runtime</description>
     <url>https://github.com/foundation-runtime/configuration/tree/master/configuration-lib</url>
     <packaging>jar</packaging>
