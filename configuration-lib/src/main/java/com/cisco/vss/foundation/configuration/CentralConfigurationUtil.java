@@ -9,6 +9,7 @@ import com.cisco.vss.foundation.configuration.xml.XmlException;
 import com.cisco.vss.foundation.configuration.xml.jaxb.*;
 import com.cisco.vss.foundation.http.*;
 import com.cisco.vss.foundation.http.apache.ApacheHttpClientFactory;
+import com.cisco.vss.foundation.http.apache.ApacheHttpResponse;
 import org.apache.commons.configuration.*;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -42,7 +43,7 @@ public enum CentralConfigurationUtil {
     private static final MessageFormat RENEW_LEASE_URL = new MessageFormat("http://{0}:{1}/api/renewLease?levelInstanceId={2,number,#}");
     private static final Logger LOGGER = LoggerFactory.getLogger(CentralConfigurationUtil.class);
     private static String uniqueProcName = null;
-    private HttpClient httpClient = ApacheHttpClientFactory.createHttpClient("ccp-lib");
+    private HttpClient httpClient = getHttpClient();
 
     /**
      * return the unique process name that is composed of the following parts: <br>
@@ -187,6 +188,45 @@ public enum CentralConfigurationUtil {
         }
 
         return backupDir;
+    }
+
+    private HttpClient<HttpRequest, ApacheHttpResponse> getHttpClient() {
+
+        MapConfiguration mapConfiguration = new MapConfiguration(loadHttpMetadata());
+        return ApacheHttpClientFactory.createHttpClient("service.configurationLib", mapConfiguration);
+    }
+
+    public Properties loadHttpMetadata() {
+
+        Properties properties = new Properties();
+
+        // parse the host & port pairs
+        String ccpServerData = System.getenv(CcpConstants.CCP_SERVER);
+
+        // validate the string matches the expected pattern:
+        // "host:port;host:port..."
+        if (StringUtils.isEmpty(ccpServerData)) {
+            throw new IllegalArgumentException("the CCP_SERVER environment variable does not have a legal host port pair. The value read is: " + ccpServerData);
+        }
+
+        if (!ccpServerData.matches(CcpConstants.CCP_SERVER__HOST_REG_EX) && !ccpServerData.matches(CcpConstants.CCP_SERVER__IPV6_REG_EX)) {
+            throw new IllegalArgumentException("the CCP_SERVER environment variable does not have a legal host port pair. The value read is: " + ccpServerData);
+        }
+
+        String[] hostPortPairs = ccpServerData.split(";");
+
+        int numOfServers = 1;
+
+        for (String hostPortString : hostPortPairs) {
+            int index = hostPortString.lastIndexOf(":");
+            String host = hostPortString.substring(0, index);
+            String port = hostPortString.substring(index + 1);
+            properties.setProperty("service.configurationLib." + numOfServers + ".host", host);
+            properties.setProperty("service.configurationLib." + numOfServers + ".port", port);
+            numOfServers++;
+        }
+
+        return properties;
     }
 
     /**
@@ -643,8 +683,6 @@ public enum CentralConfigurationUtil {
      */
     public ConfigurationResponse getConfigurationResponseViaHttp(String uniqeProcessName) {
 
-        loadHttpMetadata();
-
         ConfigurationResponse configurationResponse = null;
 
         HttpRequest httpRequest = HttpRequest.newBuilder().httpMethod(HttpMethod.GET).uri("/api/configuration?process-name=" + uniqeProcessName).build();
@@ -733,41 +771,6 @@ public enum CentralConfigurationUtil {
 //
 //        return new Pair<HttpResponse, Pair<String, Integer>>(response, currentHostPort);
 //    }
-
-    public void loadHttpMetadata() {
-        // first time init the host and port pairs after parsing from the
-        // environemnt variable
-//        if (httpclients.isEmpty()) {
-
-            // parse the host & port pairs
-            String ccpServerData = System.getenv(CcpConstants.CCP_SERVER);
-
-            // validate the string matches the expected pattern:
-            // "host:port;host:port..."
-            if (StringUtils.isEmpty(ccpServerData)) {
-                throw new IllegalArgumentException("the CCP_SERVER environment variable does not have a legal host port pair. The value read is: " + ccpServerData);
-            }
-
-            if (!ccpServerData.matches(CcpConstants.CCP_SERVER__HOST_REG_EX) && !ccpServerData.matches(CcpConstants.CCP_SERVER__IPV6_REG_EX)) {
-                throw new IllegalArgumentException("the CCP_SERVER environment variable does not have a legal host port pair. The value read is: " + ccpServerData);
-            }
-
-            String[] hostPortPairs = ccpServerData.split(";");
-
-        int numOfServers = 0;
-            for (String hostPortString : hostPortPairs) {
-                numOfServers++;
-                int index = hostPortString.lastIndexOf(":");
-                String host = hostPortString.substring(0, index);
-                String port = hostPortString.substring(index + 1);
-                ConfigurationFactory.getConfiguration().setProperty("ccp-lib." + numOfServers + ".host", host);
-                ConfigurationFactory.getConfiguration().setProperty("ccp-lib." + numOfServers + ".port", port);
-//                Pair<String, Integer> pair = new Pair<String, Integer>(host, Integer.parseInt(port));
-//                httpclients.add(pair);
-            }
-
-//        }
-    }
 
     /**
      * @param configuration
