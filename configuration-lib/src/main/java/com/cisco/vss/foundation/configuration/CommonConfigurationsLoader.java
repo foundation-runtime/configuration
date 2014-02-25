@@ -1222,7 +1222,7 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 						compositeConfiguration.clearCache();
 						createFallBackFile(configuration);
 						configuration.getLong("configuration.dynamicConfigReload.refreshDelay");
-						CabConfigurationListenerRegistry.fireConfigurationChangedEvent();
+						FoundationConfigurationListenerRegistry.fireConfigurationChangedEvent();
 					}
 
 					Thread.sleep(timeInterval);

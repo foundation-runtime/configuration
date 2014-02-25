@@ -11,11 +11,11 @@ import java.util.Properties;
 /**
  * User: Yair Ogen Date: 4/18/13 Time: 4:53 PM
  */
-public class CabCommonsConfigurationFactoryBean implements FactoryBean<Properties> {
+public class FoundationCommonsConfigurationFactoryBean implements FactoryBean<Properties> {
 
 	private Configuration configuration;
 
-	public CabCommonsConfigurationFactoryBean(Configuration configuration) {
+	public FoundationCommonsConfigurationFactoryBean(Configuration configuration) {
 		Assert.notNull(configuration);
 		this.configuration = configuration;
 	}

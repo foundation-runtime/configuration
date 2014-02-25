@@ -16,7 +16,7 @@ import java.util.TimerTask;
 /**
  * This class reads the configuration to determine if dynamic reload of the configuration in case of config file changes should be enabled or not.<br>
  * When enabled the configuration in memory map will be updated upon file changes within a configuration refresh delay period.<br>
- * Client interested in getting notifications of configuration reload should register via {@link CabConfigurationListenerRegistry#addCabConfigurationListener(CabConfigurationListener)} API.
+ * Client interested in getting notifications of configuration reload should register via {@link FoundationConfigurationListenerRegistry#addFoundationConfigurationListener(FoundationConfigurationListener)} API.
  * 
  * @author Yair Ogen
  */
@@ -67,7 +67,7 @@ public class DynamicReloadSupport {
 
 					LOGGER.debug("Setting reload strategy on: " + propertiesConfiguration.getPath());
 
-					CABFileChangedReloadingStrategy strategy = new CABFileChangedReloadingStrategy();
+					FoundationFileChangedReloadingStrategy strategy = new FoundationFileChangedReloadingStrategy();
 					strategy.setRefreshDelay(refreshDelay);
 
 					propertiesConfiguration.setReloadingStrategy(strategy);

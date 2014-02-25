@@ -12,7 +12,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * Created By: kgreen
  * Date-Time: 10/3/13 9:01 AM
  */
-public class BaseConfiguration implements CabConfigurationListener {
+public class BaseConfiguration implements FoundationConfigurationListener {
 
     /**
      * a listener to configuration changes
@@ -42,7 +42,7 @@ public class BaseConfiguration implements CabConfigurationListener {
         ParamReaders.getInstance().setConfiguration(configuration);
 
         // register as listener to configuration change
-        CabConfigurationListenerRegistry.addCabConfigurationListener(this);
+        FoundationConfigurationListenerRegistry.addFoundationConfigurationListener(this);
 
         // verify that all configured values are correct
         verifyConfiguration();

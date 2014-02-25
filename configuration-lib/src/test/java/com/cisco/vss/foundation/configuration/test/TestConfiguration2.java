@@ -1,7 +1,7 @@
 package com.cisco.vss.foundation.configuration.test;
 
-import com.cisco.vss.foundation.configuration.CabConfigurationListener;
-import com.cisco.vss.foundation.configuration.CabConfigurationListenerRegistry;
+import com.cisco.vss.foundation.configuration.FoundationConfigurationListener;
+import com.cisco.vss.foundation.configuration.FoundationConfigurationListenerRegistry;
 import com.cisco.vss.foundation.configuration.ConfigUtil;
 import com.cisco.vss.foundation.configuration.ConfigurationFactory;
 import org.apache.commons.configuration.CompositeConfiguration;
@@ -85,7 +85,7 @@ public class TestConfiguration2 {
 		Configuration configuration = (Configuration) context.getBean("configuration");
 
 		try {
-			CabConfigurationListenerRegistry.addCabConfigurationListener(new CabConfigurationListener() {
+			FoundationConfigurationListenerRegistry.addFoundationConfigurationListener(new FoundationConfigurationListener() {
 
                 @Override
                 public void configurationChanged() {

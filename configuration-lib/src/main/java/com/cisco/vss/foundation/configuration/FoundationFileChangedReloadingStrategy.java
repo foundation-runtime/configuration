@@ -9,7 +9,7 @@ import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;
  * @author Yair Ogen
  * 
  */
-public class CABFileChangedReloadingStrategy extends FileChangedReloadingStrategy {
+public class FoundationFileChangedReloadingStrategy extends FileChangedReloadingStrategy {
 
 	/**
 	 * @see org.apache.commons.configuration.reloading.FileChangedReloadingStrategy#reloadingPerformed()
@@ -20,7 +20,7 @@ public class CABFileChangedReloadingStrategy extends FileChangedReloadingStrateg
 		FoundationCompositeConfiguration configuration = (FoundationCompositeConfiguration) ConfigurationFactory.getConfiguration();
 		configuration.clearCache();
 		configuration.getString("configuration.dynamicConfigReload.refreshDelay");
-		CabConfigurationListenerRegistry.fireConfigurationChangedEvent();
+		FoundationConfigurationListenerRegistry.fireConfigurationChangedEvent();
 	}
 
 }

@@ -17,7 +17,7 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 import java.util.List;
 
-public class CabConfigurationFileNameResolver implements BeanFactoryAware {
+public class FoundationConfigurationFileNameResolver implements BeanFactoryAware {
 
 
 	@Override
@@ -64,7 +64,7 @@ public class CabConfigurationFileNameResolver implements BeanFactoryAware {
 		public TypedValue execute(EvaluationContext context, Object target, Object... arguments) throws AccessException {
 
 			try {
-				return new TypedValue(resolveConfigFileName(), new TypeDescriptor(new MethodParameter(CabConfigurationFileNameResolver.class.getDeclaredMethod("resolveConfigFileName", new Class[] { }), -1)));
+				return new TypedValue(resolveConfigFileName(), new TypeDescriptor(new MethodParameter(FoundationConfigurationFileNameResolver.class.getDeclaredMethod("resolveConfigFileName", new Class[] { }), -1)));
 			} catch (Exception ex) {
 				throw new AccessException("Problem invoking method: resolveConfigFileName", ex);
 			}

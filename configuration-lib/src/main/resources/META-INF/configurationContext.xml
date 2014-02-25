@@ -13,7 +13,7 @@
 		cab components
 	</description>	
 	
-	<bean id="cabConfigurationFileNameResolver" class="com.cisco.vss.foundation.configuration.CabConfigurationFileNameResolver" />
+	<bean id="cabConfigurationFileNameResolver" class="com.cisco.vss.foundation.configuration.FoundationConfigurationFileNameResolver" />
 
 	<bean id="configuration" class="com.cisco.vss.foundation.configuration.CommonConfigurationsLoader" depends-on="cabConfigurationFileNameResolver">
 		<description>used to to create a common configuration object that
@@ -78,7 +78,7 @@
 		<property name="properties" ref="commonsConfigFactory"/>
 	</bean>
 
-	<bean name="commonsConfigFactory" class="com.cisco.vss.foundation.configuration.CabCommonsConfigurationFactoryBean">
+	<bean name="commonsConfigFactory" class="com.cisco.vss.foundation.configuration.FoundationCommonsConfigurationFactoryBean">
 		<constructor-arg ref="configuration"/>
 	</bean>	
 
