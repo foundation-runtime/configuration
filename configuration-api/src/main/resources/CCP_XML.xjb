@@ -4,7 +4,7 @@
                
   <jxb:bindings schemaLocation="CCP_XML.xsd" node="/xs:schema">
     <jxb:schemaBindings>
-      <jxb:package name="com.cisco.vss.foundation.configuration.xml.jaxb">
+      <jxb:package name="com.cisco.oss.foundation.configuration.xml.jaxb">
       </jxb:package>
     </jxb:schemaBindings>
   </jxb:bindings>
@@ -16,8 +16,8 @@
        <jaxb:globalBindings>
        		 <xjc:simple/> 
              <jaxb:javaType name="Integer" xmlType="xs:integer"  
-               parseMethod="com.cisco.vss.foundation.configuration.xml.jaxb.adapters.DataConverter.parseInteger"
-               printMethod="com.cisco.vss.foundation.configuration.xml.jaxb.adapters.DataConverter.printInteger"/>
+               parseMethod="com.cisco.oss.foundation.configuration.xml.jaxb.adapters.DataConverter.parseInteger"
+               printMethod="com.cisco.oss.foundation.configuration.xml.jaxb.adapters.DataConverter.printInteger"/>
        </jaxb:globalBindings>  
   </jaxb:bindings>
 </jxb:bindings>

@@ -13,9 +13,9 @@
 		cab components
 	</description>	
 	
-	<bean id="cabConfigurationFileNameResolver" class="com.cisco.vss.foundation.configuration.FoundationConfigurationFileNameResolver" />
+	<bean id="cabConfigurationFileNameResolver" class="com.cisco.oss.foundation.configuration.FoundationConfigurationFileNameResolver" />
 
-	<bean id="configuration" class="com.cisco.vss.foundation.configuration.CommonConfigurationsLoader" depends-on="cabConfigurationFileNameResolver">
+	<bean id="configuration" class="com.cisco.oss.foundation.configuration.CommonConfigurationsLoader" depends-on="cabConfigurationFileNameResolver">
 		<description>used to to create a common configuration object that
 			could be injected to the
 			business objects.
@@ -26,7 +26,7 @@
 		<!-- <property name="dbapi" ref="dbApiImpl"/> -->
 	</bean>
 
-	<bean id="configResourcesLoader" class="com.cisco.vss.foundation.configuration.ConfigResourcesLoader">
+	<bean id="configResourcesLoader" class="com.cisco.oss.foundation.configuration.ConfigResourcesLoader">
 		<description>The places where to search the config files: * all the
 			defaulfConfig.properties
 			files * one single config.properties file
@@ -45,7 +45,7 @@
 		</property>
 	</bean>
 
-	<bean id="defaultConfiguration" class="com.cisco.vss.foundation.configuration.CommonConfigurationsLoader">
+	<bean id="defaultConfiguration" class="com.cisco.oss.foundation.configuration.CommonConfigurationsLoader">
 		<description>used to to create a common configuration object with the
 			default configuration this
 			could be used by the configuration UI in
@@ -54,7 +54,7 @@
 		<property name="resourcesList" ref="defaultConfigResourcesLoader"/>
 	</bean>
 
-	<bean id="defaultConfigResourcesLoader" class="com.cisco.vss.foundation.configuration.ConfigResourcesLoader">
+	<bean id="defaultConfigResourcesLoader" class="com.cisco.oss.foundation.configuration.ConfigResourcesLoader">
 		<description>The places where to search the default config files: *
 			all the
 			defaulfConfig.properties files * one dummy file to use the
@@ -65,7 +65,7 @@
 		<property name="customerConfig" value="dummyConfig.file"/>
 	</bean>
 
-	<bean class="com.cisco.vss.foundation.configuration.InfraPropertyPlaceholderConfigurer">
+	<bean class="com.cisco.oss.foundation.configuration.InfraPropertyPlaceholderConfigurer">
 		<description>used to be able to add dynamic params that will be
 			defined in the deployment stage
 			${param name}
@@ -78,11 +78,11 @@
 		<property name="properties" ref="commonsConfigFactory"/>
 	</bean>
 
-	<bean name="commonsConfigFactory" class="com.cisco.vss.foundation.configuration.FoundationCommonsConfigurationFactoryBean">
+	<bean name="commonsConfigFactory" class="com.cisco.oss.foundation.configuration.FoundationCommonsConfigurationFactoryBean">
 		<constructor-arg ref="configuration"/>
 	</bean>	
 
-	<bean id="dynamicReloadSupport" class="com.cisco.vss.foundation.configuration.DynamicReloadSupport" init-method="init"
+	<bean id="dynamicReloadSupport" class="com.cisco.oss.foundation.configuration.DynamicReloadSupport" init-method="init"
 		  lazy-init="false" depends-on="configuration">
 		<constructor-arg ref="configuration">
 		</constructor-arg>
