@@ -17,7 +17,6 @@
 package com.cisco.oss.foundation.configuration;
 
 import org.apache.commons.configuration.Configuration;
-import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.util.Assert;
@@ -37,8 +36,6 @@ import org.springframework.util.Assert;
  * 
  */
 public final class ConfigurationFactory {
-
-	private static final Logger LOGGER = Logger.getLogger(ConfigurationFactory.class);
 
 	private ConfigurationFactory() {
 		// prevent instantiation.

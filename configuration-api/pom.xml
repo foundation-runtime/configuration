@@ -131,6 +131,12 @@
             <version>${logging-api-version}</version>
         </dependency>
         <dependency>
+            <groupId>com.cisco.oss.foundation</groupId>
+            <artifactId>logging-log4j</artifactId>
+            <version>${logging-log4j-version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>commons-configuration</groupId>
             <artifactId>commons-configuration</artifactId>
             <version>${commons-configuration-version}</version>
