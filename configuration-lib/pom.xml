@@ -81,6 +81,11 @@
     <dependencies>
         <dependency>
             <groupId>com.cisco.oss.foundation</groupId>
+            <artifactId>logging-log4j</artifactId>
+            <version>${logging-log4j-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cisco.oss.foundation</groupId>
             <artifactId>configuration-api</artifactId>
             <version>${configuration-api-version}</version>
         </dependency>
@@ -93,11 +98,6 @@
             <groupId>com.cisco.oss.foundation</groupId>
             <artifactId>http-client-apache</artifactId>
             <version>${http-client-apache-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.cisco.oss.foundation</groupId>
-            <artifactId>logging-log4j</artifactId>
-            <version>${logging-log4j-version}</version>
         </dependency>
     </dependencies>	
 </project>
