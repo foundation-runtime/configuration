@@ -19,7 +19,7 @@ package com.cisco.oss.foundation.configuration;
 import com.cisco.oss.foundation.logging.ApplicationState;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.slf4j.*;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -70,7 +70,7 @@ public class ConfigResourcesLoader implements FactoryBean<List<Resource>>, Appli
      *
      */
     private static final String TEST_CONFIG_FILE = "testConfigFile";
-    private static final Logger LOGGER = Logger.getLogger(ConfigResourcesLoader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigResourcesLoader.class);
     private static boolean LOAD_CONFIG_FROM_WORKING_DIR = Boolean.getBoolean("configuration.loadConfigFromWorkingDir");
     private static boolean printedToLog = false;
     private final List<Resource> resourcesList = new ArrayList<Resource>();

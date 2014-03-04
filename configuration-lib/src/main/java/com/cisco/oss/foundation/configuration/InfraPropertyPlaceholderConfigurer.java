@@ -19,7 +19,7 @@
  */
 package com.cisco.oss.foundation.configuration;
 
-import org.apache.log4j.Logger;
+import org.slf4j.*;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
 import java.util.Properties;
@@ -32,7 +32,7 @@ import java.util.Properties;
  */
 public class InfraPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
 	
-	private static final Logger LOGGER = Logger.getLogger(InfraPropertyPlaceholderConfigurer.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(InfraPropertyPlaceholderConfigurer.class);
 
 	/**
      * trim the string value before it is returned to the caller method.

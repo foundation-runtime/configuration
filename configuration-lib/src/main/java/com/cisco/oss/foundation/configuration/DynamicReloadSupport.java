@@ -22,7 +22,7 @@ package com.cisco.oss.foundation.configuration;
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.log4j.Logger;
+import org.slf4j.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -38,7 +38,7 @@ import java.util.TimerTask;
  */
 public class DynamicReloadSupport {
 
-	private static final Logger LOGGER = Logger.getLogger(DynamicReloadSupport.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DynamicReloadSupport.class);
 
 	private final CompositeConfiguration configuration;
 
