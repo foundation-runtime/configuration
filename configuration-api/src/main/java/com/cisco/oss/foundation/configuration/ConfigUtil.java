@@ -195,6 +195,11 @@ public final class ConfigUtil {
 
         Configuration configuration = ConfigurationFactory.getConfiguration();
 
+        return parseSimpleArrayAsMap(configuration, configPrefix);
+    }
+
+    public static Map<String, String> parseSimpleArrayAsMap(Configuration configuration, String configPrefix) {
+
         Map<String, String> result = new HashMap<String, String>();
 
         // get a subset of the configuration based on the config prefix.
