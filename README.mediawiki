@@ -1,3 +1,0 @@
-Configuration holds libraries rthat extend the fundctionality provided by Apache Commons Config.
-
-You can read the user guide in [[../../wiki/Home|our Wiki]].
