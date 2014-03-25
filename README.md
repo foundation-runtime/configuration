@@ -1,6 +1,6 @@
-Configuration holds libraries rthat extend the fundctionality provided by Apache Commons Config.
+Configuration contains libraries that extend the fundctionality provided by Apache Commons Config and optionally integrate with a Central Configuration platform (soon to be released to OSS)
 
-You can read the user guide in [our Wiki](../../wiki/Home).
+You can read the user guide in [Wiki](../../wiki/Home).
 
 Following is the list of release references to the different libraries managed under this repository:
 
