@@ -15,18 +15,20 @@
   ~  limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
-		<groupId>com.cisco.oss.foundation</groupId>
-		<artifactId>foundation-common-base</artifactId>
-		<version>0.0.0-5</version>
+        <groupId>com.cisco.oss.foundation</groupId>
+        <artifactId>foundation-common-base</artifactId>
+        <version>0.0.0-5</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.cisco.oss.foundation</groupId>
     <artifactId>configuration-lib</artifactId>
     <name>configuration-lib</name>
     <version>0.0.0-6-SNAPSHOT</version>
-    <description>This project is the implementation library for configuration in the cisco vss foundation runtime</description>
+    <description>This project is the implementation library for configuration in the cisco vss foundation runtime
+    </description>
     <url>https://github.com/foundation-runtime/configuration/tree/master/configuration-lib</url>
     <packaging>jar</packaging>
     <licenses>
@@ -42,7 +44,7 @@
         <url>{URL in JIRA or Product name in CQ}</url>
     </issueManagement>
     <mailingLists>
-        <mailingList />
+        <mailingList/>
     </mailingLists>
     <developers>
         <developer>
@@ -68,7 +70,21 @@
     </organization>
     <build>
         <pluginManagement>
-            <plugins />
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.4</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>test-jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+
         </pluginManagement>
         <plugins>
         </plugins>
@@ -89,5 +105,5 @@
             <artifactId>http-client-apache</artifactId>
             <version>${http-client-apache-version}</version>
         </dependency>
-    </dependencies>	
+    </dependencies>
 </project>

@@ -65,7 +65,7 @@ public class ConfigResourcesLoader implements FactoryBean<List<Resource>>, Appli
     /**
      *
      */
-    private static final String CONFIGURATION_TEST_CLASS = "com.nds.cab.infra.test.ConfigurationForTest";
+    private static final String CONFIGURATION_TEST_CLASS = "com.cisco.oss.foundation.test.util.ConfigurationForTest";
     /**
      *
      */

@@ -22,10 +22,7 @@ import com.cisco.oss.foundation.configuration.ConfigurationFactory;
 import com.cisco.oss.foundation.configuration.FoundationCompositeConfiguration;
 import org.apache.commons.configuration.*;
 import org.apache.log4j.Logger;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -52,7 +49,15 @@ public class TestConfiguration {
 		context = new ClassPathXmlApplicationContext(new String[] { "applicationTestContext.xml" });
 	}
 
-	private static void clearConfigurtionInConfigurationFactory() {
+
+    @Before
+    public void before() throws Exception {
+        System.setProperty("testConfigFile", "QCTEST_cabConfig.properties");
+        clearConfigurtionInConfigurationFactory();
+    }
+
+
+    private static void clearConfigurtionInConfigurationFactory() {
 		try {
 			Field configField = ConfigurationFactory.class.getDeclaredField("context");
 			configField.setAccessible(true);
@@ -208,6 +213,8 @@ public class TestConfiguration {
 
 	@Test
 	public void delimiterDisabledTest() {
+        System.setProperty("testConfigFile", "");
+        clearConfigurtionInConfigurationFactory();
 		String string = ConfigurationFactory.getConfiguration().getString("ecmserver.emergencyAC");
 		Assert.assertEquals("{\"tiers\":[{\"id\":\"111\",\"name\":\"Tier_1\"}],\"usageRules\":\"AC_0\"}", string);
 	}
@@ -254,6 +261,8 @@ public class TestConfiguration {
 	}
 	
 	@Test public void testParseComplexStrucutreArray(){
+        System.setProperty("testConfigFile", "");
+        clearConfigurtionInConfigurationFactory();
 		Map<String, Map<String, String>> parseComplexArrayStructure = ConfigUtil.parseComplexArrayStructure("smartcardAdaptor.cardFeatures");
 		assertTrue(parseComplexArrayStructure.size() > 0);
 		assertEquals("{1={maxRegions=4, cardFamily=VGE, maxNumOfOPPVs=25, sbmMSB.1=0x01, initialCounter=1000, sbmMSB.0=0x00, supportSbm=true, maxSbmBlocks=16}, 23={maxRegions=4, cardFamily=VGE, maxNumOfOPPVs=25, sbmMSB.1=0x01, initialCounter=1000, sbmMSB.0=0x00, supportSbm=true, maxSbmBlocks=16}}", parseComplexArrayStructure.toString());
