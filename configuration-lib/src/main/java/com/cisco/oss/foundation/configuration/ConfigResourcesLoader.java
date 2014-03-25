@@ -322,7 +322,7 @@ public class ConfigResourcesLoader implements FactoryBean<List<Resource>>, Appli
 
                 if (!"config.properties".equals(customerResource.getFilename())) {
 
-                    customerResource = context.getResource("config.properties");
+                    customerResource = context.getResource("classpath:/config.properties");
 
                     isValid = validateResourceIsValid(customerResource);
                     if (!isValid) {
