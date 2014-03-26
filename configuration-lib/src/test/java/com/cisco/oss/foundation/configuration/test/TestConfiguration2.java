@@ -16,10 +16,7 @@
 
 package com.cisco.oss.foundation.configuration.test;
 
-import com.cisco.oss.foundation.configuration.FoundationConfigurationListener;
-import com.cisco.oss.foundation.configuration.FoundationConfigurationListenerRegistry;
-import com.cisco.oss.foundation.configuration.ConfigUtil;
-import com.cisco.oss.foundation.configuration.ConfigurationFactory;
+import com.cisco.oss.foundation.configuration.*;
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.HierarchicalConfiguration;
@@ -33,6 +30,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.util.Iterator;
 
@@ -52,10 +50,35 @@ public class TestConfiguration2 {
 		context = new ClassPathXmlApplicationContext(new String[] {"/META-INF/configurationContext.xml"});
 	}
 
-	@Test
+    private static void clearConfigurtionInConfigurationFactory() {
+        try {
+            Field configField = ConfigurationFactory.class.getDeclaredField("context");
+            configField.setAccessible(true);
+            configField.set(ConfigurationFactory.class, null);
+
+            configField = CommonConfigurationsLoader.class.getDeclaredField("configuration");
+            configField.setAccessible(true);
+            configField.set(CommonConfigurationsLoader.class, null);
+
+            configField = CommonConfigurationsLoader.class.getDeclaredField("printedToLog");
+            configField.setAccessible(true);
+            configField.set(CommonConfigurationsLoader.class, Boolean.FALSE);
+
+            FoundationCompositeConfiguration configuration = (FoundationCompositeConfiguration)ConfigurationFactory.getConfiguration();
+            configuration.clearCache();
+        } catch (Exception e) {
+            e.printStackTrace(); // To change body of catch statement use File |
+            // Settings | File Templates.
+        }
+    }
+
+
+    @Test
 	// @Ignore
 	public void testConfiguration() {
-		Configuration configuration = (Configuration) context.getBean("configuration");
+        System.setProperty("testConfigFile", "");
+        clearConfigurtionInConfigurationFactory();
+		Configuration configuration = ConfigurationFactory.getConfiguration();
 
 		Assert.assertEquals("dummy key", configuration.getString("dummyKey"));
 
