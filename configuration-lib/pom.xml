@@ -58,6 +58,9 @@
             </roles>
         </developer>
     </developers>
+    <properties>
+        <http-client-apache-version>0.0.0-6</http-client-apache-version>
+    </properties>
     <scm>
         <connection>scm:git:git@github.com:foundation-runtime/configuration.git</connection>
         <developerConnection>scm:git:git@github.com:foundation-runtime/configuration.git</developerConnection>
