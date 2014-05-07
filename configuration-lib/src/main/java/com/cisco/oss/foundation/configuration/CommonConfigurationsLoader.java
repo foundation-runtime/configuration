@@ -328,6 +328,7 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 										List<StructureMemberDefinition> structureMemberDefinitions = parameter.getStructureDefinition().getStructureMemberDefinitions();
 										for (StructureMemberDefinition structureMemberDefinition : structureMemberDefinitions) {
 											String name = structureMemberDefinition.getName();
+                                            boolean ignoreName = structureMemberDefinition.isIgnoreName();
 											if (structureMemberDefinition.isIsArray()) {
 
 												if (structureMemberDefinition.getType().equals(ParameterKind.STRUCTURE)) {
@@ -339,6 +340,11 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 															suspecteOrphaneItr.remove();
 															found = true;
 															break;
+
+                                                        }else  if (splittedOrphan.length > (index+1) && !ignoreName && innerStructureMemberDefinition.getName().equals(splittedOrphan[index+1])) {
+                                                            suspecteOrphaneItr.remove();
+                                                            found = true;
+                                                            break;
 
 														} else {
 
@@ -1026,12 +1032,15 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 					List<StructureMemberDefinition> childStructureMemberDefinitions = childStructureDefinition.getStructureMemberDefinitions();
 					childStructureMemberDefinitions.addAll(baseStructureMemberDefinitions);
 				}
+
+                parameter.setRequired(parameterType.isRequired());
+                parameter.setRequiresRestart(parameterType.isRequiresRestart());
+                parameter.setAdvanced(parameterType.isAdvanced());
+                parameter.setHidden(parameterType.isHidden());
+
 			}
 
-			parameter.setRequired(parameterType.isRequired());
-			parameter.setRequiresRestart(parameterType.isRequiresRestart());
-			parameter.setAdvanced(parameterType.isAdvanced());
-			parameter.setHidden(parameterType.isHidden());
+
 
 			// pull default values from parameter to structure member defaults
 			if (parameter.getDefaultValue() != null && parameter.getDefaultValue().getStructureValues() != null) {

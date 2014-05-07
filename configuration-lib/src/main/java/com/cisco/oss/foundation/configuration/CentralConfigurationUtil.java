@@ -584,7 +584,7 @@ public enum CentralConfigurationUtil {
         boolean override = true;
         Set<String> keys = tempProps.keySet();
         for (String tempKey : keys) {
-            if (configuration.containsKey(tempKey.toString())) {
+            if (configuration.containsKey(tempKey.toString()) && !parameter.isMergeOverrides()) {
                 override = false;
                 break;
             }

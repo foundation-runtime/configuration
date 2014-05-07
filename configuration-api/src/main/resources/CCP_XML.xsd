@@ -1,20 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright 2014 Cisco Systems, Inc.
-  ~
-  ~  Licensed under the Apache License, Version 2.0 (the "License");
-  ~  you may not use this file except in compliance with the License.
-  ~  You may obtain a copy of the License at
-  ~
-  ~  http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~  Unless required by applicable law or agreed to in writing, software
-  ~  distributed under the License is distributed on an "AS IS" BASIS,
-  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~  See the License for the specific language governing permissions and
-  ~  limitations under the License.
-  -->
-
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	elementFormDefault="qualified">
 
@@ -203,24 +187,38 @@
 	</xs:complexType>
 	
 	<xs:complexType name="Parameter">
-		<xs:sequence>
-			<xs:element name="StructureDefinition" type="StructureDefinition"
-				minOccurs="0" maxOccurs="1" />
-			<xs:element name="Value" type="ParameterValue" minOccurs="0"
-				maxOccurs="1" />
-			<xs:element name="DefaultValue" type="ParameterValue"
-				minOccurs="0" maxOccurs="1" />
-			<xs:element name="Range" type="ParameterRange" minOccurs="0"
-				maxOccurs="1" />
-
-			<!-- Use if this parameter is only enabled when another parameter in this 
-				namespace has a specific value -->
-			<xs:element name="EnabledBy" type="EnabledBy" minOccurs="0"
-				maxOccurs="1" />
-			<xs:element name="DiscoveredBy" type="DiscoveredBy" minOccurs="0"
-				maxOccurs="1" />
-		</xs:sequence>
-
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="StructureDefinition" type="StructureDefinition"
+					minOccurs="1" maxOccurs="1" />
+				<xs:element name="Value" type="ParameterValue" minOccurs="0"
+					maxOccurs="1" />
+				<xs:element name="DefaultValue" type="ParameterValue"
+					minOccurs="0" maxOccurs="1" />
+				<!-- Use if this parameter is only enabled when another parameter in this 
+					namespace has a specific value -->
+				<xs:element name="EnabledBy" type="EnabledBy" minOccurs="0"
+					maxOccurs="1" />
+				<xs:element name="DiscoveredBy" type="DiscoveredBy" minOccurs="0"
+					maxOccurs="1" />
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="Value" type="ParameterValue" minOccurs="0"
+					maxOccurs="1" />
+				<xs:element name="DefaultValue" type="ParameterValue"
+					minOccurs="0" maxOccurs="1" />
+				<xs:element name="Range" type="ParameterRange" minOccurs="0"
+					maxOccurs="1" />
+	
+				<!-- Use if this parameter is only enabled when another parameter in this 
+					namespace has a specific value -->
+				<xs:element name="EnabledBy" type="EnabledBy" minOccurs="0"
+					maxOccurs="1" />
+				<xs:element name="DiscoveredBy" type="DiscoveredBy" minOccurs="0"
+					maxOccurs="1" />
+			</xs:sequence>		
+		</xs:choice>
+		
 		<xs:attribute name="paramId" type="xs:string" use="optional" />
 		<xs:attribute name="name" type="xs:string" use="required" />
 		<xs:attribute name="type" type="ParameterKind" use="required" />
@@ -235,6 +233,8 @@
 		<xs:attribute name="description" type="xs:string" use="required" />
 
 		<xs:attribute name="isArray" type="xs:boolean" use="optional"
+			default="false" />
+			<xs:attribute name="mergeOverrides" type="xs:boolean" use="optional"
 			default="false" />
 		<xs:attribute name="required" type="xs:boolean" use="optional" default="true" />
 		<xs:attribute name="hidden" type="xs:boolean" use="optional"
@@ -491,6 +491,8 @@
 			<xs:element name="Component" type="Component" />
 			<xs:element name="NewParameterValue" type="NewParameterValue"
 				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="RequiredParameter" type="RequiredParameter"
+				minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
 
@@ -502,6 +504,16 @@
 		<xs:attribute name="namespaceVersion" type="xs:string"
 			use="required" />
 		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="LevelName" type="HierarchyLevel" use="required" />
+	</xs:complexType>
+	
+	<xs:complexType name="RequiredParameter">
+		<xs:sequence>
+			<xs:element name="Parameter" type="Parameter" />
+		</xs:sequence>
+		<xs:attribute name="namespaceName" type="xs:string" use="required" />
+		<xs:attribute name="namespaceVersion" type="xs:string"
+			use="required" />
 		<xs:attribute name="LevelName" type="HierarchyLevel" use="required" />
 	</xs:complexType>
 

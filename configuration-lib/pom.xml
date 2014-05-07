@@ -59,6 +59,7 @@
     </developers>
     <properties>
         <http-client-apache-version>0.0.0-6</http-client-apache-version>
+        <configuration-api-version>0.0.0-7-SNAPSHOT</configuration-api-version>
     </properties>
     <scm>
         <connection>scm:git:git@github.com:foundation-runtime/configuration.git</connection>
