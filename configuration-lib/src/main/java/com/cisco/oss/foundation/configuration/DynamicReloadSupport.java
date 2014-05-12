@@ -93,7 +93,6 @@ public class DynamicReloadSupport {
 			}
 
 			if (isDynamicReloadAutoUpdateEnabled) {
-				LOGGER.info("configuration dynamic reload automatic update is enabled!");
 				startDynamicReloadAutoUpdateDeamon(configuration, refreshDelay);
 			}
 
