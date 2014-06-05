@@ -1049,7 +1049,7 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 					if (structureValue != null) {
 						List<StructureMemberValue> structureMemberValues = structureValue.getStructureMemberValues();
 						for (StructureMemberValue structureMemberValue : structureMemberValues) {
-							if (structureMemberValue != null) {
+							if (structureMemberValue != null && parameter.getStructureDefinition() != null) {
 								String name = structureMemberValue.getName();
 								List<StructureMemberDefinition> structureMemberDefinitions = parameter.getStructureDefinition().getStructureMemberDefinitions();
 								for (StructureMemberDefinition structureMemberDefinition : structureMemberDefinitions) {
