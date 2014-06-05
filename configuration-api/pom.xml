@@ -56,6 +56,10 @@
             </roles>
         </developer>
     </developers>
+    <properties>
+        <logging-api-version>0.0.0-6</logging-api-version>
+        <commons-version>0.0.0-6</commons-version>
+</properties>
     <scm>
         <connection>scm:git:git@github.com:foundation-runtime/configuration.git</connection>
         <developerConnection>scm:git:git@github.com:foundation-runtime/configuration.git</developerConnection>
