@@ -58,8 +58,9 @@
         </developer>
     </developers>
     <properties>
-        <http-client-apache-version>0.0.0-6</http-client-apache-version>
-        <configuration-api-version>0.0.0-7-SNAPSHOT</configuration-api-version>
+        <http-client-apache-version>0.0.0-8</http-client-apache-version>
+        <configuration-api-version>0.0.0-7</configuration-api-version>
+        <logging-log4j-version>1.0.0-1</logging-log4j-version>
     </properties>
     <scm>
         <connection>scm:git:git@github.com:foundation-runtime/configuration.git</connection>
