@@ -63,6 +63,15 @@ public class FoundationCompositeConfiguration extends CompositeConfiguration {
 		return keys;
 	}
 
+    @Override
+    public boolean containsKey(String key) {
+        if (DISABLE_CACHE) {
+            return super.containsKey(key);
+        } else {
+            return cache.containsKey(key);
+        }
+    }
+
 	@Override
 	public Object getProperty(String key) {
 		if (DISABLE_CACHE) {
