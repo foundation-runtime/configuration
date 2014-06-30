@@ -24,7 +24,6 @@ import org.apache.commons.configuration.*;
 import org.apache.log4j.Logger;
 import org.junit.*;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class TestConfiguration {
 
 	private static final Logger LOGGER = Logger.getLogger(TestConfiguration.class);
 
-	private static ApplicationContext context;
+//	private static ApplicationContext context;
 
 	@BeforeClass
 	public static void init() throws Exception {
@@ -46,7 +45,7 @@ public class TestConfiguration {
 		// System.setProperty("commonsConfig.defaultListDelimiter", "~");
 		System.setProperty("commonsConfig.delimiterParsingDisabled", "true");
 		clearConfigurtionInConfigurationFactory();
-		context = new ClassPathXmlApplicationContext(new String[] { "applicationTestContext.xml" });
+//		context = new ClassPathXmlApplicationContext(new String[] { "applicationTestContext.xml" });
 	}
 
 
@@ -82,7 +81,7 @@ public class TestConfiguration {
 	@Test
 	// @Ignore
 	public void testConfiguration() {
-		Configuration configuration = (Configuration) context.getBean("configuration");
+		Configuration configuration = ConfigurationFactory.getConfiguration();
 
 		@SuppressWarnings("unchecked")
 		Iterator<String> keys = configuration.getKeys();
@@ -98,7 +97,7 @@ public class TestConfiguration {
 
 	@Test
 	public void testConfigUtil() {
-		Configuration configuration = (Configuration) context.getBean("configuration");
+		Configuration configuration = ConfigurationFactory.getConfiguration();
 		HierarchicalConfiguration hierarchicalConfiguration = ConfigUtil.getHierarchicalConfiguration(configuration);
 		assertNull(hierarchicalConfiguration);
 
@@ -113,14 +112,14 @@ public class TestConfiguration {
 
 	@Test
 	public void testConfigRef() {
-		Configuration configuration = (Configuration) context.getBean("configuration");
+		Configuration configuration = ConfigurationFactory.getConfiguration();
 		assertEquals(configuration.getString("dummyValueOneCopy"), configuration.getString("dummyKey"));
 	}
 
 	@Ignore
 	@Test
 	public void testHierarchicalConfiguration() {
-		Configuration configuration = (Configuration) context.getBean("configuration");
+		Configuration configuration = ConfigurationFactory.getConfiguration();
 		HierarchicalConfiguration hierarchicalConfiguration = ConfigurationUtils.convertToHierarchical(configuration);
 
 		@SuppressWarnings("unchecked")

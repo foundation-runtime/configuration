@@ -23,6 +23,7 @@ import com.cisco.oss.foundation.configuration.validation.params.*;
 import org.apache.commons.configuration.Configuration;
 import org.junit.*;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 import static com.cisco.oss.foundation.configuration.validation.BaseConfiguration.*;
@@ -281,5 +282,32 @@ public class BaseConfigurationTest {
         } else {
             Assert.assertNull(errMsg);
         }
+    }
+
+    private static void clearConfigurtionInConfigurationFactory() {
+        try {
+            Field configField = ConfigurationFactory.class.getDeclaredField("context");
+            configField.setAccessible(true);
+            configField.set(ConfigurationFactory.class, null);
+
+            configField = CommonConfigurationsLoader.class.getDeclaredField("configuration");
+            configField.setAccessible(true);
+            configField.set(CommonConfigurationsLoader.class, null);
+
+            configField = CommonConfigurationsLoader.class.getDeclaredField("printedToLog");
+            configField.setAccessible(true);
+            configField.set(CommonConfigurationsLoader.class, Boolean.FALSE);
+
+            FoundationCompositeConfiguration configuration = (FoundationCompositeConfiguration)ConfigurationFactory.getConfiguration();
+            configuration.clearCache();
+        } catch (Exception e) {
+            e.printStackTrace(); // To change body of catch statement use File |
+            // Settings | File Templates.
+        }
+    }
+
+    @AfterClass
+    public static void wrapup(){
+        clearConfigurtionInConfigurationFactory();
     }
 }

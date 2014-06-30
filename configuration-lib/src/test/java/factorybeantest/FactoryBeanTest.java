@@ -16,17 +16,51 @@
 
 package factorybeantest;
 
+import com.cisco.oss.foundation.configuration.CommonConfigurationsLoader;
+import com.cisco.oss.foundation.configuration.ConfigurationFactory;
+import com.cisco.oss.foundation.configuration.FoundationCompositeConfiguration;
 import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Field;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/applicationTestContext.xml" })
+@Ignore
 public class FactoryBeanTest {
+
+    @BeforeClass
+    public static void init(){
+//        clearConfigurtionInConfigurationFactory();
+    }
+
+    private static void clearConfigurtionInConfigurationFactory() {
+        try {
+            Field configField = ConfigurationFactory.class.getDeclaredField("context");
+            configField.setAccessible(true);
+            configField.set(ConfigurationFactory.class, null);
+
+            configField = CommonConfigurationsLoader.class.getDeclaredField("configuration");
+            configField.setAccessible(true);
+            configField.set(CommonConfigurationsLoader.class, null);
+
+            configField = CommonConfigurationsLoader.class.getDeclaredField("printedToLog");
+            configField.setAccessible(true);
+            configField.set(CommonConfigurationsLoader.class, Boolean.FALSE);
+
+            FoundationCompositeConfiguration configuration = (FoundationCompositeConfiguration)ConfigurationFactory.getConfiguration();
+            configuration.clearCache();
+        } catch (Exception e) {
+            e.printStackTrace(); // To change body of catch statement use File |
+            // Settings | File Templates.
+        }
+    }
 
 	public FactoryBeanTest() {
 		// try {
