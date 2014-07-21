@@ -18,9 +18,9 @@ package com.cisco.oss.foundation.configuration;
 
 import com.cisco.oss.foundation.configuration.xml.jaxb.*;
 import com.cisco.oss.foundation.logging.ApplicationState;
+import com.cisco.oss.foundation.logging.FoundationLevel;
 import org.apache.commons.configuration.*;
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
-import org.apache.log4j.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.FactoryBean;
@@ -137,7 +137,7 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 			boolean centralConfigEnabled = Boolean.valueOf(System.getenv(CcpConstants.CCP_ENABLED));
 			if (centralConfigEnabled) {
 
-				ApplicationState.setState(Level.INFO, "central configuration IS enabled!");
+				ApplicationState.setState(FoundationLevel.INFO, "central configuration IS enabled!");
 				// LOGGER.info("central configuration IS enabled!");
 				CentralConfigurationUtil.INSTANCE.loadCentralConfiguration(configuration, descriptionMap, enablesDynamicSupportSet);
 
@@ -169,7 +169,7 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 //				}
 
 			} else {
-				ApplicationState.setState(Level.INFO, "central configuration IS NOT enabled!");
+				ApplicationState.setState(FoundationLevel.INFO, "central configuration IS NOT enabled!");
 				// LOGGER.info("central configuration IS NOT enabled!");
 				loadNonCentralConfiguration(configuration, true);
 
@@ -584,11 +584,26 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 		Iterator<String> keys = subset.getKeys();
 		boolean found = false;
 
-		while (keys.hasNext()) {
-			found = true;
-			String index = (String) keys.next();
-			validateSingleParameter(requiredErrors, typeErrors, rangeErrors, name + "." + index, required, type, range, enabledBy);
-		}
+        if (keys.hasNext()) {
+            while (keys.hasNext()) {
+                found = true;
+                String index = (String) keys.next();
+                validateSingleParameter(requiredErrors, typeErrors, rangeErrors, name + "." + index, required, type, range, enabledBy);
+            }
+        }else if (enabledBy != null) {
+            String enabledByName = enabledBy.getParameterName();
+            Operator operator = enabledBy.getOperator();
+            if (Operator.E.equals(operator)) {
+                List<PrimitiveValue> primitiveValues = enabledBy.getValue().getPrimitiveValues();
+                if (primitiveValues != null) {
+                    String enabledByValue = primitiveValues.get(0).getValue();
+                    String enabledByValue2 = configuration.getString(enabledByName, null);
+                    if (enabledByValue != null && enabledByValue2 != null && !enabledByValue.equals(enabledByValue2)) {
+                        found = true;
+                    }
+                }
+            }
+        }
 
 		if (required && !found) {
 			requiredErrors.add("[Array] " + name);
@@ -1147,7 +1162,7 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 				logMessage.append(key).append("=").append(value).append("\n");
 			}
 		}
-		ApplicationState.setState(Level.INFO, logMessage.toString());
+		ApplicationState.setState(FoundationLevel.INFO, logMessage.toString());
 	}
 
 	public boolean isDelimiterParsingDisabled() {

@@ -17,9 +17,10 @@
 package com.cisco.oss.foundation.configuration;
 
 import com.cisco.oss.foundation.logging.ApplicationState;
+import com.cisco.oss.foundation.logging.FoundationLevel;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Level;
-import org.slf4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -191,12 +192,12 @@ public class ConfigResourcesLoader implements FactoryBean<List<Resource>>, Appli
             if (!printedToLog) {
                 StringBuffer logMessageBuffer = new StringBuffer("The customer resources loaded are:");
                 printResourcesLoaded(logMessageBuffer, customerPropertyResource);
-                ApplicationState.setState(Level.INFO, logMessageBuffer.toString());
+                ApplicationState.setState(FoundationLevel.INFO, logMessageBuffer.toString());
 
                 if (deploymentResource != null) {
                     logMessageBuffer = new StringBuffer("The deployment resources loaded are:");
                     printResourcesLoaded(logMessageBuffer, deploymentResource);
-                    ApplicationState.setState(Level.INFO, logMessageBuffer.toString());
+                    ApplicationState.setState(FoundationLevel.INFO, logMessageBuffer.toString());
                 }
 
             }
@@ -214,7 +215,7 @@ public class ConfigResourcesLoader implements FactoryBean<List<Resource>>, Appli
             final StringBuffer logMessageBuffer = new StringBuffer("The default resources loaded are:");
             printResourcesLoaded(logMessageBuffer, internalXmlResourcesList);
             printResourcesLoaded(logMessageBuffer, internalPropertyResourcesList);
-            ApplicationState.setState(Level.INFO, logMessageBuffer.toString());
+            ApplicationState.setState(FoundationLevel.INFO, logMessageBuffer.toString());
             printedToLog = true;
         }
 

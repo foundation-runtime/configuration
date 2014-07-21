@@ -119,9 +119,10 @@ public class TestConfiguration2 {
 	@Test
 	public void testConfigurationReload() {
 
-		System.setProperty("testConfigFile", "config.properties");
+//		System.setProperty("testConfigFile", "config.properties");
 		context = new ClassPathXmlApplicationContext(new String[] { "/META-INF/configurationContext.xml" });
 		Configuration configuration = (Configuration) context.getBean("configuration");
+        configuration.setProperty("configuration.dynamicConfigReload.enabled", "true");
 
 		try {
 			FoundationConfigurationListenerRegistry.addFoundationConfigurationListener(new FoundationConfigurationListener() {
@@ -133,7 +134,7 @@ public class TestConfiguration2 {
                 }
             });
 
-			FileOutputStream fileOutputStream = new FileOutputStream(new File(this.getClass().getResource("/config.properties").toURI()), true);
+			FileOutputStream fileOutputStream = new FileOutputStream(new File(this.getClass().getResource("/QCTEST_cabConfig2.properties").toURI()), true);
 			String entry = "\nnew data key= new value\n";
 			byte[] bytes = entry.getBytes();
 
@@ -142,11 +143,13 @@ public class TestConfiguration2 {
 			fileOutputStream.close();
 
 			// give time for reload strategy to work.
-			Thread.sleep(10000);
+			Thread.sleep(15000);
 
 			configuration.getString("new data key");
 
 			Assert.assertTrue(reloaded);
+
+            LOGGER.info("all is well!");
 		} catch (Exception e) {
 			Assert.fail(e.toString());
 		}
