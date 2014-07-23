@@ -30,6 +30,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.util.Iterator;
@@ -135,12 +136,9 @@ public class TestConfiguration2 {
             });
 
 			FileOutputStream fileOutputStream = new FileOutputStream(new File(this.getClass().getResource("/QCTEST_cabConfig2.properties").toURI()), true);
-			String entry = "\nnew data key= new value\n";
-			byte[] bytes = entry.getBytes();
-
-			fileOutputStream.getChannel().write(ByteBuffer.wrap(bytes));
-			fileOutputStream.flush();
-			fileOutputStream.close();
+            updateFile(fileOutputStream);
+            fileOutputStream = new FileOutputStream(new File(this.getClass().getResource("/config.properties").toURI()), true);
+            updateFile(fileOutputStream);
 
 			// give time for reload strategy to work.
 			Thread.sleep(15000);
@@ -155,5 +153,14 @@ public class TestConfiguration2 {
 		}
 
 	}
+
+    private void updateFile(FileOutputStream fileOutputStream) throws IOException {
+        String entry = "\nnew data key= new value\n";
+        byte[] bytes = entry.getBytes();
+
+        fileOutputStream.getChannel().write(ByteBuffer.wrap(bytes));
+        fileOutputStream.flush();
+        fileOutputStream.close();
+    }
 
 }
