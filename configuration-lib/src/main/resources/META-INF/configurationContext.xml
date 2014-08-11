@@ -38,7 +38,8 @@
 		</description>
 		<property name="resourcesList" ref="configResourcesLoader"/>
 		<property name="delimiterParsingDisabled" value="#{ systemProperties['commonsConfig.delimiterParsingDisabled'] != null ? systemProperties['commonsConfig.delimiterParsingDisabled'] : false }"/>
-		<property name="defaultListDelimiter" value="#{ systemProperties['commonsConfig.defaultListDelimiter'] != null ? systemProperties['commonsConfig.defaultListDelimiter'] : ',' }"/>		
+		<property name="defaultListDelimiter" value="#{ systemProperties['commonsConfig.defaultListDelimiter'] != null ? systemProperties['commonsConfig.defaultListDelimiter'] : ',' }"/>
+        <property name="applicationState" ref="applicationState"/>
 		<!-- <property name="dbapi" ref="dbApiImpl"/> -->
 	</bean>
 
@@ -49,6 +50,7 @@
 		</description>
 		<property name="internalPropertyConfig" value="classpath*:/defaultConfig.properties"/>
 		<property name="internalXmlConfig" value="classpath*:/configSchema.xml"/>
+		<property name="applicationState" ref="applicationState"/>
 		<property name="customerConfig">
 			<list>
 				<value>#{resolveConfigFileName()}</value>
@@ -103,4 +105,6 @@
 		<constructor-arg ref="configuration">
 		</constructor-arg>
 	</bean>
+
+    <bean id="applicationState" class="com.cisco.oss.foundation.logging.ApplicationState" factory-method="getInstance"/>
 </beans>

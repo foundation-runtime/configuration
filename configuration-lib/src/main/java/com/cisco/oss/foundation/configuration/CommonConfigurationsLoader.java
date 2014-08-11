@@ -17,7 +17,7 @@
 package com.cisco.oss.foundation.configuration;
 
 import com.cisco.oss.foundation.configuration.xml.jaxb.*;
-import com.cisco.oss.foundation.logging.ApplicationState;
+import com.cisco.oss.foundation.logging.ApplicationStateInterface;
 import com.cisco.oss.foundation.logging.FoundationLevel;
 import org.apache.commons.configuration.*;
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
@@ -128,7 +128,13 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 
 	private String defaultListDelimiter = ",";
 
-	@Override
+    private ApplicationStateInterface applicationState;
+
+    public void setApplicationState(ApplicationStateInterface applicationState) {
+        this.applicationState = applicationState;
+    }
+
+    @Override
 	public void afterPropertiesSet() throws Exception {
 		if (configuration == null) {
 			configuration = new FoundationCompositeConfiguration();
@@ -137,7 +143,9 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 			boolean centralConfigEnabled = Boolean.valueOf(System.getenv(CcpConstants.CCP_ENABLED));
 			if (centralConfigEnabled) {
 
-				ApplicationState.setState(FoundationLevel.INFO, "central configuration IS enabled!");
+                if(applicationState != null) {
+                    applicationState.setState(FoundationLevel.INFO, "central configuration IS enabled!");
+                }
 				// LOGGER.info("central configuration IS enabled!");
 				CentralConfigurationUtil.INSTANCE.loadCentralConfiguration(configuration, descriptionMap, enablesDynamicSupportSet);
 
@@ -169,7 +177,9 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 //				}
 
 			} else {
-				ApplicationState.setState(FoundationLevel.INFO, "central configuration IS NOT enabled!");
+                if(applicationState != null) {
+                    applicationState.setState(FoundationLevel.INFO, "central configuration IS NOT enabled!");
+                }
 				// LOGGER.info("central configuration IS NOT enabled!");
 				loadNonCentralConfiguration(configuration, true);
 
@@ -1162,7 +1172,9 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 				logMessage.append(key).append("=").append(value).append("\n");
 			}
 		}
-		ApplicationState.setState(FoundationLevel.INFO, logMessage.toString());
+        if(applicationState != null) {
+            applicationState.setState(FoundationLevel.INFO, logMessage.toString());
+        }
 	}
 
 	public boolean isDelimiterParsingDisabled() {

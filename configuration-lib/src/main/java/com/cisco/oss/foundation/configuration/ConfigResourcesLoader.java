@@ -16,7 +16,7 @@
 
 package com.cisco.oss.foundation.configuration;
 
-import com.cisco.oss.foundation.logging.ApplicationState;
+import com.cisco.oss.foundation.logging.ApplicationStateInterface;
 import com.cisco.oss.foundation.logging.FoundationLevel;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -80,6 +80,7 @@ public class ConfigResourcesLoader implements FactoryBean<List<Resource>>, Appli
     private String internalXmlConfig;
     private List<String> customerPropertyConfig;
     private List<String> deploymentConfig;
+    private ApplicationStateInterface applicationState;
 
     /**
      * set by injection the factory layer config file name.
@@ -163,6 +164,10 @@ public class ConfigResourcesLoader implements FactoryBean<List<Resource>>, Appli
         this.context = context;
     }
 
+    public void setApplicationState(ApplicationStateInterface applicationState) {
+        this.applicationState = applicationState;
+    }
+
     /**
      * fill the resourcesList only once. return it in the getObject method.
      */
@@ -192,12 +197,16 @@ public class ConfigResourcesLoader implements FactoryBean<List<Resource>>, Appli
             if (!printedToLog) {
                 StringBuffer logMessageBuffer = new StringBuffer("The customer resources loaded are:");
                 printResourcesLoaded(logMessageBuffer, customerPropertyResource);
-                ApplicationState.setState(FoundationLevel.INFO, logMessageBuffer.toString());
+                if(applicationState != null){
+                    applicationState.setState(FoundationLevel.INFO, logMessageBuffer.toString());
+                }
 
                 if (deploymentResource != null) {
                     logMessageBuffer = new StringBuffer("The deployment resources loaded are:");
                     printResourcesLoaded(logMessageBuffer, deploymentResource);
-                    ApplicationState.setState(FoundationLevel.INFO, logMessageBuffer.toString());
+                    if(applicationState != null) {
+                        applicationState.setState(FoundationLevel.INFO, logMessageBuffer.toString());
+                    }
                 }
 
             }
@@ -215,7 +224,9 @@ public class ConfigResourcesLoader implements FactoryBean<List<Resource>>, Appli
             final StringBuffer logMessageBuffer = new StringBuffer("The default resources loaded are:");
             printResourcesLoaded(logMessageBuffer, internalXmlResourcesList);
             printResourcesLoaded(logMessageBuffer, internalPropertyResourcesList);
-            ApplicationState.setState(FoundationLevel.INFO, logMessageBuffer.toString());
+            if(applicationState != null) {
+                applicationState.setState(FoundationLevel.INFO, logMessageBuffer.toString());
+            }
             printedToLog = true;
         }
 
