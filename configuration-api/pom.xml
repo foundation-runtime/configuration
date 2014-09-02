@@ -58,7 +58,7 @@
     </developers>
     <properties>
         <logging-api-version>0.0.0-6</logging-api-version>
-        <commons-version>0.0.0-6</commons-version>
+        <commons-version>1.0.0-1</commons-version>
         <logging-log4j-version>1.0.0-1</logging-log4j-version>
 </properties>
     <scm>
