@@ -25,7 +25,7 @@
     <groupId>com.cisco.oss.foundation</groupId>
     <artifactId>configuration-api</artifactId>
     <name>configuration-api</name>
-    <version>1.0.2-1</version>
+    <version>1.0.2-2-SNAPSHOT</version>
     <description>This project is the api library for configuration in the cisco vss foundation runtime</description>
     <url>https://github.com/foundation-runtime/configuration/tree/master/configuration-api</url>
     <packaging>jar</packaging>
@@ -66,7 +66,7 @@
         <connection>scm:git:git@github.com:foundation-runtime/configuration.git</connection>
         <developerConnection>scm:git:git@github.com:foundation-runtime/configuration.git</developerConnection>
         <url>https://github.com/foundation-runtime/configuration.git</url>
-        <tag>configuration-api-1.0.2-1</tag>
+        <tag>HEAD</tag>
     </scm>
     <organization>
         <name>Cisco</name>
