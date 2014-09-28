@@ -243,6 +243,7 @@ public enum CentralConfigurationUtil {
             properties.setProperty("service.configurationLib." + numOfServers + ".port", port);
             numOfServers++;
         }
+        properties.setProperty("service.configurationLib.http.exposeStatisticsToMonitor", "false");
 
         return properties;
     }
