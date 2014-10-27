@@ -549,7 +549,12 @@ public enum CentralConfigurationUtil {
                             if (ignoreName == null || (ignoreName != null && Boolean.FALSE.equals(ignoreName))) {
                                 tempKey += "." + innerStructName;
                             }
+
+                            if(innerStructureMemberValue.getIndex() != null){
+                                tempKey += "." + innerStructureMemberValue.getIndex();
+                            }
                             String innerStructValue = innerStructureMemberValue.getValue();
+                            List<StructureValue> innerStructureMemberValueStructureValues = innerStructureMemberValue.getStructureValues();
 
                             if (innerStructValue == null) {
                                 List<StructureValue> structureValues2 = innerStructureMemberValue.getStructureValues();
@@ -560,6 +565,20 @@ public enum CentralConfigurationUtil {
                                         tempKey2 += "." + index2;
                                     }
                                     List<StructureMemberValue> structureMemberValues2 = structureValue2.getStructureMemberValues();
+                                    for (StructureMemberValue structureMemberValue2 : structureMemberValues2) {
+                                        String tempKey3 = structureMemberValue2.getName();
+                                        tempKey3 = tempKey2 + "." + tempKey3;
+                                        tempProps.put(tempKey3, structureMemberValue2.getValue());
+                                    }
+                                }
+                            } else if(innerStructureMemberValueStructureValues != null && !innerStructureMemberValueStructureValues.isEmpty()) {
+                                for (StructureValue innerStructureMemberValueStructureValue : innerStructureMemberValueStructureValues) {
+                                    String index2 = innerStructureMemberValueStructureValue.getIndex();
+                                    String tempKey2 = tempKey;
+                                    if (index2 != null) {
+                                        tempKey2 += "." + index2;
+                                    }
+                                    List<StructureMemberValue> structureMemberValues2 = innerStructureMemberValueStructureValue.getStructureMemberValues();
                                     for (StructureMemberValue structureMemberValue2 : structureMemberValues2) {
                                         String tempKey3 = structureMemberValue2.getName();
                                         tempKey3 = tempKey2 + "." + tempKey3;
