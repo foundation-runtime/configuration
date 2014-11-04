@@ -18,14 +18,14 @@
 <NamespaceDefinitions xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/foundation-runtime/configuration/master/ccp_schema/CCP_XML.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<NamespaceDefinition>
 		<NamespaceIdentifier version="TBD" name="TBD" />
-		<Parameter name="configuration.dynamicConfigReload.enabled" type="BOOLEAN" hidden="true" description="set to true if you want to have dyanmic supoprt enabled in your process" instantiationLevel="GLOBAL" advanced="true">
+		<Parameter name="configuration.dynamicConfigReload.enabled" type="BOOLEAN" hidden="true" description="set to true if you want to have dynamic support enabled in your process" instantiationLevel="GLOBAL" advanced="true">
 			<DefaultValue>
-				<PrimitiveValue value="false" />
+				<PrimitiveValue value="true" />
 			</DefaultValue>
 		</Parameter>
-		<Parameter name="configuration.dynamicConfigReload.refreshDelay" type="INTEGER" description="define the perios of time to check for new config changes." instantiationLevel="GLOBAL" unit="MILLISECONDS" advanced="true">
+		<Parameter name="configuration.dynamicConfigReload.refreshDelay" type="INTEGER" description="define the period of time to check for new config changes." instantiationLevel="GLOBAL" unit="MILLISECONDS" advanced="true">
 			<DefaultValue>
-				<PrimitiveValue value="30000" />
+				<PrimitiveValue value="10000" />
 			</DefaultValue>
 		</Parameter>
 		<Parameter name="configuration.rejectInvalidConfiguration" type="BOOLEAN" description="when set to true will throw an exception if a validation violation was found" instantiationLevel="GLOBAL" advanced="true">
