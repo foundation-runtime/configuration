@@ -15,7 +15,7 @@
   ~  limitations under the License.
   -->
 
-<ConfigurationResponse xsi:noNamespaceSchemaLocation="http://ch-infra.il.nds.com/cabResources/CCP_XML.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ConfigurationResponse xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/foundation-runtime/configuration/master/ccp_schema/CCP_XML.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <NamespaceParameters>
         <NamespaceIdentifier version="2.1" name="ProdY"/>
         <Parameter requiresRestart="false" advanced="false" readOnly="false" hidden="false" required="true" isArray="false" description="Whether or not to use bsm-server" type="BOOLEAN" name="bsm-server.enabled">

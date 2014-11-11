@@ -75,7 +75,7 @@ public class XmlParser {
 			if (null == jaxbMarshaller){
 				jaxbMarshaller = jaxbContext.createMarshaller();
 				jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-				jaxbMarshaller.setProperty(Marshaller.JAXB_NO_NAMESPACE_SCHEMA_LOCATION, "http://ch-infra.il.nds.com/cabResources/CCP_XML.xsd");
+				jaxbMarshaller.setProperty(Marshaller.JAXB_NO_NAMESPACE_SCHEMA_LOCATION, "https://raw.githubusercontent.com/foundation-runtime/configuration/master/ccp_schema/CCP_XML.xsd");
 			}
 			writer = new StringWriter();
 
