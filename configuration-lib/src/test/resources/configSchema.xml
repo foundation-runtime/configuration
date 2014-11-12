@@ -910,6 +910,23 @@
             </StructureDefinition>
         </Parameter>
 
+        <Parameter name="service.mongoDB" type="STRUCTURE" description="MongoDB connections" isArray="true">
+            <StructureDefinition>
+                <StructureMemberDefinition name="host" type="STRING" />
+                <StructureMemberDefinition name="port" type="INTEGER" />
+            </StructureDefinition>
+            <DefaultValue>
+                <StructureValue index="1">
+                    <StructureMemberValue name="host" value="vgc1a" />
+                    <StructureMemberValue name="port" value="27017" />
+                </StructureValue>
+                <StructureValue index="2">
+                    <StructureMemberValue name="host" value="vgc1b" />
+                    <StructureMemberValue name="port" value="27017" />
+                </StructureValue>
+            </DefaultValue>
+        </Parameter>
+
 
     </NamespaceDefinition>
 </NamespaceDefinitions>

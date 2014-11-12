@@ -1029,6 +1029,14 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 
 			if (config != null) {
 				configuration.addConfiguration(config);
+				if (config instanceof PropertiesConfiguration) {
+					//update cache
+					Iterator<String> keys = configuration.getKeys();
+					while (keys.hasNext()) {
+                        String next =  keys.next();
+                        configuration.getString(next);
+                    }
+				}
 			}
 		}
 
