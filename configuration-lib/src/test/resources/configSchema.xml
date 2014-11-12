@@ -690,36 +690,6 @@
             </DefaultValue>
         </Parameter>
 
-        <Parameter name="service.queue.connections" isArray="true" type="STRUCTURE"
-                   description="Connection identifier for queue server(s). For HornetQ this is the connection to HornetQ's jndi service.">
-            <StructureDefinition>
-                <StructureMemberDefinition name="host" type="STRING"/>
-                <StructureMemberDefinition name="port" type="INTEGER">
-                    <DefaultValue>
-                        <PrimitiveValue value="5902"/>
-                    </DefaultValue>
-                </StructureMemberDefinition>
-                <StructureMemberDefinition name="jmxPort" type="INTEGER">
-                    <DefaultValue>
-                        <PrimitiveValue value="3900"/>
-                    </DefaultValue>
-                </StructureMemberDefinition>
-            </StructureDefinition>
-            <DefaultValue>
-                <StructureValue index="1">
-                    <StructureMemberValue name="host" value="vgc1a"/>
-                    <StructureMemberValue name="port" value="5902"/>
-                    <StructureMemberValue name="jmxPort" value="3900"/>
-                </StructureValue>
-            </DefaultValue>
-            <EnabledBy parameterName="service.queue.isEnabled" operator="E">
-                <Value>
-                    <PrimitiveValue value="true"/>
-                </Value>
-            </EnabledBy>
-        </Parameter>
-
-
         <Parameter name="tms.tmm.behavior" type="STRUCTURE" isArray="true"
                    description="Definition of behavior of message source for sending messages through TMS">
             <StructureDefinition>
