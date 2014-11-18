@@ -58,7 +58,7 @@
         </developer>
     </developers>
     <properties>
-        <http-client-apache-version>1.0.2-4</http-client-apache-version>
+        <http-client-apache-version>1.0.2-5</http-client-apache-version>
         <configuration-api-version>1.0.2-3</configuration-api-version>
         <logging-log4j-version>1.0.2-1</logging-log4j-version>
         <javaVersion>1.6</javaVersion>
