@@ -111,6 +111,8 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 
 	private List<Resource> resourcesList;
 
+	private static Integer configAppStateId = -1;
+
 	// private Set<String> factoryKeySet = new HashSet<String>();
 
 	// private DBAPI dbapi;
@@ -128,11 +130,20 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 
 	private String defaultListDelimiter = ",";
 
-    private ApplicationStateInterface applicationState;
+    private static ApplicationStateInterface applicationState;
 
-    public void setApplicationState(ApplicationStateInterface applicationState) {
-        this.applicationState = applicationState;
+    public static void setApplicationState(ApplicationStateInterface applicationState) {
+        CommonConfigurationsLoader.applicationState = applicationState;
     }
+
+	static{
+		FoundationConfigurationListenerRegistry.addFoundationConfigurationListener(new FoundationConfigurationListener() {
+			@Override
+			public void configurationChanged() {
+				CommonConfigurationsLoader.updateConfigInApplicationState((CompositeConfiguration)ConfigurationFactory.getConfiguration());
+			}
+		});
+	}
 
     @Override
 	public void afterPropertiesSet() throws Exception {
@@ -1169,6 +1180,10 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 
 		printedToLog = true;
 
+		updateConfigInApplicationState(configuration);
+	}
+
+	public static void updateConfigInApplicationState(CompositeConfiguration configuration) {
 		@SuppressWarnings("unchecked")
 		final Iterator<String> keys = configuration.getKeys();
 		final StringBuilder logMessage = new StringBuilder("The properties loaded are:\n");
@@ -1180,8 +1195,12 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 				logMessage.append(key).append("=").append(value).append("\n");
 			}
 		}
-        if(applicationState != null) {
-            applicationState.setState(FoundationLevel.INFO, logMessage.toString());
+		if(applicationState != null) {
+			if(configAppStateId.intValue() != -1){
+				applicationState.updateState(configAppStateId, FoundationLevel.INFO, logMessage.toString());
+			}else{
+				configAppStateId = applicationState.setState(FoundationLevel.INFO, logMessage.toString());
+			}
         }
 	}
 
@@ -1200,6 +1219,7 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 	public void setDefaultListDelimiter(String defaultListDelimiter) {
 		this.defaultListDelimiter = defaultListDelimiter;
 	}
+
 
 	/**
 	 * run over the parameters that support dynamic reload update local cache

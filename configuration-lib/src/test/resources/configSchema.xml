@@ -736,7 +736,7 @@
             <StructureDefinition>
                 <StructureMemberDefinition name="numberOfRetries" type="INTEGER"/>
                 <StructureMemberDefinition name="retryDelay" type="INTEGER"/>
-                <StructureMemberDefinition name="serviceName" type="STRING" hidden="true"/>
+                <StructureMemberDefinition name="clientName" type="STRING" hidden="true"/>
                 <StructureMemberDefinition name="waitingTime" type="INTEGER"/>
                 <StructureMemberDefinition name="connections" type="STRUCTURE" isArray="true" ignoreName="true">
                     <StructureDefinition>
@@ -749,7 +749,7 @@
                 <StructureValue>
                     <StructureMemberValue name="numberOfRetries" value="5"/>
                     <StructureMemberValue name="retryDelay" value="1500"/>
-                    <StructureMemberValue name="serviceName" value="notificationHandlerRMI"/>
+                    <StructureMemberValue name="clientName" value="notificationHandlerRMI"/>
                     <StructureMemberValue name="waitingTime" value="60000"/>
                     <StructureMemberValue name="connections">
                         <StructureValue index="1">
