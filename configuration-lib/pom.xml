@@ -19,7 +19,7 @@
     <parent>
         <groupId>com.cisco.oss.foundation</groupId>
         <artifactId>foundation-common-base</artifactId>
-        <version>1.0.0-2</version>
+        <version>1.0.0-3</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.cisco.oss.foundation</groupId>
@@ -61,7 +61,7 @@
         <http-client-apache-version>1.0.3-1</http-client-apache-version>
         <configuration-api-version>1.0.2-4</configuration-api-version>
         <logging-log4j-version>1.0.2-1</logging-log4j-version>
-        <javaVersion>1.6</javaVersion>
+        <!--<javaVersion>1.6</javaVersion>-->
     </properties>
     <scm>
         <connection>scm:git:git@github.com:foundation-runtime/configuration.git</connection>
