@@ -20,6 +20,7 @@
 package com.cisco.oss.foundation.configuration;
 
 import org.apache.commons.configuration.CompositeConfiguration;
+import org.apache.commons.lang3.BooleanUtils;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -110,4 +111,31 @@ public class FoundationCompositeConfiguration extends CompositeConfiguration {
         updateCache(key, value);
     }
 
+	@Override
+	public boolean getBoolean(String key) {
+		Boolean b = getBoolean(key, null);
+		if (b != null)
+		{
+			return b.booleanValue();
+		}
+		else
+		{
+			throw new NoSuchElementException('\'' + key + "' doesn't map to an existing object");
+		}
+	}
+
+	@Override
+	public boolean getBoolean(String key, boolean defaultValue) {
+		return getBoolean(key, (Boolean)defaultValue);
+	}
+
+	@Override
+	public Boolean getBoolean(String key, Boolean defaultValue) {
+		Object property = getProperty(key);
+		if (property != null) {
+			return BooleanUtils.toBooleanObject(property.toString());
+		} else {
+			return defaultValue;
+		}
+	}
 }
