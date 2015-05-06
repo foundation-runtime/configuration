@@ -733,7 +733,7 @@ public enum CentralConfigurationUtil {
 
         ConfigurationResponse configurationResponse = null;
 
-        HttpRequest httpRequest = HttpRequest.newBuilder().httpMethod(HttpMethod.GET).uri("/api/configuration?process-name=" + uniqeProcessName).build();
+        HttpRequest httpRequest = HttpRequest.newBuilder().silentLogging().httpMethod(HttpMethod.GET).uri("/api/configuration?process-name=" + uniqeProcessName).build();
 
         if(firstTime.compareAndSet(true,false)){
             httpClient = getHttpClient();
@@ -770,60 +770,7 @@ public enum CentralConfigurationUtil {
         return configurationResponse;
     }
 
-//    public Pair<HttpResponse, Pair<String, Integer>> executeHttpRequest(String methodType, String url, String body) throws NoHttpResponseException {
-//
-//        loadHttpMetadata();
-//
-//        HttpResponse response = null;
-//
-//        HttpRequestBase httpRequestBase = null;
-//
-//        Pair<String, Integer> currentHostPort = null;
-//
-//        // loop over all available host and port pairs. is the first pair
-//        // succeeds we do not progress to the next pair.
-//        for (Pair<String, Integer> hostPort : httpclients) {
-//
-//            currentHostPort = hostPort;
-//
-//            if (HttpGet.METHOD_NAME.equalsIgnoreCase(methodType)) {
-//                httpRequestBase = new HttpGet(String.format(url, hostPort.key, hostPort.value.toString()));
-//            } else if (HttpPost.METHOD_NAME.equalsIgnoreCase(methodType)) {
-//                httpRequestBase = new HttpPost(String.format(url, hostPort.key, hostPort.value.toString()));
-//                HttpPost httpPost = (HttpPost) httpRequestBase;
-//                if (StringUtils.isNotEmpty(body)) {
-//                    try {
-//                        StringEntity entity = new StringEntity(body, HTTP.UTF_8);
-//                        entity.setContentType("text/xml");
-//                        httpPost.setEntity(entity);
-//                    } catch (UnsupportedEncodingException e) {
-//                        throw new IllegalArgumentException("cannot execute http post method as the content is not un UTF-8 format");
-//                    }
-//                }
-//            } else {
-//                throw new IllegalArgumentException("invoked with illegal method type. method typed requested is" + methodType);
-//            }
-//
-//            try {
-//
-//                response = httpClient.execute(httpRequestBase);
-//                break;
-//            } catch (ClientProtocolException e) {
-//                throw new IllegalArgumentException("cannot process http get message.", e);
-//            } catch (IOException e) {
-//                // if we get an IOException, log the error and continue to the
-//                // next pair in the loop
-//                LOGGER.warn("cannot process http method. probably server is down. moving to the next server if exists.", e);
-//            }
-//
-//        }
-//
-//        if (response == null) {
-//            throw new NoHttpResponseException("could not access any available server.");
-//        }
-//
-//        return new Pair<HttpResponse, Pair<String, Integer>>(response, currentHostPort);
-//    }
+
 
     /**
      * @param configuration
