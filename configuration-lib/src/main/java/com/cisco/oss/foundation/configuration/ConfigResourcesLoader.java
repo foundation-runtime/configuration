@@ -32,9 +32,7 @@ import org.springframework.core.io.Resource;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * returns a list of resources that could be used:
@@ -79,6 +77,7 @@ public class ConfigResourcesLoader implements FactoryBean<List<Resource>>, Appli
     private String internalPropertyConfig;
     private String internalXmlConfig;
     private List<String> customerPropertyConfig;
+    public static List<String> customerPropertyNames = new ArrayList<>();
     private List<String> deploymentConfig;
     private ApplicationStateInterface applicationState;
 
@@ -349,6 +348,23 @@ public class ConfigResourcesLoader implements FactoryBean<List<Resource>>, Appli
                 }
             }
         }
+
+        if(customerResource != null){
+            try {
+                URL customerResourceURL = customerResource.getURL();
+                if (customerResourceURL != null) {
+                    Properties properties = new Properties();
+                    properties.load(customerResourceURL.openStream());
+                    ArrayList<?> list = Collections.list(properties.propertyNames());
+                    for (Object propName : list) {
+                        customerPropertyNames.add(propName.toString());
+                    }
+                }
+            } catch (IOException e) {
+                LOGGER.error("can't read customer url", e);
+            }
+        }
+
         return customerResource;
     }
 

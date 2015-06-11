@@ -26,6 +26,7 @@ import org.slf4j.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -123,7 +124,21 @@ public class DynamicReloadSupport {
 					if(!disableCahce){
 						configCacheField.set(configuration, Boolean.TRUE);
 						// just for triggering reload mechanism
-						configuration.getProperty("configuration.dynamicConfigReload.enabled");
+
+//						configuration.getProperty("configuration.dynamicConfigReload.enabled");
+						boolean loaded = false;
+						Iterator<String> configIterator = ConfigResourcesLoader.customerPropertyNames.iterator();
+						while (configIterator.hasNext() && !loaded) {
+							String propName =  configIterator.next();
+							try {
+								configuration.getProperty(propName);
+								loaded = true;
+							} catch (Exception e) {
+								loaded = false;
+							}
+
+						}
+
 						configCacheField.set(configuration, Boolean.FALSE);
 					}else{
 						// just for triggering reload mechanism
