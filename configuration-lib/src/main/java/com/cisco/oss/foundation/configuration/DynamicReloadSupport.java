@@ -23,6 +23,7 @@ import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.*;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -34,123 +35,142 @@ import java.util.TimerTask;
  * This class reads the configuration to determine if dynamic reload of the configuration in case of config file changes should be enabled or not.<br>
  * When enabled the configuration in memory map will be updated upon file changes within a configuration refresh delay period.<br>
  * Client interested in getting notifications of configuration reload should register via {@link FoundationConfigurationListenerRegistry#addFoundationConfigurationListener(FoundationConfigurationListener)} API.
- * 
+ *
  * @author Yair Ogen
  */
 public class DynamicReloadSupport {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(DynamicReloadSupport.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DynamicReloadSupport.class);
 
-	private final CompositeConfiguration configuration;
+    private final CompositeConfiguration configuration;
 
-	private DynamicReloadSupport(CompositeConfiguration configuration) {
-		super();
-		this.configuration = configuration;
-	}
+    private DynamicReloadSupport(CompositeConfiguration configuration) {
+        super();
+        this.configuration = configuration;
+    }
 
-	public void init() {
+    public void init() {
 
-		LOGGER.debug("in DynamicReloadSupport init method");
+        LOGGER.debug("in DynamicReloadSupport init method");
 
-		boolean isDynamicReLoadEnabled = configuration.getBoolean("configuration.dynamicConfigReload.enabled", false);
-		boolean isDynamicReloadAutoUpdateEnabled = true;//configuration.getBoolean("configuration.dynamicConfigReload.autoUpdateEnabled");
-		long refreshDelay = configuration.getLong("configuration.dynamicConfigReload.refreshDelay", 30000);
+        boolean isDynamicReLoadEnabled = configuration.getBoolean("configuration.dynamicConfigReload.enabled", false);
+        boolean isDynamicReloadAutoUpdateEnabled = true;//configuration.getBoolean("configuration.dynamicConfigReload.autoUpdateEnabled");
+        long refreshDelay = configuration.getLong("configuration.dynamicConfigReload.refreshDelay", 30000);
 
-		if (isDynamicReLoadEnabled) {
+        if (isDynamicReLoadEnabled) {
 
-			LOGGER.info("configuration dynamic reload is enabled!");
+            LOGGER.info("configuration dynamic reload is enabled!");
 
-			int numberOfConfigurations = configuration.getNumberOfConfigurations();
+            int numberOfConfigurations = configuration.getNumberOfConfigurations();
 
-			for (int index = 0; index < numberOfConfigurations; index++) {
+            for (int index = 0; index < numberOfConfigurations; index++) {
 
-				Configuration config = configuration.getConfiguration(index);
+                Configuration config = configuration.getConfiguration(index);
 
-				// file reload only supported on file based configurations.
-				// cab configuration only supports properties configuration.
-				if (config instanceof PropertiesConfiguration) {
+                // file reload only supported on file based configurations.
+                // cab configuration only supports properties configuration.
+                if (config instanceof PropertiesConfiguration) {
 
-					PropertiesConfiguration propertiesConfiguration = (PropertiesConfiguration) config;
+                    PropertiesConfiguration propertiesConfiguration = (PropertiesConfiguration) config;
 
-					// TODO: ignore default config files
-					String fileName = propertiesConfiguration.getFileName();
-					if (fileName == null) {
-						fileName = propertiesConfiguration.getBasePath();
-					}
-					if (fileName.startsWith("default")) {
-						// do not support reload for default config files.
-						continue;
-					}
+                    // TODO: ignore default config files
+                    String fileName = propertiesConfiguration.getFileName();
+                    if (fileName == null) {
+                        fileName = propertiesConfiguration.getBasePath();
+                    }
+                    if (fileName.startsWith("default")) {
+                        // do not support reload for default config files.
+                        continue;
+                    }
 
-					LOGGER.debug("Setting reload strategy on: " + propertiesConfiguration.getPath());
+                    LOGGER.debug("Setting reload strategy on: " + propertiesConfiguration.getPath());
 
-					FoundationFileChangedReloadingStrategy strategy = new FoundationFileChangedReloadingStrategy();
-					strategy.setRefreshDelay(refreshDelay);
+                    FoundationFileChangedReloadingStrategy strategy = new FoundationFileChangedReloadingStrategy();
+                    strategy.setRefreshDelay(refreshDelay);
 
-					propertiesConfiguration.setReloadingStrategy(strategy);
+                    propertiesConfiguration.setReloadingStrategy(strategy);
 
-				}
+                }
 
-			}
+            }
 
-			if (isDynamicReloadAutoUpdateEnabled) {
-				startDynamicReloadAutoUpdateDeamon(configuration, refreshDelay);
-			}
+            if (isDynamicReloadAutoUpdateEnabled) {
+                startDynamicReloadAutoUpdateDeamon(configuration, refreshDelay);
+            }
 
-		}
+        }
 
-	}
+    }
 
-	/**
-	 * @param refreshDelay
-	 */
-	private void startDynamicReloadAutoUpdateDeamon(final Configuration configuration, final long refreshDelay) {
+    /**
+     * @param refreshDelay
+     */
+    private void startDynamicReloadAutoUpdateDeamon(final Configuration configuration, final long refreshDelay) {
 
-		// run as daemon
-		Timer timer = new Timer("DynamicReloadAutoUpdate", true);
+        // run as daemon
+        Timer timer = new Timer("DynamicReloadAutoUpdate", true);
 
-		timer.schedule(new TimerTask() {
+        timer.schedule(new DynamicReloadTask().init(), refreshDelay, refreshDelay);
 
-			@Override
-			public void run() {
-				
-				try {
-					Field configCacheField = FoundationCompositeConfiguration.class.getDeclaredField("DISABLE_CACHE");
-					configCacheField.setAccessible(true);
-					Field modifiersField = Field.class.getDeclaredField("modifiers");
-					modifiersField.setAccessible(true);
-					modifiersField.setInt(configCacheField, configCacheField.getModifiers() & ~Modifier.FINAL);
-					boolean disableCahce = (Boolean) configCacheField.get(configuration);
-					if(!disableCahce){
-						configCacheField.set(configuration, Boolean.TRUE);
-						// just for triggering reload mechanism
+    }
 
-//						configuration.getProperty("configuration.dynamicConfigReload.enabled");
-						boolean loaded = false;
-						Iterator<String> configIterator = ConfigResourcesLoader.customerPropertyNames.iterator();
-						while (configIterator.hasNext() && !loaded) {
-							String propName =  configIterator.next();
-							try {
-								configuration.getProperty(propName);
-								loaded = true;
-							} catch (Exception e) {
-								loaded = false;
-							}
+    private class DynamicReloadTask extends TimerTask {
 
-						}
+        private Field configCacheField;
+        private Field modifiersField;
 
-						configCacheField.set(configuration, Boolean.FALSE);
-					}else{
-						// just for triggering reload mechanism
-						configuration.getProperty("configuration.dynamicConfigReload.enabled");
-					}
-				} catch (Exception e) {					
-					LOGGER.error("problem reloading the configuration", e);
-				}
-				
+        public DynamicReloadTask() {
+            init();
+        }
 
-			}
-		}, refreshDelay, refreshDelay);
-	}
+        public DynamicReloadTask init() {
+            try {
+                configCacheField = FoundationCompositeConfiguration.class.getDeclaredField("DISABLE_CACHE");
+                configCacheField.setAccessible(true);
+
+                modifiersField = Field.class.getDeclaredField("modifiers");
+                modifiersField.setAccessible(true);
+                modifiersField.setInt(configCacheField, configCacheField.getModifiers() & ~Modifier.FINAL);
+            } catch (Exception e) {
+                LOGGER.trace(e.toString(), e);
+            }
+            return this;
+        }
+
+        @Override
+        public void run() {
+
+            try {
+                LOGGER.trace("Configuration reload started.");
+                if (configCacheField == null)
+                    init();
+
+                Boolean disableCache = (Boolean) configCacheField.get(null);
+                if (!disableCache) {
+                    configCacheField.set(null, Boolean.TRUE);
+                    // just for triggering reload mechanism
+                    boolean loaded = false;
+                    Iterator<String> configIterator = ConfigResourcesLoader.customerPropertyNames.iterator();
+                    while (configIterator.hasNext() && !loaded) {
+                        String propName = configIterator.next();
+                        try {
+                            configuration.getProperty(propName);
+                            loaded = true;
+                        } catch (Exception e) {
+                            LOGGER.trace(e.toString(), e);
+                        }
+                    }
+
+                    configCacheField.set(null, Boolean.FALSE);
+                } else {
+                    // just for triggering reload mechanism
+                    configuration.getProperty("configuration.dynamicConfigReload.enabled");
+                }
+                LOGGER.trace("Configuration reload finished.");
+            } catch (Exception e) {
+                LOGGER.error("problem reloading the configuration", e);
+            }
+        }
+    }
 
 }

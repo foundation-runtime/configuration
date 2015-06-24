@@ -21,6 +21,8 @@ package com.cisco.oss.foundation.configuration;
 
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.lang3.BooleanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -32,9 +34,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Yair Ogen
  */
 public class FoundationCompositeConfiguration extends CompositeConfiguration {
+    private static final Logger LOGGER = LoggerFactory.getLogger(FoundationCompositeConfiguration.class);
 
     private final Map<String, Object> cache = new ConcurrentHashMap<String, Object>();
-    private static final boolean DISABLE_CACHE = Boolean.getBoolean("configuration.disableCache");
+    private static Boolean DISABLE_CACHE = Boolean.getBoolean("configuration.disableCache");
 
     /**
      * each call to this method method will first sort the keys and then return
@@ -80,6 +83,7 @@ public class FoundationCompositeConfiguration extends CompositeConfiguration {
     @Override
     public Object getProperty(String key) {
         if (DISABLE_CACHE) {
+            LOGGER.trace("Reloading from disk.");
             return super.getProperty(key);
         } else {
             if (cache.containsKey(key)) {
