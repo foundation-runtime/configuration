@@ -1064,9 +1064,10 @@ public class CommonConfigurationsLoader implements FactoryBean<Configuration>, I
 			CentralConfigurationUtil.parameterMap.remove(parameter);
 
 			String base = parameter.getBase();
-			ParameterType parameterType = baseMap.get(base);
+			ParameterType parameterTypeOrig = baseMap.get(base);
 
-			if (parameterType != null) {
+			if (parameterTypeOrig != null) {
+				ParameterType parameterType = (ParameterType) parameterTypeOrig.clone();
 				StructureDefinition baseStructureDefinition = parameterType.getStructureDefinition();
 				StructureDefinition childStructureDefinition = parameter.getStructureDefinition();
 				if (childStructureDefinition == null) {
