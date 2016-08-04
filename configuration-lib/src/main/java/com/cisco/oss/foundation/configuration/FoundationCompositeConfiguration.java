@@ -21,6 +21,7 @@ package com.cisco.oss.foundation.configuration;
 
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -87,11 +88,16 @@ public class FoundationCompositeConfiguration extends CompositeConfiguration {
             return super.getProperty(key);
         } else {
             if (cache.containsKey(key)) {
-                return cache.get(key);
+                final Object value = cache.get(key);
+                return (value == ObjectUtils.NULL)?null:value;
             } else {
                 Object value = super.getProperty(key);
-                if (value != null)
-                    cache.put(key, value);
+                if (value == null) {
+                     cache.put(key, ObjectUtils.NULL);
+                 } else {
+                      cache.put(key, value);
+                 }
+ 
                 return value;
             }
         }
