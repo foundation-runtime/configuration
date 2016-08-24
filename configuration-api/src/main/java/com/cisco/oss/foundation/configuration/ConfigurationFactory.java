@@ -17,9 +17,26 @@
 package com.cisco.oss.foundation.configuration;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.MapConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.annotation.Order;
+import org.springframework.core.env.CompositePropertySource;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.EnumerablePropertySource;
+import org.springframework.core.env.PropertySource;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
+import javax.annotation.PostConstruct;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Factory to get a Configuration object that gets all the configuration files
@@ -35,13 +52,80 @@ import org.springframework.util.Assert;
  * @author Yair Ogen
  * 
  */
-public final class ConfigurationFactory {
 
-	private ConfigurationFactory() {
-		// prevent instantiation.
-	}
+@Service
+@Order(1)
+public class ConfigurationFactory {
 
-	private static volatile ApplicationContext context;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurationFactory.class);
+
+	@Autowired
+	private ConfigurableEnvironment environment;
+
+	private static Configuration configuration;
+
+	@PostConstruct
+    public void init(){
+        init(environment);
+    }
+
+    public void init(ConfigurableEnvironment environment) {
+        try {
+            configuration = (Configuration) getContext().getBean("configuration");
+        } catch (BeansException e) {
+            if(environment != null){
+                Map<String, Object> allProperties = getAllProperties();
+                configuration = new MapConfiguration(allProperties);
+            }else{
+                throw new RuntimeException("can't load commons config. error: " + e);
+            }
+        }
+    }
+
+    public Map<String,Object> getAllProperties()
+    {
+        Map<String,Object> result = new HashMap<>();
+        environment.getPropertySources().forEach( ps -> addAll( result, getAllProperties( ps ) ) );
+        return result;
+    }
+
+    public Map<String,Object> getAllProperties( PropertySource<?> aPropSource )
+    {
+        Map<String,Object> result = new HashMap<>();
+
+        if ( aPropSource instanceof CompositePropertySource)
+        {
+            CompositePropertySource cps = (CompositePropertySource) aPropSource;
+            cps.getPropertySources().forEach( ps -> addAll( result, getAllProperties( ps ) ) );
+            return result;
+        }
+
+        if ( aPropSource instanceof EnumerablePropertySource<?> )
+        {
+            EnumerablePropertySource<?> ps = (EnumerablePropertySource<?>) aPropSource;
+            Arrays.asList( ps.getPropertyNames() ).forEach(key -> result.put( key, ps.getProperty( key ) ) );
+            return result;
+        }
+
+
+        return result;
+
+    }
+
+    private static void addAll( Map<String, Object> aBase, Map<String, Object> aToBeAdded )
+    {
+        for (Map.Entry<String, Object> entry : aToBeAdded.entrySet())
+        {
+            if ( aBase.containsKey( entry.getKey() ) )
+            {
+                continue;
+            }
+
+            aBase.put( entry.getKey(), entry.getValue() );
+        }
+    }
+
+    private static volatile ApplicationContext context;
 
 	/**
 	 * get the full configuration object that contains all the configuration
@@ -50,7 +134,14 @@ public final class ConfigurationFactory {
 	 * @return the configuration object
 	 */
 	public static Configuration getConfiguration() {
-		return (Configuration) getContext().getBean("configuration");
+	    if(configuration == null){
+            try {
+                configuration = (Configuration) getContext().getBean("configuration");
+            } catch (BeansException e) {
+                LOGGER.error("Can't load config. Error: {}",e ,e);
+            }
+        }
+	    return configuration;
 	}
 
 	/**
