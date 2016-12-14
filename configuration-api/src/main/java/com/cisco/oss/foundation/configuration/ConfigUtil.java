@@ -26,10 +26,7 @@ import java.lang.reflect.Array;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DecimalFormatSymbols;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -212,6 +209,46 @@ public final class ConfigUtil {
 
             final String key = keys.next();
             result.put(key, subset.getString(key));
+        }
+
+        return result;
+    }
+
+    /**
+     * parse a simple array and return it as a Set.
+     * @param configPrefix the prefix that is the basis of the array. E.g.
+     *
+     * given:
+     *
+     * smartcardAdaptor.cardFeatures.23.sbmMSB.0=0x00
+     * smartcardAdaptor.cardFeatures.23.sbmMSB.1=0x01
+     *
+     * the config prefix will be:
+     * smartcardAdaptor.cardFeatures.23.sbmMSB
+     *
+     * @return the Set where a distinct list of values.
+     */
+    public static Set<String> parseSimpleArrayAsSet(String configPrefix) {
+
+        Configuration configuration = ConfigurationFactory.getConfiguration();
+
+        return parseSimpleArrayAsSet(configuration, configPrefix);
+    }
+
+    public static Set<String> parseSimpleArrayAsSet(Configuration configuration, String configPrefix) {
+
+        Set<String> result = new HashSet<String>();
+
+        // get a subset of the configuration based on the config prefix.
+        final Configuration subset = configuration.subset(configPrefix);
+
+        @SuppressWarnings("unchecked")
+        final Iterator<String> keys = subset.getKeys();
+
+        while (keys.hasNext()) {
+
+            final String key = keys.next();
+            result.add(subset.getString(key));
         }
 
         return result;
