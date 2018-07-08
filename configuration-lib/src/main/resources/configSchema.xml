@@ -20,7 +20,7 @@
 		<NamespaceIdentifier version="TBD" name="TBD" />
 		<Parameter name="configuration.dynamicConfigReload.enabled" type="BOOLEAN" hidden="true" description="set to true if you want to have dynamic support enabled in your process" instantiationLevel="GLOBAL" advanced="true">
 			<DefaultValue>
-				<PrimitiveValue value="true" />
+				<PrimitiveValue value="false" />
 			</DefaultValue>
 		</Parameter>
 		<Parameter name="configuration.dynamicConfigReload.refreshDelay" type="INTEGER" description="define the period of time to check for new config changes." instantiationLevel="GLOBAL" unit="MILLISECONDS" advanced="true">
